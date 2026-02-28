@@ -48,8 +48,8 @@ const Home = () => {
                     <h2 className="section-title">Shop by Room</h2>
                     <div className="room-grid">
                         {[
-                            { name: 'Bedroom', image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1000' },
-                            { name: 'Living Room', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000' },
+                            { name: 'Bedroom', image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000' },
+                            { name: 'Living Room', image: 'https://images.unsplash.com/photo-1616489953149-6058e5797800?q=80&w=1000' },
                             { name: 'Kids Room', image: 'https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000' },
                             { name: 'Dining Area', image: 'https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000' }
                         ].map((room, i) => (
