@@ -174,6 +174,40 @@
     font-weight: 700 !important;
 }
 
+.cart-icon-wrap {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ed6c0d;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.user-avatar-mini {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #ed6c0d, #f59e0b);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
 @media (max-width: 1024px) {
     .header-center {
         display: none;

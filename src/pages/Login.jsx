@@ -68,8 +68,8 @@ const Login = () => {
                 </form>
 
                 <div className="login-footer">
-                    <p>Demo Admin: admin@jannathandloom.com | admin123</p>
-                    <p>Note: Admin must be created in DB first.</p>
+                    <p>Don't have an account? <Link to="/signup" style={{ color: '#ed6c0d', fontWeight: 600 }}>Create account</Link></p>
+                    <p style={{ marginTop: '8px', fontSize: '0.8rem', color: '#94a3b8' }}>Admin? Contact your manager to get access.</p>
                 </div>
             </div>
         </div>

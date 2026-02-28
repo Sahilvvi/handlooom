@@ -13,8 +13,21 @@ const ProductDetail = () => {
     const [pincode, setPincode] = useState('');
     const [similarProducts, setSimilarProducts] = useState([]);
 
-    // Real images for gallery enrichment
-    const galleryImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
+    // All real local images available in /public folder
+    const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
+
+    // Returns 5 deterministic images based on the product id so each product gets different real images
+    const getLocalImages = (seed = '') => {
+        let hash = 0;
+        for (let i = 0; i < seed.length; i++) {
+            hash = (hash * 31 + seed.charCodeAt(i)) % allLocalImages.length;
+        }
+        const imgs = [];
+        for (let i = 0; i < 5; i++) {
+            imgs.push(allLocalImages[(hash + i) % allLocalImages.length]);
+        }
+        return imgs;
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,13 +39,9 @@ const ProductDetail = () => {
                 const productData = await productRes.json();
                 const allData = await allRes.json();
 
-                // Merge real images if needed or just use them
+                // Always use real local images — ignore any external/dummy URLs from DB
                 if (productData) {
-                    const combinedImages = [...(productData.images || [])];
-                    if (combinedImages.length < 5) {
-                        combinedImages.push(...galleryImages.slice(0, 5 - combinedImages.length));
-                    }
-                    productData.images = combinedImages;
+                    productData.images = getLocalImages(productData._id || productData.name || id);
                 }
 
                 setProduct(productData);
@@ -75,7 +84,7 @@ const ProductDetail = () => {
         { q: 'What material in curtains do you provide?', a: 'We provide Polyester, Cotton, Jute, and more.' }
     ];
 
-    const productImages = product.images || galleryImages.slice(0, 5);
+    const productImages = product.images || allLocalImages.slice(0, 5);
 
     return (
         <div className="product-detail-page container">

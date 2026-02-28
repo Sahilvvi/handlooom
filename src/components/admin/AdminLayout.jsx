@@ -19,10 +19,10 @@ const AdminLayout = () => {
                     <h1>Jannat <span>Admin</span></h1>
                 </div>
                 <nav className="admin-nav">
-                    <Link to="/admin">Dashboard</Link>
-                    <Link to="/admin/products">Manage Products</Link>
-                    <Link to="/admin/orders">Recent Orders</Link>
-                    <Link to="/">Go to Website</Link>
+                    <Link to="/admin">📊 Dashboard</Link>
+                    <Link to="/admin/products">📦 Manage Products</Link>
+                    <Link to="/admin/orders">🛒 Orders</Link>
+                    <Link to="/">🌐 View Website</Link>
                 </nav>
                 <div className="admin-user-info">
                     <p>{user?.firstName} {user?.lastName}</p>
