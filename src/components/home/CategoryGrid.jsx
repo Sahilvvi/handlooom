@@ -3,34 +3,40 @@ import './CategoryGrid.css';
 
 const categories = [
     {
-        title: 'Blackout Curtains',
+        title: 'Luxe Blackout',
+        subtitle: '100% Light Block | Premium Velvet',
         image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070',
         link: '/shop/blackout'
     },
     {
-        title: 'Sheer Curtains',
+        title: 'Etherial Sheers',
+        subtitle: 'Soft Light | Delicate Linen',
         image: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070',
         link: '/shop/sheer'
     },
     {
-        title: 'Printed Curtains',
+        title: 'Royal Jacquard',
+        subtitle: 'Intricate Weaves | Timeless Style',
         image: 'https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=2070',
+        link: '/shop/jacquard'
+    },
+    {
+        title: 'Modern Prints',
+        subtitle: 'Vibrant Patterns | Contemporary Touch',
+        image: 'https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=2070',
         link: '/shop/printed'
     },
     {
-        title: 'Velvet Curtains',
-        image: 'https://images.unsplash.com/photo-1577174881658-0f30ed549adc?q=80&w=2070',
+        title: 'Pure Linen',
+        subtitle: 'Natural Texture | Breathable Elegance',
+        image: 'https://images.unsplash.com/photo-1505671811271-85573489fe1b?q=80&w=2070',
+        link: '/shop/linen'
+    },
+    {
+        title: 'Vintage Velvet',
+        subtitle: 'Plush Comfort | Sophisticated Warmth',
+        image: 'https://images.unsplash.com/photo-1616489953149-6058e5797800?q=80&w=2070',
         link: '/shop/velvet'
-    },
-    {
-        title: 'Bedroom Curtains',
-        image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2070',
-        link: '/shop/bedroom'
-    },
-    {
-        title: 'Living Room Curtains',
-        image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000',
-        link: '/shop/living-room'
     }
 ];
 
@@ -45,9 +51,10 @@ const CategoryGrid = () => {
                             <div className="category-image">
                                 <img src={cat.image} alt={cat.title} />
                             </div>
-                            <div className="category-overlay">
+                            <div className="category-info">
                                 <h3>{cat.title}</h3>
-                                <span className="shop-link">Explore</span>
+                                <p>{cat.subtitle}</p>
+                                <span className="shop-link">Explore Collection →</span>
                             </div>
                         </a>
                     ))}

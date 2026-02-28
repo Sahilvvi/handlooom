@@ -13,6 +13,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import ProductList from './pages/admin/ProductList';
 import AddProduct from './pages/admin/AddProduct';
+import { About, Shipping, Returns, Privacy, Faq, Career, Contact, OurStores } from './pages/StaticPages';
 import './App.css';
 
 function App() {
@@ -28,6 +29,14 @@ function App() {
             <Route path="/product/:id" element={<><Header /><ProductDetail /><Footer /></>} />
             <Route path="/checkout" element={<><Header /><Checkout /><Footer /></>} />
             <Route path="/login" element={<><Header /><Login /><Footer /></>} />
+            <Route path="/about" element={<><Header /><About /><Footer /></>} />
+            <Route path="/shipping" element={<><Header /><Shipping /><Footer /></>} />
+            <Route path="/returns" element={<><Header /><Returns /><Footer /></>} />
+            <Route path="/privacy" element={<><Header /><Privacy /><Footer /></>} />
+            <Route path="/faq" element={<><Header /><Faq /><Footer /></>} />
+            <Route path="/career" element={<><Header /><Career /><Footer /></>} />
+            <Route path="/contact" element={<><Header /><Contact /><Footer /></>} />
+            <Route path="/stores" element={<><Header /><OurStores /><Footer /></>} />
 
             {/* Admin Routes */}
             <Route element={<ProtectedRoute adminOnly={true} />}>

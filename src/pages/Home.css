@@ -55,10 +55,12 @@
 
 .room-card {
     position: relative;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1.2;
+    min-height: 250px;
     overflow: hidden;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-lg);
     cursor: pointer;
+    box-shadow: var(--shadow-soft);
 }
 
 .room-card img {

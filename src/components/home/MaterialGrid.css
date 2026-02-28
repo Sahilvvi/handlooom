@@ -1,0 +1,52 @@
+.material-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.material-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.material-card {
+    text-align: center;
+    cursor: pointer;
+}
+
+.material-img {
+    height: 380px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.material-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.material-card:hover .material-img img {
+    transform: scale(1.05);
+}
+
+.material-info h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+@media (max-width: 968px) {
+    .material-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .material-grid {
+        grid-template-columns: 1fr;
+    }
+}

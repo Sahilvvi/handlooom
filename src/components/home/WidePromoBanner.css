@@ -1,0 +1,133 @@
+.wide-promo-section {
+    padding: 20px 0;
+    background-color: #fff;
+}
+
+.wide-banner {
+    background: linear-gradient(to right, #FDF1F3, #F6CBD2);
+    border-radius: 8px;
+    padding: 30px 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.wide-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.left-promo {
+    display: flex;
+    flex-direction: column;
+}
+
+.splash-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #222;
+}
+
+.colours-text {
+    font-size: 2.8rem;
+    color: #D64561;
+    line-height: 1;
+    margin: 0;
+}
+
+.colours-text span {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #222;
+    font-size: 2rem;
+}
+
+.divider {
+    width: 2px;
+    height: 80px;
+    background-color: #D64561;
+    opacity: 0.3;
+}
+
+.middle-promo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.upto {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #D64561;
+}
+
+.percent {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #D64561;
+    line-height: 1;
+}
+
+.plus {
+    font-size: 3rem;
+    color: #D64561;
+    font-weight: 300;
+}
+
+.cashback {
+    display: flex;
+    flex-direction: column;
+}
+
+.upto-small {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #D64561;
+    margin-bottom: -5px;
+}
+
+.amount {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #D64561;
+    line-height: 1;
+}
+
+.right-promo {
+    max-width: 150px;
+}
+
+.cashback-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #D64561;
+    line-height: 1.2;
+    display: block;
+}
+
+@media (max-width: 1024px) {
+    .wide-banner-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .divider {
+        display: none;
+    }
+
+    .colours-text {
+        font-size: 2rem;
+    }
+
+    .percent {
+        font-size: 3rem;
+    }
+
+    .amount {
+        font-size: 2.5rem;
+    }
+}

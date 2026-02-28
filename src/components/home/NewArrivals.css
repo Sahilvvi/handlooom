@@ -1,0 +1,52 @@
+.new-arrivals-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.arrivals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.arrival-card {
+    cursor: pointer;
+}
+
+.arrival-img {
+    height: 600px;
+    /* Large high impact images */
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.arrival-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.arrival-card:hover .arrival-img img {
+    transform: scale(1.02);
+}
+
+.arrival-info h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+@media (max-width: 968px) {
+    .arrival-img {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .arrivals-grid {
+        grid-template-columns: 1fr;
+    }
+}

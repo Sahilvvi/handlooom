@@ -8,8 +8,8 @@ const ProductCard = ({ product }) => {
                 {product.isBestSeller && <span className="badge-best">Best Seller</span>}
             </div>
             <div className="product-image-wrapper">
-                <img src={product.images[0]} alt={product.name} className="primary-img" />
-                {product.images[1] && <img src={product.images[1]} alt={product.name} className="secondary-img" />}
+                <img src={product.images?.[0] || '/d1.png'} alt={product.name} className="primary-img" />
+                {(product.images?.[1] || '/d2.png') && <img src={product.images?.[1] || '/d2.png'} alt={product.name} className="secondary-img" />}
                 <div className="product-actions">
                     <button className="action-btn" title="Add to Wishlist">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>

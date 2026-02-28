@@ -1,0 +1,126 @@
+.latest-designs-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.design-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    border-color: #EF6F31;
+    color: #EF6F31;
+}
+
+.tab-btn.active {
+    background-color: #EF6F31;
+    border-color: #EF6F31;
+    color: #fff;
+}
+
+.designs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.design-card {
+    cursor: pointer;
+}
+
+.design-img {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.design-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.design-card:hover .design-img img {
+    transform: scale(1.05);
+}
+
+.best-seller-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #EF6F31;
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+.design-info h3 {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.current-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.old-price {
+    font-size: 0.9rem;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.discount-tag {
+    font-size: 0.8rem;
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .designs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .designs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .designs-grid {
+        grid-template-columns: 1fr;
+    }
+}

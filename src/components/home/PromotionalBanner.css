@@ -1,0 +1,24 @@
+.promotional-banner {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.full-width-banner {
+    width: 100%;
+}
+
+.hero-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .hero-banner-img {
+        min-height: 250px;
+        object-fit: cover;
+    }
+}

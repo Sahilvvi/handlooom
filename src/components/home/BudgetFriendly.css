@@ -1,0 +1,58 @@
+.budget-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.budget-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.budget-card {
+    text-align: center;
+    cursor: pointer;
+}
+
+.budget-img {
+    height: 350px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.budget-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.budget-card:hover .budget-img img {
+    transform: scale(1.05);
+}
+
+.budget-info h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.from-price {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+@media (max-width: 968px) {
+    .budget-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .budget-grid {
+        grid-template-columns: 1fr;
+    }
+}
