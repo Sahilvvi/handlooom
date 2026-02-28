@@ -1,0 +1,106 @@
+.hero-slider {
+    position: relative;
+    height: calc(100vh - 160px);
+    min-height: 500px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 10s linear;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+.slide-content {
+    max-width: 650px;
+    color: var(--white);
+    animation: slideIn 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-label {
+    display: block;
+    font-family: var(--font-accent);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    color: var(--accent-gold);
+}
+
+.slide-title {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.slide-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid transparent;
+}
+
+.dot.active {
+    background-color: var(--white);
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .hero-slider {
+        height: 70vh;
+    }
+
+    .slide-title {
+        font-size: 2.5rem;
+    }
+
+    .slide-subtitle {
+        font-size: 1rem;
+    }
+}

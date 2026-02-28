@@ -1,0 +1,50 @@
+.admin-form {
+    max-width: 800px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.admin-form .form-group {
+    margin-bottom: 25px;
+}
+
+.admin-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-sm);
+    outline: none;
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+    border-color: var(--accent-sage);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-light);
+    padding: 15px 30px;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+}

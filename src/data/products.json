@@ -1,0 +1,436 @@
+[
+    {
+        "id": 1,
+        "name": "Noor Linen Sheer Curtain",
+        "category": "Sheer",
+        "price": 1899,
+        "fabric": "Premium Linen",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Ivory",
+            "Soft Beige",
+            "White"
+        ],
+        "description": "The Noor Linen Sheer Curtain brings a touch of ethereal beauty to any room. Crafted from high-quality linen, it filters sunlight beautifully while maintain privacy.",
+        "images": [
+            "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1000&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 2,
+        "name": "Meher Velvet Blackout Drape",
+        "category": "Blackout",
+        "price": 3499,
+        "fabric": "Luxury Velvet",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Sage Green",
+            "Dusty Rose",
+            "Deep Blue"
+        ],
+        "description": "Experience peak luxury with our Meher Velvet series. Designed for complete light blockage and superior thermal insulation with a rich, soft texture.",
+        "images": [
+            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Bedroom",
+        "isBestSeller": true
+    },
+    {
+        "id": 3,
+        "name": "Sahara Cotton Printed Curtain",
+        "category": "Printed",
+        "price": 2299,
+        "fabric": "100% Cotton",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Earthy Terracotta",
+            "Muted Gold",
+            "Indigo"
+        ],
+        "description": "Inspired by traditional handloom prints, the Sahara series adds a warm, ethnic touch to your modern Indian home.",
+        "images": [
+            "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Dining Area",
+        "isBestSeller": false
+    },
+    {
+        "id": 4,
+        "name": "Aafreen Sage Blackout Panel",
+        "category": "Blackout",
+        "price": 2899,
+        "fabric": "Polyester Blend",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Sage Green"
+        ],
+        "description": "A minimalist approach to luxury. The Aafreen panel provides excellent blackout performance with a subtle, elegant sheen.",
+        "images": [
+            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Bedroom",
+        "isBestSeller": true
+    },
+    {
+        "id": 5,
+        "name": "Gul Linen Textured Curtain",
+        "category": "Linen",
+        "price": 2499,
+        "fabric": "Slub Linen",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Natural",
+            "Oatmeal",
+            "Grey"
+        ],
+        "description": "Richly textured with a natural hand-feel, the Gul series is perfect for those who appreciate organic elegance.",
+        "images": [
+            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 6,
+        "name": "Zoya Sheer Embroidered Drape",
+        "category": "Sheer",
+        "price": 2199,
+        "fabric": "Faux Silk Sheer",
+        "sizes": [
+            "5ft",
+            "7ft"
+        ],
+        "colors": [
+            "Ivory",
+            "Cream"
+        ],
+        "description": "Delicate floral embroidery on premium sheer fabric. The Zoya drape adds a romantic, feminine touch to your interiors.",
+        "images": [
+            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Bedroom",
+        "isBestSeller": false
+    },
+    {
+        "id": 7,
+        "name": "Aria Velvet Gold Border Curtain",
+        "category": "Velvet",
+        "price": 3999,
+        "fabric": "Heavy Velvet",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Emerald Green",
+            "Wine Red"
+        ],
+        "description": "Royal aesthetics for grand living spaces. Features a delicate gold-thread ethnic border for that premium Indian touch.",
+        "images": [
+            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 8,
+        "name": "Tara Cotton Striped Panel",
+        "category": "Printed",
+        "price": 1499,
+        "fabric": "Cotton Canvas",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Blue/White",
+            "Grey/White"
+        ],
+        "description": "Clean, modern, and versatile. The Tara series features subtle handloom-inspired stripes for a relaxed aesthetic.",
+        "images": [
+            "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Kids Room",
+        "isBestSeller": false
+    },
+    {
+        "id": 9,
+        "name": "Ira Textured Jute Blend",
+        "category": "Linen",
+        "price": 2699,
+        "fabric": "Jute-Cotton Blend",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Sand",
+            "Earth"
+        ],
+        "description": "A perfect marriage of rustic texture and modern softness. Ideal for spaces that bridge indoor and outdoor vibes.",
+        "images": [
+            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Dining Area",
+        "isBestSeller": true
+    },
+    {
+        "id": 10,
+        "name": "Kiara Pastel Sheer Set",
+        "category": "Sheer",
+        "price": 1799,
+        "fabric": "Organza Sheer",
+        "sizes": [
+            "5ft",
+            "7ft"
+        ],
+        "colors": [
+            "Lavender",
+            "Sky Blue",
+            "Mint"
+        ],
+        "description": "Soft pastel tones in a lightweight organza sheer. Perfect for creating a dreamy, light-filled atmosphere.",
+        "images": [
+            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Kids Room",
+        "isBestSeller": false
+    },
+    {
+        "id": 11,
+        "name": "Riva Metallic Print Blackout",
+        "category": "Blackout",
+        "price": 3299,
+        "fabric": "Jacquard",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Silver Grey",
+            "Champagne Gold"
+        ],
+        "description": "Contemporary luxury at its best. Features a subtle metallic jacquard weave for a sophisticated shimmer.",
+        "images": [
+            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 12,
+        "name": "Siya Handloom Cotton Drape",
+        "category": "Printed",
+        "price": 1999,
+        "fabric": "Handloom Cotton",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Indigo",
+            "Mustard"
+        ],
+        "description": "Authentic handloom texture with traditional block prints. A celebration of Indian craftsmanship.",
+        "images": [
+            "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false
+    },
+    {
+        "id": 13,
+        "name": "Maya Crushed Velvet Luxury",
+        "category": "Velvet",
+        "price": 3799,
+        "fabric": "Crushed Velvet",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Mauve",
+            "Slate"
+        ],
+        "description": "Interplay of light and shadow. The Maya series features a crushed texture that reflects light beautifully.",
+        "images": [
+            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Bedroom",
+        "isBestSeller": true
+    },
+    {
+        "id": 14,
+        "name": "Ojas Geometric Print Curtain",
+        "category": "Printed",
+        "price": 1699,
+        "fabric": "Polyester Cotton",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Teal",
+            "Ochre"
+        ],
+        "description": "Modern geometric patterns for the contemporary home. Durable, easy-to-maintain, and stylish.",
+        "images": [
+            "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Dining Area",
+        "isBestSeller": false
+    },
+    {
+        "id": 15,
+        "name": "Hasa Dual-Tone Sheer",
+        "category": "Sheer",
+        "price": 1999,
+        "fabric": "Voile",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Beige/Cream",
+            "Grey/White"
+        ],
+        "description": "A sophisticated dual-tone effect that changes depth with the light. Elegant and understated.",
+        "images": [
+            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 16,
+        "name": "Deva Silk Blend Opacity",
+        "category": "Blackout",
+        "price": 3899,
+        "fabric": "Silk Blend",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Deep Gold",
+            "Royal Blue"
+        ],
+        "description": "The pinnacle of opulence. Silk-like finish with heavy blackout lining for ultimate comfort.",
+        "images": [
+            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true
+    },
+    {
+        "id": 17,
+        "name": "Kavi Boho Tassel Curtain",
+        "category": "Printed",
+        "price": 2199,
+        "fabric": "Cotton Linen",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Natural/Black",
+            "Natural/Red"
+        ],
+        "description": "Bohemian vibes for the free-spirited home. Features hand-tied tassels for a playful touch.",
+        "images": [
+            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Kids Room",
+        "isBestSeller": false
+    },
+    {
+        "id": 18,
+        "name": "Nila Water-Resistant Sheer",
+        "category": "Sheer",
+        "price": 1599,
+        "fabric": "Synthetic Sheer",
+        "sizes": [
+            "5ft",
+            "7ft"
+        ],
+        "colors": [
+            "Ice Blue",
+            "Frosted White"
+        ],
+        "description": "Practical luxury. Ideal for bathrooms or kitchens, combining beauty with moisture resistance.",
+        "images": [
+            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Dining Area",
+        "isBestSeller": false
+    },
+    {
+        "id": 19,
+        "name": "Yara Floral Jacquard Panel",
+        "category": "Blackout",
+        "price": 3199,
+        "fabric": "Jacquard",
+        "sizes": [
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Blush Pink",
+            "Lavender"
+        ],
+        "description": "Subtle floral motifs woven directly into the fabric. Timeless, elegant, and durable.",
+        "images": [
+            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Bedroom",
+        "isBestSeller": true
+    },
+    {
+        "id": 20,
+        "name": "Zain Minimalist Linen Set",
+        "category": "Linen",
+        "price": 2399,
+        "fabric": "Premium Linen",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false
+    }
+]

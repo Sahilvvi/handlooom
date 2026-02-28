@@ -1,0 +1,142 @@
+.footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+}
+
+.footer-newsletter {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.newsletter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.newsletter-text h3 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.newsletter-text p {
+    color: var(--text-muted);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    max-width: 500px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-body);
+    outline: none;
+}
+
+.footer-main {
+    padding: 80px 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+}
+
+.footer-brand .logo h2 {
+    font-size: 2rem;
+    letter-spacing: 4px;
+}
+
+.footer-brand .logo span {
+    font-size: 0.8rem;
+    letter-spacing: 6px;
+}
+
+.brand-desc {
+    margin: 25px 0;
+    color: var(--text-muted);
+    max-width: 350px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links h4 {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.footer-links ul li a:hover {
+    color: var(--accent-gold);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    padding: 30px 0;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.footer-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.payment-methods img {
+    height: 24px;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: var(--transition-smooth);
+}
+
+.payment-methods img:hover {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+@media (max-width: 968px) {
+    .newsletter-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}

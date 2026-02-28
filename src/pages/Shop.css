@@ -1,0 +1,147 @@
+.shop-page {
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.shop-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.shop-header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.shop-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 60px;
+}
+
+.shop-sidebar {
+    position: sticky;
+    top: 180px;
+    height: fit-content;
+}
+
+.filter-group {
+    margin-bottom: 40px;
+}
+
+.filter-group h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 10px;
+}
+
+.filter-group ul li {
+    margin-bottom: 12px;
+}
+
+.filter-group button {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    text-align: left;
+    width: 100%;
+    padding: 5px 0;
+    transition: var(--transition-smooth);
+}
+
+.filter-group button:hover,
+.filter-group button.active {
+    color: var(--accent-sage);
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+.shop-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.results-count {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sort-wrapper label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.sort-wrapper select {
+    padding: 8px 15px;
+    border: 1px solid var(--border-light);
+    background-color: transparent;
+    font-family: var(--font-body);
+    outline: none;
+    cursor: pointer;
+}
+
+.shop-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 30px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.no-results h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.no-results p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1200px) {
+    .shop-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 968px) {
+    .shop-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+        display: none;
+        /* In a real app, this would be a mobile drawer */
+    }
+
+    .shop-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .shop-product-grid {
+        grid-template-columns: 1fr;
+    }
+}
