@@ -11,6 +11,26 @@
 
 .arrival-card {
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.new-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #EF6F31;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+
+.arrival-img {
+    position: relative;
 }
 
 .arrival-img {

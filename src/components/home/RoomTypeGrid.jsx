@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './RoomTypeGrid.css';
 
 const rooms = [
-    { title: 'Living Room', offer: 'UPTO 40% OFF', image: '/g1.png' },
-    { title: 'Bedroom', offer: 'UPTO 45% OFF', image: '/g2.png' },
-    { title: 'Kitchen', offer: 'UPTO 20% OFF', image: '/g1.png' },
-    { title: 'Dining Room', offer: 'UPTO 35% OFF', image: '/g2.png' }
+    { title: 'Living Room', offer: 'UPTO 40% OFF', image: '/g1.png', search: 'living' },
+    { title: 'Bedroom', offer: 'UPTO 45% OFF', image: '/g2.png', search: 'bedroom' },
+    { title: 'Kitchen', offer: 'UPTO 20% OFF', image: '/g1.png', search: 'kitchen' },
+    { title: 'Dining Room', offer: 'UPTO 35% OFF', image: '/g2.png', search: 'dining' }
 ];
 
 const RoomTypeGrid = () => {
@@ -18,7 +19,7 @@ const RoomTypeGrid = () => {
                 </div>
                 <div className="room-grid">
                     {rooms.map((item, index) => (
-                        <div key={index} className="room-card-alt">
+                        <Link key={index} to={`/shop?search=${encodeURIComponent(item.search)}`} className="room-card-alt">
                             <div className="room-img-alt">
                                 <img src={item.image} alt={item.title} />
                             </div>
@@ -26,7 +27,7 @@ const RoomTypeGrid = () => {
                                 <h3>{item.title}</h3>
                                 <p className="offer-badge">{item.offer}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

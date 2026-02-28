@@ -12,6 +12,9 @@
 .budget-card {
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .budget-img {

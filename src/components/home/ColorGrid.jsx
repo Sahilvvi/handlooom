@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ColorGrid.css';
 
 const colors = [
-    { title: 'White Curtains', offer: 'UPTO 39% OFF', image: '/q1.png' },
-    { title: 'Blue Curtains', offer: 'UPTO 30% OFF', image: '/q2.png' },
-    { title: 'Green Curtains', offer: 'UPTO 30% OFF', image: '/q3.png' },
-    { title: 'Grey Curtains', offer: 'UPTO 42% OFF', image: '/q1.png' },
-    { title: 'Black Curtains', offer: 'UPTO 43% OFF', image: '/q2.png' }
+    { title: 'White Curtains', offer: 'UPTO 39% OFF', image: '/q1.png', search: 'white' },
+    { title: 'Blue Curtains', offer: 'UPTO 30% OFF', image: '/q2.png', search: 'blue' },
+    { title: 'Green Curtains', offer: 'UPTO 30% OFF', image: '/q3.png', search: 'green' },
+    { title: 'Grey Curtains', offer: 'UPTO 42% OFF', image: '/q1.png', search: 'grey' },
+    { title: 'Black Curtains', offer: 'UPTO 43% OFF', image: '/q2.png', search: 'black' }
 ];
 
 const ColorGrid = () => {
@@ -19,7 +20,7 @@ const ColorGrid = () => {
                 </div>
                 <div className="color-grid">
                     {colors.map((item, index) => (
-                        <div key={index} className="color-card">
+                        <Link key={index} to={`/shop?search=${encodeURIComponent(item.search)}`} className="color-card">
                             <div className="color-img">
                                 <img src={item.image} alt={item.title} />
                             </div>
@@ -27,7 +28,7 @@ const ColorGrid = () => {
                                 <h3>{item.title}</h3>
                                 <p className="offer-badge">{item.offer}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

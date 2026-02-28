@@ -42,6 +42,26 @@
 
 .design-card {
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.view-all-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid #EF6F31;
+    color: #EF6F31;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+    background: #EF6F31;
+    color: white;
 }
 
 .design-img {

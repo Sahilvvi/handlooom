@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './MaterialGrid.css';
 
 const materials = [
-    { title: 'Cotton Curtains', offer: 'UPTO 40% OFF', image: '/h1.png' },
-    { title: 'Velvet Curtains', offer: 'UPTO 34% OFF', image: '/h2.png' },
-    { title: 'Polyester Curtains', offer: 'UPTO 45% OFF', image: '/h1.png' },
-    { title: 'Net Curtains', offer: 'UPTO 24% OFF', image: '/h2.png' }
+    { title: 'Cotton Curtains', offer: 'UPTO 40% OFF', image: '/h1.png', search: 'cotton' },
+    { title: 'Velvet Curtains', offer: 'UPTO 34% OFF', image: '/h2.png', search: 'Velvet' },
+    { title: 'Polyester Curtains', offer: 'UPTO 45% OFF', image: '/h1.png', search: 'polyester' },
+    { title: 'Net Curtains', offer: 'UPTO 24% OFF', image: '/h2.png', search: 'Sheer' }
 ];
 
 const MaterialGrid = () => {
@@ -18,15 +19,15 @@ const MaterialGrid = () => {
                 </div>
                 <div className="material-grid">
                     {materials.map((item, index) => (
-                        <div key={index} className="material-card">
+                        <Link key={index} to={`/shop?search=${encodeURIComponent(item.search)}`} className="material-card">
                             <div className="material-img">
                                 <img src={item.image} alt={item.title} />
                             </div>
                             <div className="material-info">
                                 <h3>{item.title}</h3>
-                                <p className="from-price">From ₹{item.price}</p>
+                                <p className="offer-badge">{item.offer}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

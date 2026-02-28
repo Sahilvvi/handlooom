@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './LatestDesigns.css';
+
+const allLocalImages = ['/d1.png', '/d2.png', '/s1.png', '/s2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png'];
+
+const getImg = (seed = '', offset = 0) => {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) % allLocalImages.length;
+    return allLocalImages[(hash + offset) % allLocalImages.length];
+};
 
 const LatestDesigns = () => {
     const [activeTab, setActiveTab] = useState('All Curtains');
@@ -12,13 +21,17 @@ const LatestDesigns = () => {
             try {
                 const response = await fetch('http://localhost:5000/api/products');
                 const data = await response.json();
-                setProducts(data.slice(0, 8)); // Just show 8 for the grid
+                setProducts(data.slice(0, 8));
             } catch (err) {
                 console.error("Error fetching products:", err);
             }
         };
         fetchProducts();
     }, []);
+
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    };
 
     return (
         <section className="latest-designs-section">
@@ -33,7 +46,7 @@ const LatestDesigns = () => {
                         <button
                             key={tab}
                             className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab)}
+                            onClick={() => handleTabClick(tab)}
                         >
                             {tab}
                         </button>
@@ -42,21 +55,25 @@ const LatestDesigns = () => {
 
                 <div className="designs-grid">
                     {products.slice(0, 4).map((product, index) => (
-                        <div key={product._id} className="design-card">
+                        <Link key={product._id} to={`/product/${product._id}`} className="design-card">
                             <div className="design-img">
-                                <img src={index % 2 === 0 ? '/d1.png' : '/d2.png'} alt={product.name} />
+                                <img src={getImg(product._id || product.name, index)} alt={product.name} />
                                 {product.isBestSeller && <span className="best-seller-tag">Best Seller</span>}
                             </div>
                             <div className="design-info">
                                 <h3>{product.name}</h3>
                                 <div className="price-row">
-                                    <span className="current-price">₹{product.price}</span>
-                                    <span className="old-price">₹{Math.round(product.price * 1.25)}</span>
+                                    <span className="current-price">₹{product.price?.toLocaleString('en-IN')}</span>
+                                    <span className="old-price">₹{Math.round(product.price * 1.25).toLocaleString('en-IN')}</span>
                                     <span className="discount-tag">21% OFF</span>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
+                </div>
+
+                <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                    <Link to="/shop" className="view-all-btn">View All Products →</Link>
                 </div>
             </div>
         </section>

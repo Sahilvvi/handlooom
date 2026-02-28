@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FiltrationGrid.css';
 
 const filters = [
-    { title: 'Room Darkening Curtains', offer: 'UPTO 24% OFF', image: '/s1.png' },
-    { title: 'Blackout Curtains', offer: 'UPTO 34% OFF', image: '/s2.png' },
-    { title: 'Sheer Curtains', offer: 'UPTO 40% OFF', image: '/s1.png' },
-    { title: 'Light Filtering Curtains', offer: 'UPTO 24% OFF', image: '/s2.png' }
+    { title: 'Room Darkening Curtains', offer: 'UPTO 24% OFF', image: '/s1.png', search: 'blackout' },
+    { title: 'Blackout Curtains', offer: 'UPTO 34% OFF', image: '/s2.png', search: 'Blackout' },
+    { title: 'Sheer Curtains', offer: 'UPTO 40% OFF', image: '/s1.png', search: 'Sheer' },
+    { title: 'Light Filtering Curtains', offer: 'UPTO 24% OFF', image: '/s2.png', search: 'sheer' }
 ];
 
 const FiltrationGrid = () => {
@@ -18,7 +19,7 @@ const FiltrationGrid = () => {
                 </div>
                 <div className="filtration-grid">
                     {filters.map((item, index) => (
-                        <div key={index} className="filtration-card">
+                        <Link key={index} to={`/shop?search=${encodeURIComponent(item.search)}`} className="filtration-card">
                             <div className="filtration-img">
                                 <img src={item.image} alt={item.title} />
                             </div>
@@ -26,7 +27,7 @@ const FiltrationGrid = () => {
                                 <h3>{item.title}</h3>
                                 <p className="offer-badge">{item.offer}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

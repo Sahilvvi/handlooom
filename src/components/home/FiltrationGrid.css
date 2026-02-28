@@ -31,6 +31,9 @@
 .filtration-card {
     cursor: pointer;
     transition: transform 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .filtration-card:hover {
