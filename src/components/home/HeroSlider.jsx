@@ -3,19 +3,19 @@ import './HeroSlider.css';
 
 const slides = [
     {
-        image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=2070',
         title: 'Transform Your Home Into Jannat',
         subtitle: 'Premium Handloom Curtains Crafted with Love',
         cta: 'Shop Now'
     },
     {
-        image: 'https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1932&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=2070',
         title: 'Light. Airy. Elegant.',
         subtitle: 'Sheer Curtains That Breathe Luxury',
         cta: 'Explore Collection'
     },
     {
-        image: 'https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1505691722718-4684375e7970?q=80&w=2070',
         title: 'Tradition Meets Modern Living',
         subtitle: 'Timeless Handloom Designs',
         cta: 'View Designs'

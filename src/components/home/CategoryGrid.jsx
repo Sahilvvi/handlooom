@@ -4,32 +4,32 @@ import './CategoryGrid.css';
 const categories = [
     {
         title: 'Blackout Curtains',
-        image: 'https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070',
         link: '/shop/blackout'
     },
     {
         title: 'Sheer Curtains',
-        image: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070',
         link: '/shop/sheer'
     },
     {
         title: 'Printed Curtains',
-        image: 'https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=2070',
         link: '/shop/printed'
     },
     {
         title: 'Velvet Curtains',
-        image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1577174881658-0f30ed549adc?q=80&w=2070',
         link: '/shop/velvet'
     },
     {
         title: 'Bedroom Curtains',
-        image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2069&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2070',
         link: '/shop/bedroom'
     },
     {
         title: 'Living Room Curtains',
-        image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000',
         link: '/shop/living-room'
     }
 ];
