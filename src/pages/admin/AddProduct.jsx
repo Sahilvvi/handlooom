@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../utils/api';
 import './AddProduct.css';
 
 const CATEGORIES = ['Sheer', 'Blackout', 'Printed', 'Linen', 'Velvet'];
@@ -50,7 +51,7 @@ const AddProduct = () => {
                 colors: formData.colors.split(',').map(s => s.trim()).filter(Boolean)
             };
 
-            const response = await fetch('http://localhost:5000/api/products', {
+            const response = await fetch(`${BASE_URL}/api/products`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

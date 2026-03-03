@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import BASE_URL from '../utils/api';
 import './Account.css';
 
 const Account = () => {
@@ -16,7 +17,7 @@ const Account = () => {
     useEffect(() => {
         if (!user) { navigate('/login'); return; }
         const token = localStorage.getItem('jannat_token');
-        fetch('http://localhost:5000/api/orders/my-orders', {
+        fetch(`${BASE_URL}/api/orders/my-orders`, {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(r => r.json()).then(data => {
             setOrders(Array.isArray(data) ? data : []);
@@ -28,7 +29,7 @@ const Account = () => {
         e.preventDefault();
         setSaving(true);
         const token = localStorage.getItem('jannat_token');
-        await fetch('http://localhost:5000/api/auth/profile', {
+        await fetch(`${BASE_URL}/api/auth/profile`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(profile)

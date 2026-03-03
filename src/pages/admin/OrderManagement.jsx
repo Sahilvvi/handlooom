@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../utils/api';
 import './OrderManagement.css';
 
 const statusOptions = ['placed', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'];
@@ -18,7 +19,7 @@ const OrderManagement = () => {
     const fetchOrders = async () => {
         try {
             const token = localStorage.getItem('jannat_token');
-            const res = await fetch('http://localhost:5000/api/orders', {
+            const res = await fetch(`${BASE_URL}/api/orders`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
@@ -34,7 +35,7 @@ const OrderManagement = () => {
         setUpdatingId(orderId);
         try {
             const token = localStorage.getItem('jannat_token');
-            await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+            await fetch(`${BASE_URL}/api/orders/${orderId}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ orderStatus: newStatus })

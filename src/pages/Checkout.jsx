@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import BASE_URL from '../utils/api';
 import './Checkout.css';
 
 const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
@@ -51,7 +52,7 @@ const Checkout = () => {
                     shippingCost: shipping,
                     totalAmount: total
                 };
-                const res = await fetch('http://localhost:5000/api/orders', {
+                const res = await fetch(`${BASE_URL}/api/orders`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

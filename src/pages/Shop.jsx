@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import ProductCard from '../components/product/ProductCard';
+import BASE_URL from '../utils/api';
 import './Shop.css';
 
 const Shop = () => {
@@ -26,7 +27,7 @@ const Shop = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/products');
+                const response = await fetch(`${BASE_URL}/api/products`);
                 const data = await response.json();
                 setAllProducts(data);
                 setProducts(data);

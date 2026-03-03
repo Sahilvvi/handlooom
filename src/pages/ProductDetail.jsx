@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/product/ProductCard';
+import BASE_URL from '../utils/api';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -38,8 +39,8 @@ const ProductDetail = () => {
         const fetchData = async () => {
             try {
                 const [productRes, allRes] = await Promise.all([
-                    fetch(`http://localhost:5000/api/products/${id}`),
-                    fetch(`http://localhost:5000/api/products`)
+                    fetch(`${BASE_URL}/api/products/${id}`),
+                    fetch(`${BASE_URL}/api/products`)
                 ]);
                 const productData = await productRes.json();
                 const allData = await allRes.json();

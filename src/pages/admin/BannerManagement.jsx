@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../utils/api';
 
 const BannerManagement = () => {
     const [banners, setBanners] = useState([]);
@@ -12,7 +13,7 @@ const BannerManagement = () => {
 
     const fetchBanners = () => {
         setLoading(true);
-        fetch('http://localhost:5000/api/banners/all', { headers })
+        fetch(`${BASE_URL}/api/banners/all`, { headers })
             .then(r => r.json()).then(data => { setBanners(Array.isArray(data) ? data : []); setLoading(false); })
             .catch(() => setLoading(false));
     };
@@ -22,19 +23,19 @@ const BannerManagement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); setSaving(true);
         try {
-            const res = await fetch('http://localhost:5000/api/banners', { method: 'POST', headers, body: JSON.stringify(form) });
+            const res = await fetch(`${BASE_URL}/api/banners`, { method: 'POST', headers, body: JSON.stringify(form) });
             if (res.ok) { setShowForm(false); setForm({ title: '', subtitle: '', image: '', link: '/shop', buttonText: 'Shop Now', bgColor: '#fff9f6', sortOrder: 0, isActive: true }); fetchBanners(); }
         } finally { setSaving(false); }
     };
 
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this banner?')) return;
-        await fetch(`http://localhost:5000/api/banners/${id}`, { method: 'DELETE', headers });
+        await fetch(`${BASE_URL}/api/banners/${id}`, { method: 'DELETE', headers });
         fetchBanners();
     };
 
     const toggleActive = async (b) => {
-        await fetch(`http://localhost:5000/api/banners/${b._id}`, { method: 'PUT', headers, body: JSON.stringify({ isActive: !b.isActive }) });
+        await fetch(`${BASE_URL}/api/banners/${b._id}`, { method: 'PUT', headers, body: JSON.stringify({ isActive: !b.isActive }) });
         fetchBanners();
     };
 

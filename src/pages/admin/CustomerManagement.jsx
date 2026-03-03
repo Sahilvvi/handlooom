@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../utils/api';
 
 const CustomerManagement = () => {
     const [customers, setCustomers] = useState([]);
@@ -7,7 +8,7 @@ const CustomerManagement = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('jannat_token');
-        fetch('http://localhost:5000/api/auth/users', {
+        fetch(`${BASE_URL}/api/auth/users`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(r => r.json())

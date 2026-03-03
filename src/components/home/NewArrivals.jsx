@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import BASE_URL from '../../utils/api';
 import './NewArrivals.css';
 
 const allLocalImages = ['/d1.png', '/d2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png'];
@@ -14,7 +15,7 @@ const NewArrivals = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/products')
+        fetch(`${BASE_URL}/api/products`)
             .then(r => r.json())
             .then(data => {
                 // Show the 2 most recently added products (last in array)

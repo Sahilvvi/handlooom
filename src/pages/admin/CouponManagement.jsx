@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../utils/api';
 
 const CouponManagement = () => {
     const [coupons, setCoupons] = useState([]);
@@ -15,7 +16,7 @@ const CouponManagement = () => {
 
     const fetch_coupons = () => {
         setLoading(true);
-        fetch('http://localhost:5000/api/coupons', { headers })
+        fetch(`${BASE_URL}/api/coupons`, { headers })
             .then(r => r.json()).then(data => { setCoupons(Array.isArray(data) ? data : []); setLoading(false); })
             .catch(() => setLoading(false));
     };
@@ -25,7 +26,7 @@ const CouponManagement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); setSaving(true); setError('');
         try {
-            const res = await fetch('http://localhost:5000/api/coupons', { method: 'POST', headers, body: JSON.stringify(form) });
+            const res = await fetch(`${BASE_URL}/api/coupons`, { method: 'POST', headers, body: JSON.stringify(form) });
             if (res.ok) { setShowForm(false); setForm({ code: '', discountType: 'percentage', discountValue: '', minOrderAmount: '', maxUses: 100, expiresAt: '', isActive: true }); fetch_coupons(); }
             else { const d = await res.json(); setError(d.message); }
         } catch { setError('Server error'); } finally { setSaving(false); }
@@ -33,12 +34,12 @@ const CouponManagement = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this coupon?')) return;
-        await fetch(`http://localhost:5000/api/coupons/${id}`, { method: 'DELETE', headers });
+        await fetch(`${BASE_URL}/api/coupons/${id}`, { method: 'DELETE', headers });
         fetch_coupons();
     };
 
     const toggleActive = async (coupon) => {
-        await fetch(`http://localhost:5000/api/coupons/${coupon._id}`, { method: 'PUT', headers, body: JSON.stringify({ isActive: !coupon.isActive }) });
+        await fetch(`${BASE_URL}/api/coupons/${coupon._id}`, { method: 'PUT', headers, body: JSON.stringify({ isActive: !coupon.isActive }) });
         fetch_coupons();
     };
 

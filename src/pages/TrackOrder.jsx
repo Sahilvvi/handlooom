@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BASE_URL from '../utils/api';
 import './TrackOrder.css';
 
 const STATUS_STEPS = ['Placed', 'Confirmed', 'Shipped', 'Delivered'];
@@ -17,7 +18,7 @@ const TrackOrder = () => {
         if (!orderNumber.trim()) { setError('Please enter your order number'); return; }
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/orders/track/${orderNumber.trim()}`);
+            const res = await fetch(`${BASE_URL}/api/orders/track/${orderNumber.trim()}`);
             if (!res.ok) { setError('Order not found. Please check your order number.'); setLoading(false); return; }
             const data = await res.json();
             setOrder(data);

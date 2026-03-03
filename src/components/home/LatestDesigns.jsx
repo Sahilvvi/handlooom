@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import BASE_URL from '../../utils/api';
 import './LatestDesigns.css';
 
 const allLocalImages = ['/d1.png', '/d2.png', '/s1.png', '/s2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png'];
@@ -19,7 +20,7 @@ const LatestDesigns = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/products');
+                const response = await fetch(`${BASE_URL}/api/products`);
                 const data = await response.json();
                 setProducts(data.slice(0, 8));
             } catch (err) {

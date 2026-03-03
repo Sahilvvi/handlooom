@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend } from 'chart.js';
+import BASE_URL from '../../utils/api';
 import './Dashboard.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
@@ -15,7 +16,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('jannat_token');
-        fetch('http://localhost:5000/api/orders/dashboard-stats', {
+        fetch(`${BASE_URL}/api/orders/dashboard-stats`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(r => r.json())

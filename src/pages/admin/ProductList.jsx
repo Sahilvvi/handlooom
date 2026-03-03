@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import BASE_URL from '../../utils/api';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -12,7 +13,7 @@ const ProductList = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/products');
+            const response = await fetch(`${BASE_URL}/api/products`);
             const data = await response.json();
             setProducts(data);
             setLoading(false);
@@ -26,7 +27,7 @@ const ProductList = () => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
                 const token = localStorage.getItem('jannat_token');
-                const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+                const response = await fetch(`${BASE_URL}/api/products/${id}`, {
                     method: 'DELETE',
                     headers: { 'Authorization': `Bearer ${token}` }
                 });

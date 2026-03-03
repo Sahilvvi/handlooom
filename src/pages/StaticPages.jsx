@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css'; // Reusing some container styles
+import BASE_URL from '../utils/api';
 
 const StaticPage = ({ title, children }) => (
     <div className="container" style={{ padding: '80px 20px', minHeight: '60vh' }}>
@@ -84,7 +85,7 @@ export const Contact = () => {
         setLoading(true);
         setStatus('');
         try {
-            const res = await fetch('http://localhost:5000/api/contact', {
+            const res = await fetch(`${BASE_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)

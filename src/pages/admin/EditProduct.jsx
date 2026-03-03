@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import BASE_URL from '../../utils/api';
 import './AddProduct.css';
 
 const EditProduct = () => {
@@ -15,7 +16,7 @@ const EditProduct = () => {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/products/${id}`)
+        fetch(`${BASE_URL}/api/products/${id}`)
             .then(r => r.json())
             .then(data => {
                 setFormData({
@@ -59,7 +60,7 @@ const EditProduct = () => {
             };
             delete productData.images; // Keep existing images in DB
 
-            const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+            const response = await fetch(`${BASE_URL}/api/products/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(productData)
