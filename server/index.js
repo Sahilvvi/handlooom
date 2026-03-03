@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(mongoSanitize());  // Prevent NoSQL injection
+// app.use(mongoSanitize());  // Prevent NoSQL injection
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,  // 15 minutes
