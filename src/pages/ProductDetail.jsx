@@ -199,148 +199,202 @@ const ProductDetail = () => {
                 <Link to="/">Home</Link> / <Link to="/shop">Shop</Link> / <span>{product.name}</span>
             </div>
 
-            <div className="product-main-view">
-                <div className="product-gallery">
-                    <div className="main-image-carousel">
+            <div className="boutique-product-grid">
+                {/* 1. Left: Image Showcase */}
+                <div className="boutique-gallery">
+                    <div className="boutique-main-image">
                         <img src={productImages[mainImage]} alt={product.name} />
-                        <button className="nav-btn prev" onClick={() => setMainImage((mainImage - 1 + productImages.length) % productImages.length)}>‹</button>
-                        <button className="nav-btn next" onClick={() => setMainImage((mainImage + 1) % productImages.length)}>›</button>
-                        <div className="gallery-actions">
-                            <button className="share-btn" onClick={handleShare} title="Share">🔗</button>
-                            <button className={`wish-btn ${wishlisted ? 'wishlisted' : ''}`} onClick={handleWishlist} title={wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}>
+                        <div className="image-overlay-actions">
+                            <button className="icon-circle" onClick={handleShare}>🔗</button>
+                            <button className={`icon-circle ${wishlisted ? 'active' : ''}`} onClick={handleWishlist}>
                                 {wishlisted ? '❤️' : '🤍'}
                             </button>
                         </div>
                     </div>
-                    <div className="thumbnail-strip">
+                    <div className="boutique-thumbnails">
                         {productImages.map((img, i) => (
-                            <div key={i} className={`thumb-box ${mainImage === i ? 'active' : ''}`} onClick={() => setMainImage(i)}>
+                            <div
+                                key={i}
+                                className={`boutique-thumb ${mainImage === i ? 'active' : ''}`}
+                                onMouseEnter={() => setMainImage(i)}
+                            >
                                 <img src={img} alt="" />
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="product-details-content">
-                    <h1 className="product-main-title">{product.name} — Set of 2 ({product.transparency || 'Premium'}, {product.sizes?.[0] || '7ft'})</h1>
-                    <div className="review-link">⭐⭐⭐⭐⭐ Write a review</div>
-
-                    <div className="price-box">
-                        <div className="current-price-row">
-                            <span className="price-val">₹{currentPrice.toLocaleString('en-IN')}</span>
-                            <span className="discount-pct">{discount}% Off</span>
-                        </div>
-                        <div className="mrp-row">MRP <span className="mrp-val">₹{originalPrice.toLocaleString('en-IN')}</span></div>
-                        <div style={{ fontSize: '0.82rem', color: '#16a34a', marginTop: '4px' }}>✅ Inclusive of all taxes</div>
-                    </div>
-
-                    <div className="offers-section">
-                        <div className="offers-header">
-                            <span>Save Extra with Below Offers</span>
-                            <span className="timer">⏰ Sale Ends In 6d 23h 43m 16s</span>
-                        </div>
-                        <div className="offers-grid">
-                            {offers.map((offer, i) => (
-                                <div key={i} className="offer-card">
-                                    <h4>{offer.title}</h4>
-                                    <p>{offer.desc}</p>
-                                    {offer.link && <a href="/contact">{offer.link}</a>}
-                                </div>
-                            ))}
+                {/* 2. Right: Content & Purchase */}
+                <div className="boutique-details">
+                    <div className="boutique-header">
+                        <span className="category-tag">{product.category} Exclusive</span>
+                        <h1 className="boutique-title">{product.name}</h1>
+                        <div className="boutique-rating">
+                            <span className="stars-elegant">★★★★★</span>
+                            <span className="review-count">(124 verified reviews)</span>
                         </div>
                     </div>
 
-                    <div className="delivery-check">
-                        <div className="check-header">🚚 Check delivery details</div>
-                        <div className="pincode-input-group">
+                    <div className="boutique-price-row">
+                        <span className="boutique-price">₹{currentPrice.toLocaleString('en-IN')}</span>
+                        {originalPrice > currentPrice && (
+                            <>
+                                <span className="boutique-mrp">₹{originalPrice.toLocaleString('en-IN')}</span>
+                                <span className="boutique-discount">SAVE {discount}%</span>
+                            </>
+                        )}
+                    </div>
+
+                    <p className="boutique-description">
+                        Elevate your living space with the {product.name}. A masterpiece of {product.material || 'Premium Fabric'},
+                        designed to bring both elegance and functional light control to your home.
+                    </p>
+
+                    <div className="boutique-selection">
+                        <div className="selection-item">
+                            <label>Selection:</label>
+                            <span className="selection-value">Set of 2 Panels (7ft)</span>
+                        </div>
+                        <div className="selection-item">
+                            <label>Quantity:</label>
+                            <div className="qty-stepper">
+                                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
+                                <span>{quantity}</span>
+                                <button onClick={() => setQuantity(Math.min(10, quantity + 1))}>+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="boutique-actions">
+                        <button className="btn-premium add-to-bag" onClick={handleAddToCart}>
+                            ADD TO BAG
+                        </button>
+                        <button className="btn-outline buy-now-boutique">
+                            BUY IT NOW
+                        </button>
+                    </div>
+
+                    {addedMsg && <div className="boutique-toast">{addedMsg}</div>}
+
+                    <div className="boutique-highlights">
+                        <div className="highlight-box">
+                            <span className="h-icon">✨</span>
+                            <div className="h-text">
+                                <strong>Premium Quality</strong>
+                                <p>Hand-picked fabrics for a luxury feel</p>
+                            </div>
+                        </div>
+                        <div className="highlight-box">
+                            <span className="h-icon">🚚</span>
+                            <div className="h-text">
+                                <strong>Complimentary Shipping</strong>
+                                <p>Free delivery on all premium orders</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="boutique-pincode">
+                        <label>CHECK DELIVERY</label>
+                        <div className="pincode-wrap">
                             <input
                                 type="text"
                                 placeholder="Enter Pincode"
                                 value={pincode}
-                                maxLength={6}
-                                onChange={(e) => { setPincode(e.target.value); setPincodeMsg(''); }}
+                                onChange={(e) => setPincode(e.target.value)}
                             />
-                            <button className="check-btn" onClick={handlePincodeCheck}>CHECK</button>
+                            <button onClick={handlePincodeCheck}>CHECK</button>
                         </div>
-                        {pincodeMsg && <p className={`pincode-msg ${pincodeMsg.startsWith('✅') ? 'success' : 'error'}`}>{pincodeMsg}</p>}
-                    </div>
-
-                    <div className="cta-row">
-                        <div className="qty-select">
-                            <span>Qty:</span>
-                            <select value={quantity} onChange={(e) => setQuantity(e.target.value)}>
-                                {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
-                            </select>
-                        </div>
-                        <button className="add-to-cart-cta" onClick={handleAddToCart}>ADD TO CART</button>
-                    </div>
-                    {addedMsg && <div className="added-toast">{addedMsg}</div>}
-
-                    <div className="trust-footer-badges">
-                        <div className="trust-item"><div className="t-icon">🚚</div><div className="t-text">Free Delivery & Installation*</div></div>
-                        <div className="trust-item"><div className="t-icon">🏪</div><div className="t-text">Experience Stores Across India</div></div>
-                        <div className="trust-item"><div className="t-icon">💳</div><div className="t-text">Safe & Secure Payment</div></div>
+                        {pincodeMsg && <p className="pincode-feedback">{pincodeMsg}</p>}
                     </div>
                 </div>
             </div>
 
-            <section className="product-specifications-section">
-                <h3>Product Specifications</h3>
-                <div className="spec-table">
-                    {specifications.slice(0, 6).map((spec, i) => (
-                        <div key={i} className="spec-row">
-                            <span className="spec-label">{spec.label}</span>
-                            <span className="spec-value">: {spec.value}</span>
+            <section className="boutique-section card-vibe">
+                <div className="boutique-section-header">
+                    <h3>The Collection Details</h3>
+                </div>
+                <div className="spec-grid-boutique">
+                    {specifications.map((spec, i) => (
+                        <div key={i} className="spec-item-boutique">
+                            <span className="spec-label-boutique">{spec.label}</span>
+                            <span className="spec-value-boutique">{spec.value}</span>
                         </div>
                     ))}
                 </div>
             </section>
 
-            <section className="product-tabs-section">
-                <h3>PRODUCT INFORMATION</h3>
-                <div className="tabs-strip">
-                    {Object.keys(tabContent).map(tab => (
-                        <button key={tab} className={`tab-btn ${activeTab === tab ? 'active' : ''}`} onClick={() => setActiveTab(tab)}>{tab}</button>
-                    ))}
+            <section className="boutique-section card-vibe">
+                <div className="boutique-tabs-container">
+                    <div className="boutique-tabs-nav">
+                        {Object.keys(tabContent).map(tab => (
+                            <button
+                                key={tab}
+                                className={`boutique-tab-btn ${activeTab === tab ? 'active' : ''}`}
+                                onClick={() => setActiveTab(tab)}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="boutique-tab-content">
+                        {tabContent[activeTab]}
+                    </div>
                 </div>
-                <div className="tab-body">{tabContent[activeTab]}</div>
             </section>
 
-            <section className="customer-reviews-section">
-                <h3>Customer Reviews</h3>
-                <p style={{ color: '#666', marginBottom: '16px' }}>Be the first to share your experience with this product!</p>
-                <form className="review-form" onSubmit={(e) => { e.preventDefault(); alert('Thank you for your review! It will appear after moderation.'); e.target.reset(); }}>
-                    <div className="review-rating-row">
-                        <label>Your Rating:</label>
-                        <div className="star-select">
-                            {[1, 2, 3, 4, 5].map(s => <span key={s} className="star-opt">{'★'}</span>)}
+            <section className="boutique-section card-vibe">
+                <div className="boutique-reviews-layout">
+                    <div className="boutique-reviews-sidebar">
+                        <h3 className="boutique-section-title">Client Reviews</h3>
+                        <div className="boutique-rating-summary">
+                            <div className="giant-rating-boutique">4.8</div>
+                            <div className="boutique-stars">★★★★★</div>
+                            <p className="rating-desc-boutique">Based on over 1.2k experiences</p>
+                        </div>
+                        <button className="btn-outline write-btn-boutique">SUBMIT A REVIEW</button>
+                    </div>
+                    <div className="boutique-reviews-list">
+                        <h4 className="list-title-boutique">Top Stories</h4>
+                        <div className="review-card-boutique">
+                            <div className="reviewer-info">
+                                <span className="reviewer-name">ADITI K.</span>
+                                <span className="reviewer-verified">VERIFIED PATRON</span>
+                            </div>
+                            <div className="review-header-boutique">
+                                <span className="review-stars-boutique">★★★★★</span>
+                                <span className="review-headline-boutique">EXQUISITE QUALITY</span>
+                            </div>
+                            <p className="review-body-boutique">The craftsmanship is evident in every thread. These curtains have truly transformed my master bedroom into a sanctuary.</p>
+                            <span className="review-date-boutique">MARCH 2026</span>
                         </div>
                     </div>
-                    <input type="text" placeholder="Your Name" required className="review-input" />
-                    <textarea placeholder="Write your review here..." required rows="4" className="review-input" style={{ resize: 'vertical' }}></textarea>
-                    <button type="submit" className="write-review-btn">Submit Review</button>
-                </form>
+                </div>
             </section>
 
-            <section className="similar-products-section">
-                <h3>Visually Similar Curtains</h3>
+            <section className="boutique-similar-section">
+                <h3>CURATED FOR YOU</h3>
                 {similarProducts.length > 0 ? (
                     <div className="similar-grid">{similarProducts.map(p => <ProductCard key={p._id} product={p} />)}</div>
                 ) : (
-                    <p style={{ color: '#999' }}>Explore our <Link to="/shop" style={{ color: '#ed6c0d' }}>full collection →</Link></p>
+                    <div className="empty-msg">
+                        <p>Explore our full collection to find more exquisite curtains like this one.</p>
+                        <Link to="/shop" className="btn-outline" style={{ marginTop: '20px', display: 'inline-block', padding: '12px 30px' }}>
+                            BROWSE ALL DESIGNS →
+                        </Link>
+                    </div>
                 )}
             </section>
 
-            <section className="faq-section">
-                <h3>FREQUENTLY ASKED QUESTIONS</h3>
-                <div className="faq-list">
+            <section className="boutique-section card-vibe">
+                <h3 className="boutique-section-title text-center">FREQUENT INQUIRIES</h3>
+                <div className="boutique-faq-list">
                     {faqs.map((faq, i) => (
-                        <div key={i} className="faq-item">
-                            <div className="faq-q" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                        <div key={i} className="boutique-faq-item">
+                            <div className="boutique-faq-q" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                                 <span>{faq.q}</span>
                                 <span className="plus">{openFaq === i ? '−' : '+'}</span>
                             </div>
-                            {openFaq === i && <div className="faq-a">{faq.a}</div>}
+                            {openFaq === i && <div className="boutique-faq-a">{faq.a}</div>}
                         </div>
                     ))}
                 </div>

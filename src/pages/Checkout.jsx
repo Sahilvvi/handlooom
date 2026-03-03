@@ -20,6 +20,7 @@ const Checkout = () => {
         address: '', city: '', state: '', pincode: '', phone: '',
         paymentMode: 'COD'
     });
+    const [error, setError] = useState('');
 
     const shipping = cartTotal >= 999 ? 0 : 99;
     const total = cartTotal + shipping;
@@ -29,14 +30,15 @@ const Checkout = () => {
         if (step === 1) { setStep(2); return; }
         if (step === 2) {
             setSubmitting(true);
+            setError('');
             try {
                 const token = localStorage.getItem('jannat_token');
                 const orderPayload = {
                     items: cartItems.map(item => ({
                         product: item._id,
                         name: item.name,
-                        price: item.price,
-                        quantity: item.quantity
+                        price: item.price || 0,
+                        quantity: item.quantity || 1
                     })),
                     shippingAddress: {
                         firstName: formData.firstName, lastName: formData.lastName,
@@ -62,8 +64,13 @@ const Checkout = () => {
                     setOrderNumber(data.orderNumber);
                     clearCart();
                     setStep(3);
+                } else {
+                    setError(data.message || 'Something went wrong. Please try again.');
                 }
-            } catch (err) { console.error(err); }
+            } catch (err) {
+                setError('Unable to connect to server. Please check your internet or try again later.');
+                console.error(err);
+            }
             setSubmitting(false);
         }
     };
@@ -127,9 +134,12 @@ const Checkout = () => {
                                     </div>
                                     <div className="payment-actions">
                                         <button type="button" className="btn-text" onClick={() => setStep(1)}>← Return to shipping</button>
-                                        <button type="submit" className="btn-primary" disabled={submitting}>
-                                            {submitting ? 'Placing Order...' : 'Place Order'}
-                                        </button>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                            {error && <p className="error-msg-boutique" style={{ color: '#CC0000', fontSize: '14px', textAlign: 'right', margin: 0 }}>{error}</p>}
+                                            <button type="submit" className="btn-primary" disabled={submitting}>
+                                                {submitting ? 'Placing Order...' : 'Place Order'}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )}

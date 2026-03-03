@@ -47,7 +47,10 @@ app.get('/', (req, res) => res.json({ message: 'Jannat Handloom API ✅', versio
 // ─── Global Error Handler ────────────────────────────
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack
+    });
 });
 
 // ─── MongoDB Connection & Start ──────────────────────
