@@ -72,13 +72,86 @@ export const OurStores = () => (
     </StaticPage>
 );
 
-export const Contact = () => (
-    <StaticPage title="Contact Us">
-        <p>We're here to help! Reach out to us for any queries or support.</p>
-        <div style={{ marginTop: '20px' }}>
-            <p><strong>Phone:</strong> +91 98765 43210 (Mon-Sat, 10 AM - 7 PM)</p>
-            <p><strong>Email:</strong> help@jannatloom.com</p>
-            <p><strong>Address:</strong> Jannat Handloom HQ, Sector 62, Noida, UP - 201301</p>
+export const Contact = () => {
+    const [form, setForm] = React.useState({ name: '', email: '', phone: '', subject: '', message: '' });
+    const [status, setStatus] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+
+    const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        setLoading(true);
+        setStatus('');
+        try {
+            const res = await fetch('http://localhost:5000/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setStatus('success');
+                setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+            } else {
+                setStatus(data.message || 'Something went wrong');
+            }
+        } catch {
+            setStatus('Server error. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="container" style={{ padding: '60px 20px', minHeight: '60vh' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
+                {/* Info */}
+                <div>
+                    <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: '#1e293b', marginBottom: '20px' }}>Contact Us</h1>
+                    <p style={{ color: '#64748b', marginBottom: '30px', lineHeight: 1.7 }}>We're here to help with any queries about orders, products, or returns. Reach out — we respond within 24 hours.</p>
+                    {[
+                        { icon: '📞', label: 'Phone', val: '+91 98765 43210 (Mon-Sat, 10AM-7PM)' },
+                        { icon: '📧', label: 'Email', val: 'help@jannatloom.com' },
+                        { icon: '📍', label: 'Address', val: 'Jannat Handloom HQ, Sector 62, Noida, UP - 201301' },
+                        { icon: '🕐', label: 'Hours', val: 'Monday to Saturday, 10AM - 7PM IST' }
+                    ].map(({ icon, label, val }) => (
+                        <div key={label} style={{ display: 'flex', gap: '14px', marginBottom: '20px' }}>
+                            <span style={{ fontSize: '1.5rem' }}>{icon}</span>
+                            <div><strong style={{ display: 'block', color: '#334155', fontSize: '0.85rem', marginBottom: '4px' }}>{label}</strong><span style={{ color: '#64748b' }}>{val}</span></div>
+                        </div>
+                    ))}
+                </div>
+                {/* Form */}
+                <div>
+                    {status === 'success' ? (
+                        <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '12px', padding: '40px', textAlign: 'center' }}>
+                            <div style={{ fontSize: '3rem', marginBottom: '12px' }}>✅</div>
+                            <h3 style={{ color: '#16a34a', marginBottom: '8px' }}>Message Sent!</h3>
+                            <p style={{ color: '#64748b' }}>We'll get back to you within 24 hours.</p>
+                            <button onClick={() => setStatus('')} style={{ marginTop: '20px', background: '#EF6F31', color: 'white', border: 'none', padding: '10px 24px', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>Send Another</button>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <h2 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#1e293b' }}>Send us a message</h2>
+                            {typeof status === 'string' && status && status !== 'success' && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 14px', borderRadius: '6px', fontSize: '0.9rem' }}>{status}</div>}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                {[['name', 'Full Name', 'text', true], ['email', 'Email Address', 'email', true],].map(([n, ph, t, req]) => (
+                                    <input key={n} name={n} value={form[n]} onChange={handleChange} placeholder={ph} type={t} required={req} style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
+                                ))}
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone (optional)" type="tel" style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
+                                <input name="subject" value={form.subject} onChange={handleChange} placeholder="Subject" style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
+                            </div>
+                            <textarea name="message" value={form.message} onChange={handleChange} placeholder="Your message..." required rows={5} style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', resize: 'vertical', outline: 'none' }} />
+                            <button type="submit" disabled={loading} style={{ background: '#EF6F31', color: 'white', border: 'none', padding: '14px', borderRadius: '6px', fontWeight: 600, fontSize: '1rem', cursor: 'pointer', transition: 'background 0.2s' }}>
+                                {loading ? 'Sending...' : '✉️ Send Message'}
+                            </button>
+                        </form>
+                    )}
+                </div>
+            </div>
         </div>
-    </StaticPage>
-);
+    );
+};

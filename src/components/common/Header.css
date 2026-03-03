@@ -208,6 +208,161 @@
     font-weight: 700;
 }
 
+/* --- Hamburger Button --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --- Mobile Overlay --- */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1050;
+    animation: fadeOverlay 0.2s ease;
+}
+
+@keyframes fadeOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- Mobile Drawer --- */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    background: white;
+    z-index: 1100;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-drawer.open {
+    transform: translateX(0);
+}
+
+.mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+    background: #1e293b;
+}
+
+.logo-text {
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.mobile-search {
+    display: flex;
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-search input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.mobile-search button {
+    background: #EF6F31;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.mobile-nav a {
+    padding: 14px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px solid #f7f7f7;
+    transition: background 0.2s;
+}
+
+.mobile-nav a:hover {
+    background: #fff9f6;
+    color: #EF6F31;
+}
+
+.mobile-nav-separator {
+    height: 8px;
+    background: #f7f7f7;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 4px 0;
+}
+
 @media (max-width: 1024px) {
     .header-center {
         display: none;
@@ -223,5 +378,23 @@
         justify-content: flex-start;
         white-space: nowrap;
         padding: 0 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .header-nav {
+        display: none;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    .header-right {
+        gap: 16px;
     }
 }

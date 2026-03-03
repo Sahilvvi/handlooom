@@ -404,3 +404,151 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* --- New Additions --- */
+.added-toast {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #16a34a;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.pincode-msg {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.pincode-msg.success {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.pincode-msg.error {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.wish-btn.wishlisted {
+    background: #fff0f0;
+    border-color: #f87171;
+}
+
+.faq-q {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #444;
+    padding: 4px 0;
+}
+
+.faq-q:hover {
+    color: #EF6F31;
+}
+
+.plus {
+    font-size: 1.3rem;
+    color: #EF6F31;
+    font-weight: 300;
+}
+
+.faq-a {
+    padding: 12px 0 4px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    animation: fadeIn 0.2s ease;
+}
+
+.tab-text-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.tab-text-content p {
+    padding: 10px 0;
+    border-bottom: 1px solid #f4f4f4;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.review-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.review-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.review-input:focus {
+    outline: none;
+    border-color: #EF6F31;
+}
+
+.review-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+}
+
+.star-select .star-opt {
+    font-size: 1.5rem;
+    color: #f59e0b;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .offers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trust-footer-badges {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .tabs-strip {
+        gap: 8px;
+    }
+
+    .tab-btn {
+        font-size: 0.78rem;
+        padding: 6px 10px;
+    }
+
+    .similar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+}

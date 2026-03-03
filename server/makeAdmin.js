@@ -1,28 +1,32 @@
+/**
+ * makeAdmin.js - Run this to promote a user to admin role
+ * 
+ * Usage:
+ *   node makeAdmin.js user@example.com
+ */
+require('dotenv').config();
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const dotenv = require('dotenv');
-dotenv.config({ path: './server/.env' });
+const User = require('./models/User');
 
-const MONGO = process.env.MONGODB_URI || 'mongodb://localhost:27017/jannat_handloom';
+const email = process.argv[2];
+if (!email) {
+    console.error('❌ Usage: node makeAdmin.js <email>');
+    process.exit(1);
+}
 
-const UserSchema = new mongoose.Schema({
-    firstName: String, lastName: String,
-    email: { type: String, unique: true },
-    password: String, role: { type: String, default: 'customer' }
-}, { timestamps: true });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jannat_handloom';
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema);
-
-mongoose.connect(MONGO).then(async () => {
-    const existing = await User.findOne({ email: 'admin@jannatloom.com' });
-    if (existing) { console.log('Admin already exists!'); process.exit(0); }
-    const hashed = await bcrypt.hash('admin123', 10);
-    await User.create({
-        firstName: 'Admin', lastName: 'Jannat',
-        email: 'admin@jannatloom.com',
-        password: hashed, role: 'admin'
-    });
-    console.log('Admin created successfully!');
-    console.log('Email: admin@jannatloom.com | Password: admin123');
+mongoose.connect(MONGODB_URI).then(async () => {
+    const user = await User.findOne({ email });
+    if (!user) {
+        console.error(`❌ No user found with email: ${email}`);
+        process.exit(1);
+    }
+    user.role = 'admin';
+    await user.save();
+    console.log(`✅ ${user.firstName} ${user.lastName} (${email}) is now an admin.`);
     process.exit(0);
-}).catch(e => { console.error('Error:', e.message); process.exit(1); });
+}).catch(err => {
+    console.error('❌ DB error:', err.message);
+    process.exit(1);
+});

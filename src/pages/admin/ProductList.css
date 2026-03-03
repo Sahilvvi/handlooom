@@ -48,3 +48,33 @@
     padding: 0;
     font-weight: 500;
 }
+
+/* New additions */
+.product-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0 4px;
+}
+
+.product-list-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.btn-add-product {
+    background: #EF6F31;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.btn-add-product:hover {
+    background: #d4591b;
+}

@@ -19,7 +19,13 @@ import ProductList from './pages/admin/ProductList';
 import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import OrderManagement from './pages/admin/OrderManagement';
+import CustomerManagement from './pages/admin/CustomerManagement';
+import CouponManagement from './pages/admin/CouponManagement';
+import BannerManagement from './pages/admin/BannerManagement';
 import { About, Shipping, Returns, Privacy, Faq, Career, Contact, OurStores } from './pages/StaticPages';
+import NotFound from './pages/NotFound';
+import Wishlist from './pages/Wishlist';
+import TrackOrder from './pages/TrackOrder';
 import './App.css';
 
 const Layout = ({ children }) => <><Header />{children}<Footer /></>;
@@ -51,6 +57,11 @@ function App() {
               <Route path="/career" element={<Layout><Career /></Layout>} />
               <Route path="/contact" element={<Layout><Contact /></Layout>} />
               <Route path="/stores" element={<Layout><OurStores /></Layout>} />
+              <Route path="/wishlist" element={<Layout><Wishlist /></Layout>} />
+              <Route path="/track-order" element={<Layout><TrackOrder /></Layout>} />
+
+              {/* 404 Catch-all */}
+              <Route path="*" element={<Layout><NotFound /></Layout>} />
 
               {/* Admin Routes */}
               <Route element={<ProtectedRoute adminOnly={true} />}>
@@ -60,6 +71,9 @@ function App() {
                   <Route path="products/new" element={<AddProduct />} />
                   <Route path="products/edit/:id" element={<EditProduct />} />
                   <Route path="orders" element={<OrderManagement />} />
+                  <Route path="customers" element={<CustomerManagement />} />
+                  <Route path="coupons" element={<CouponManagement />} />
+                  <Route path="banners" element={<BannerManagement />} />
                 </Route>
               </Route>
             </Routes>

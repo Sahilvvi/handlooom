@@ -43,6 +43,10 @@ const ProductList = () => {
 
     return (
         <div className="product-list-container">
+            <div className="product-list-header">
+                <h2>Products ({products.length})</h2>
+                <Link to="/admin/products/new" className="btn-add-product">+ Add New Product</Link>
+            </div>
             <table className="admin-table">
                 <thead>
                     <tr>

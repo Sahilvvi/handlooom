@@ -22,6 +22,9 @@ const AdminLayout = () => {
                     <Link to="/admin">📊 Dashboard</Link>
                     <Link to="/admin/products">📦 Manage Products</Link>
                     <Link to="/admin/orders">🛒 Orders</Link>
+                    <Link to="/admin/customers">👥 Customers</Link>
+                    <Link to="/admin/coupons">🏷️ Coupons</Link>
+                    <Link to="/admin/banners">🖼️ Banners</Link>
                     <Link to="/">🌐 View Website</Link>
                 </nav>
                 <div className="admin-user-info">

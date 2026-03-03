@@ -8,8 +8,10 @@ const EditProduct = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [formData, setFormData] = useState({
-        name: '', category: 'Sheer', price: '', fabric: '',
-        description: '', room: 'Living Room', stock: 50, colors: '', sizes: '', isBestSeller: false
+        name: '', category: 'Sheer', price: '', originalPrice: '', fabric: '',
+        material: 'Cotton', transparency: 'Semi-Sheer',
+        description: '', room: 'Living Room', stock: 50,
+        colors: '', sizes: '', isBestSeller: false, fastDelivery: false
     });
 
     useEffect(() => {
@@ -20,13 +22,17 @@ const EditProduct = () => {
                     name: data.name || '',
                     category: data.category || 'Sheer',
                     price: data.price || '',
+                    originalPrice: data.originalPrice || '',
                     fabric: data.fabric || '',
+                    material: data.material || 'Cotton',
+                    transparency: data.transparency || 'Semi-Sheer',
                     description: data.description || '',
                     room: data.room || 'Living Room',
                     stock: data.stock || 50,
                     colors: (data.colors || []).join(', '),
                     sizes: (data.sizes || []).join(', '),
-                    isBestSeller: data.isBestSeller || false
+                    isBestSeller: data.isBestSeller || false,
+                    fastDelivery: data.fastDelivery || false
                 });
                 setLoading(false);
             })
@@ -48,6 +54,7 @@ const EditProduct = () => {
                 colors: formData.colors.split(',').map(s => s.trim()).filter(Boolean),
                 sizes: formData.sizes.split(',').map(s => s.trim()).filter(Boolean),
                 price: Number(formData.price),
+                originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
                 stock: Number(formData.stock)
             };
             delete productData.images; // Keep existing images in DB
@@ -67,27 +74,42 @@ const EditProduct = () => {
     return (
         <div className="add-product-container">
             <form onSubmit={handleSubmit} className="admin-form">
+                <h2 className="form-title">Edit Product</h2>
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Product Name</label>
+                        <label>Product Name *</label>
                         <input name="name" value={formData.name} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
                         <label>Category</label>
                         <select name="category" value={formData.category} onChange={handleChange}>
                             <option>Sheer</option><option>Blackout</option><option>Printed</option>
-                            <option>Linen</option><option>Velvet</option><option>Cotton</option>
+                            <option>Linen</option><option>Velvet</option>
                         </select>
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Price (₹)</label>
+                        <label>Selling Price (₹) *</label>
                         <input type="number" name="price" value={formData.price} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
-                        <label>Stock</label>
-                        <input type="number" name="stock" value={formData.stock} onChange={handleChange} required />
+                        <label>Original / MRP (₹)</label>
+                        <input type="number" name="originalPrice" value={formData.originalPrice} onChange={handleChange} placeholder="e.g. 3799" />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Material</label>
+                        <select name="material" value={formData.material} onChange={handleChange}>
+                            {['Cotton', 'Polyester', 'Linen', 'Velvet', 'Silk Blend', 'Jute', 'Organza'].map(m => <option key={m}>{m}</option>)}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Transparency</label>
+                        <select name="transparency" value={formData.transparency} onChange={handleChange}>
+                            {['Sheer', 'Semi-Sheer', 'Opaque', 'Blackout'].map(t => <option key={t}>{t}</option>)}
+                        </select>
                     </div>
                 </div>
                 <div className="form-row">
@@ -100,20 +122,32 @@ const EditProduct = () => {
                         <input name="sizes" value={formData.sizes} onChange={handleChange} placeholder="5ft, 7ft, 9ft" />
                     </div>
                 </div>
-                <div className="form-group">
-                    <label>Fabric Details</label>
-                    <input name="fabric" value={formData.fabric} onChange={handleChange} placeholder="100% Pure Cotton" />
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Fabric Details</label>
+                        <input name="fabric" value={formData.fabric} onChange={handleChange} placeholder="100% Pure Cotton" />
+                    </div>
+                    <div className="form-group">
+                        <label>Stock</label>
+                        <input type="number" name="stock" value={formData.stock} onChange={handleChange} required />
+                    </div>
                 </div>
                 <div className="form-group">
-                    <label>Description</label>
-                    <textarea name="description" value={formData.description} onChange={handleChange} rows="5" required></textarea>
+                    <label>Description *</label>
+                    <textarea name="description" value={formData.description} onChange={handleChange} rows="4" required></textarea>
                 </div>
-                <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-                    <input type="checkbox" name="isBestSeller" id="isBestSeller" checked={formData.isBestSeller} onChange={handleChange} />
-                    <label htmlFor="isBestSeller" style={{ marginBottom: 0 }}>Mark as Best Seller</label>
+                <div className="form-row checkboxes-row">
+                    <label className="checkbox-label">
+                        <input type="checkbox" name="isBestSeller" checked={formData.isBestSeller} onChange={handleChange} />
+                        <span>⭐ Best Seller</span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" name="fastDelivery" checked={formData.fastDelivery} onChange={handleChange} />
+                        <span>⚡ Fast Delivery</span>
+                    </label>
                 </div>
                 <div className="form-actions">
-                    <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Saving...' : 'Update Product'}</button>
+                    <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Saving...' : '✅ Update Product'}</button>
                     <button type="button" onClick={() => navigate('/admin/products')} className="btn-secondary">Cancel</button>
                 </div>
             </form>

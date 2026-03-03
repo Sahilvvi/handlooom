@@ -61,12 +61,15 @@ const Shop = () => {
             const matchMaterial = filters.material.length === 0 || filters.material.includes(p.material);
             const matchColor = filters.color.length === 0 || (p.colors && p.colors.some(c => filters.color.includes(c)));
             const matchCategory = !urlCategory || p.category.toLowerCase() === urlCategory.toLowerCase();
+            const matchFastDelivery = !filters.fastDelivery || p.fastDelivery === true;
             const matchSearch = !searchTerm ||
                 p.name.toLowerCase().includes(searchTerm) ||
                 p.category.toLowerCase().includes(searchTerm) ||
-                (p.material && p.material.toLowerCase().includes(searchTerm));
+                (p.material && p.material.toLowerCase().includes(searchTerm)) ||
+                (p.fabric && p.fabric.toLowerCase().includes(searchTerm)) ||
+                (p.description && p.description.toLowerCase().includes(searchTerm));
 
-            return matchPrice && matchTransparency && matchMaterial && matchColor && matchCategory && matchSearch;
+            return matchPrice && matchTransparency && matchMaterial && matchColor && matchCategory && matchFastDelivery && matchSearch;
         });
 
         if (sort === 'Price: Low to High') {

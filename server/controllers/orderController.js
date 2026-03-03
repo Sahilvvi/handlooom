@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const User = require('../models/User');
+const { sendOrderConfirmation } = require('../services/emailService');
 
 // Create order (public - guests can order too)
 exports.createOrder = async (req, res) => {
@@ -17,6 +18,8 @@ exports.createOrder = async (req, res) => {
             paymentStatus: paymentMode === 'COD' ? 'pending' : 'paid'
         });
         await order.save();
+        // Send confirmation email (non-blocking)
+        sendOrderConfirmation(order);
         res.status(201).json(order);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -81,6 +84,31 @@ exports.getDashboardStats = async (req, res) => {
         const revenue = revenueAgg[0]?.total || 0;
         const recentOrders = await Order.find().sort({ createdAt: -1 }).limit(5).populate('user', 'firstName lastName');
         res.json({ totalProducts, totalOrders, totalUsers, revenue, recentOrders });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// Public: Track order by order number
+exports.trackOrder = async (req, res) => {
+    try {
+        const order = await Order.findOne({ orderNumber: req.params.orderNumber });
+        if (!order) return res.status(404).json({ message: 'Order not found' });
+        res.json({
+            orderNumber: order.orderNumber,
+            status: order.status || order.orderStatus || 'placed',
+            paymentMode: order.paymentMode,
+            totalAmount: order.totalAmount,
+            createdAt: order.createdAt,
+            items: order.items,
+            shippingAddress: {
+                firstName: order.shippingAddress?.firstName,
+                lastName: order.shippingAddress?.lastName,
+                address: order.shippingAddress?.address,
+                city: order.shippingAddress?.city,
+                pincode: order.shippingAddress?.pincode
+            }
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

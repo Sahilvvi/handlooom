@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
+
 
 const statusColors = { placed: '#f59e0b', confirmed: '#3b82f6', processing: '#8b5cf6', shipped: '#06b6d4', delivered: '#16a34a', cancelled: '#ef4444' };
 
@@ -53,6 +58,44 @@ const Dashboard = () => {
                 </div>
             </div>
 
+            {/* Charts Section */}
+            {stats && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+                    {/* Order Status Donut */}
+                    <div style={{ background: 'white', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                        <h3 style={{ marginBottom: 16, color: '#1e293b', fontSize: '1rem', fontWeight: 600 }}>Orders by Status</h3>
+                        <div style={{ maxWidth: 220, margin: '0 auto' }}>
+                            <Doughnut
+                                data={{
+                                    labels: ['Placed', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'],
+                                    datasets: [{
+                                        data: [
+                                            stats.recentOrders?.filter(o => o.orderStatus === 'placed').length || 0,
+                                            stats.recentOrders?.filter(o => o.orderStatus === 'confirmed').length || 0,
+                                            stats.recentOrders?.filter(o => o.orderStatus === 'shipped').length || 0,
+                                            stats.recentOrders?.filter(o => o.orderStatus === 'delivered').length || 0,
+                                            stats.recentOrders?.filter(o => o.orderStatus === 'cancelled').length || 0,
+                                        ], backgroundColor: ['#f59e0b', '#3b82f6', '#06b6d4', '#16a34a', '#ef4444'], borderWidth: 0
+                                    }]
+                                }}
+                                options={{ plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } } }, cutout: '65%' }}
+                            />
+                        </div>
+                    </div>
+                    {/* Revenue Bar */}
+                    <div style={{ background: 'white', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                        <h3 style={{ marginBottom: 16, color: '#1e293b', fontSize: '1rem', fontWeight: 600 }}>Recent Order Revenue (₹)</h3>
+                        <Bar
+                            data={{
+                                labels: (stats.recentOrders || []).map(o => o.orderNumber?.slice(-4) || '').reverse(),
+                                datasets: [{ label: 'Revenue', data: (stats.recentOrders || []).map(o => o.totalAmount || 0).reverse(), backgroundColor: 'rgba(239,111,49,0.75)', borderRadius: 4 }]
+                            }}
+                            options={{ plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } }, maintainAspectRatio: true }}
+                        />
+                    </div>
+                </div>
+            )}
+
             <div className="dashboard-bottom">
                 <div className="recent-orders-section">
                     <div className="section-header">
@@ -88,7 +131,7 @@ const Dashboard = () => {
                     <h3>Quick Actions</h3>
                     <Link to="/admin/products/new" className="quick-btn">+ Add New Product</Link>
                     <Link to="/admin/orders" className="quick-btn secondary">📋 Manage Orders</Link>
-                    <Link to="/admin/products" className="quick-btn secondary">📦 Product List</Link>
+                    <Link to="/admin/coupons" className="quick-btn secondary">🏷️ Coupons</Link>
                     <Link to="/" className="quick-btn secondary">🌐 View Website</Link>
                 </div>
             </div>

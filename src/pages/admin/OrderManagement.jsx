@@ -8,6 +8,9 @@ const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filterStatus, setFilterStatus] = useState('all');
+    const [search, setSearch] = useState('');
+    const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
     const [updatingId, setUpdatingId] = useState(null);
 
     useEffect(() => { fetchOrders(); }, []);
@@ -41,7 +44,18 @@ const OrderManagement = () => {
         setUpdatingId(null);
     };
 
-    const filtered = filterStatus === 'all' ? orders : orders.filter(o => o.orderStatus === filterStatus);
+    const filtered = orders.filter(o => {
+        const matchStatus = filterStatus === 'all' || o.orderStatus === filterStatus;
+        const q = search.toLowerCase();
+        const matchSearch = !q ||
+            o.orderNumber?.toLowerCase().includes(q) ||
+            `${o.shippingAddress?.firstName} ${o.shippingAddress?.lastName}`.toLowerCase().includes(q) ||
+            o.shippingAddress?.email?.toLowerCase().includes(q);
+        const orderDate = new Date(o.createdAt);
+        const matchFrom = !dateFrom || orderDate >= new Date(dateFrom);
+        const matchTo = !dateTo || orderDate <= new Date(dateTo + 'T23:59:59');
+        return matchStatus && matchSearch && matchFrom && matchTo;
+    });
 
     if (loading) return <div style={{ padding: '40px', color: '#666' }}>Loading orders...</div>;
 
@@ -52,6 +66,17 @@ const OrderManagement = () => {
                     <span>Total: <strong>{orders.length}</strong></span>
                     <span>Pending: <strong style={{ color: '#f59e0b' }}>{orders.filter(o => o.orderStatus === 'placed').length}</strong></span>
                     <span>Delivered: <strong style={{ color: '#16a34a' }}>{orders.filter(o => o.orderStatus === 'delivered').length}</strong></span>
+                </div>
+                <input
+                    type="text" placeholder="🔍 Search by order# or name..."
+                    value={search} onChange={e => setSearch(e.target.value)}
+                    style={{ padding: '8px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: '0.9rem', width: 220 }}
+                />
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={{ padding: '8px', border: '1px solid #e2e8f0', borderRadius: 6 }} />
+                    <span style={{ color: '#64748b' }}>to</span>
+                    <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={{ padding: '8px', border: '1px solid #e2e8f0', borderRadius: 6 }} />
+                    {(dateFrom || dateTo) && <button onClick={() => { setDateFrom(''); setDateTo(''); }} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 600 }}>✕</button>}
                 </div>
                 <select className="status-filter" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
                     <option value="all">All Orders</option>

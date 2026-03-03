@@ -1,10 +1,12 @@
 [
     {
-        "id": 1,
         "name": "Noor Linen Sheer Curtain",
         "category": "Sheer",
         "price": 1899,
+        "originalPrice": 3799,
         "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -15,20 +17,23 @@
             "Soft Beige",
             "White"
         ],
-        "description": "The Noor Linen Sheer Curtain brings a touch of ethereal beauty to any room. Crafted from high-quality linen, it filters sunlight beautifully while maintain privacy.",
+        "description": "The Noor Linen Sheer Curtain brings a touch of ethereal beauty to any room. Crafted from high-quality linen, it filters sunlight beautifully while maintaining privacy.",
         "images": [
-            "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1000&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?q=80&w=1000&auto=format&fit=crop"
+            "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": true,
+        "stock": 50
     },
     {
-        "id": 2,
         "name": "Meher Velvet Blackout Drape",
         "category": "Blackout",
         "price": 3499,
+        "originalPrice": 6999,
         "fabric": "Luxury Velvet",
+        "material": "Velvet",
+        "transparency": "Blackout",
         "sizes": [
             "7ft",
             "9ft"
@@ -40,18 +45,21 @@
         ],
         "description": "Experience peak luxury with our Meher Velvet series. Designed for complete light blockage and superior thermal insulation with a rich, soft texture.",
         "images": [
-            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Bedroom",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 30
     },
     {
-        "id": 3,
         "name": "Sahara Cotton Printed Curtain",
         "category": "Printed",
         "price": 2299,
+        "originalPrice": 4599,
         "fabric": "100% Cotton",
+        "material": "Cotton",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -67,14 +75,18 @@
             "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Dining Area",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 45
     },
     {
-        "id": 4,
         "name": "Aafreen Sage Blackout Panel",
         "category": "Blackout",
         "price": 2899,
+        "originalPrice": 5799,
         "fabric": "Polyester Blend",
+        "material": "Polyester",
+        "transparency": "Blackout",
         "sizes": [
             "7ft",
             "9ft"
@@ -87,14 +99,18 @@
             "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Bedroom",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 25
     },
     {
-        "id": 5,
         "name": "Gul Linen Textured Curtain",
         "category": "Linen",
         "price": 2499,
+        "originalPrice": 4999,
         "fabric": "Slub Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "7ft",
             "9ft"
@@ -109,14 +125,18 @@
             "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": true,
+        "stock": 40
     },
     {
-        "id": 6,
         "name": "Zoya Sheer Embroidered Drape",
         "category": "Sheer",
         "price": 2199,
+        "originalPrice": 4399,
         "fabric": "Faux Silk Sheer",
+        "material": "Silk Blend",
+        "transparency": "Sheer",
         "sizes": [
             "5ft",
             "7ft"
@@ -130,14 +150,18 @@
             "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Bedroom",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 60
     },
     {
-        "id": 7,
         "name": "Aria Velvet Gold Border Curtain",
         "category": "Velvet",
         "price": 3999,
+        "originalPrice": 7999,
         "fabric": "Heavy Velvet",
+        "material": "Velvet",
+        "transparency": "Opaque",
         "sizes": [
             "7ft",
             "9ft"
@@ -151,14 +175,18 @@
             "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 20
     },
     {
-        "id": 8,
         "name": "Tara Cotton Striped Panel",
         "category": "Printed",
         "price": 1499,
+        "originalPrice": 2999,
         "fabric": "Cotton Canvas",
+        "material": "Cotton",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -173,14 +201,18 @@
             "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Kids Room",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 80
     },
     {
-        "id": 9,
         "name": "Ira Textured Jute Blend",
         "category": "Linen",
         "price": 2699,
+        "originalPrice": 5399,
         "fabric": "Jute-Cotton Blend",
+        "material": "Jute",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "7ft",
             "9ft"
@@ -194,14 +226,18 @@
             "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Dining Area",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": true,
+        "stock": 35
     },
     {
-        "id": 10,
         "name": "Kiara Pastel Sheer Set",
         "category": "Sheer",
         "price": 1799,
+        "originalPrice": 3599,
         "fabric": "Organza Sheer",
+        "material": "Polyester",
+        "transparency": "Sheer",
         "sizes": [
             "5ft",
             "7ft"
@@ -216,14 +252,18 @@
             "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Kids Room",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 55
     },
     {
-        "id": 11,
         "name": "Riva Metallic Print Blackout",
         "category": "Blackout",
         "price": 3299,
+        "originalPrice": 6599,
         "fabric": "Jacquard",
+        "material": "Polyester",
+        "transparency": "Blackout",
         "sizes": [
             "7ft",
             "9ft"
@@ -237,14 +277,18 @@
             "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 22
     },
     {
-        "id": 12,
         "name": "Siya Handloom Cotton Drape",
         "category": "Printed",
         "price": 1999,
+        "originalPrice": 3999,
         "fabric": "Handloom Cotton",
+        "material": "Cotton",
+        "transparency": "Opaque",
         "sizes": [
             "5ft",
             "7ft",
@@ -259,14 +303,18 @@
             "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 70
     },
     {
-        "id": 13,
         "name": "Maya Crushed Velvet Luxury",
         "category": "Velvet",
         "price": 3799,
+        "originalPrice": 7599,
         "fabric": "Crushed Velvet",
+        "material": "Velvet",
+        "transparency": "Opaque",
         "sizes": [
             "7ft",
             "9ft"
@@ -280,14 +328,18 @@
             "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Bedroom",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 18
     },
     {
-        "id": 14,
         "name": "Ojas Geometric Print Curtain",
         "category": "Printed",
         "price": 1699,
+        "originalPrice": 3399,
         "fabric": "Polyester Cotton",
+        "material": "Polyester",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -302,14 +354,18 @@
             "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Dining Area",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 65
     },
     {
-        "id": 15,
         "name": "Hasa Dual-Tone Sheer",
         "category": "Sheer",
         "price": 1999,
+        "originalPrice": 3999,
         "fabric": "Voile",
+        "material": "Cotton",
+        "transparency": "Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -324,14 +380,18 @@
             "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": true,
+        "stock": 42
     },
     {
-        "id": 16,
         "name": "Deva Silk Blend Opacity",
         "category": "Blackout",
         "price": 3899,
+        "originalPrice": 7799,
         "fabric": "Silk Blend",
+        "material": "Silk Blend",
+        "transparency": "Blackout",
         "sizes": [
             "7ft",
             "9ft"
@@ -345,14 +405,18 @@
             "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 15
     },
     {
-        "id": 17,
         "name": "Kavi Boho Tassel Curtain",
         "category": "Printed",
         "price": 2199,
+        "originalPrice": 4399,
         "fabric": "Cotton Linen",
+        "material": "Cotton",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -367,14 +431,18 @@
             "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Kids Room",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 50
     },
     {
-        "id": 18,
         "name": "Nila Water-Resistant Sheer",
         "category": "Sheer",
         "price": 1599,
+        "originalPrice": 3199,
         "fabric": "Synthetic Sheer",
+        "material": "Polyester",
+        "transparency": "Sheer",
         "sizes": [
             "5ft",
             "7ft"
@@ -388,14 +456,18 @@
             "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Dining Area",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 55
     },
     {
-        "id": 19,
         "name": "Yara Floral Jacquard Panel",
         "category": "Blackout",
         "price": 3199,
+        "originalPrice": 6399,
         "fabric": "Jacquard",
+        "material": "Polyester",
+        "transparency": "Blackout",
         "sizes": [
             "7ft",
             "9ft"
@@ -409,14 +481,18 @@
             "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Bedroom",
-        "isBestSeller": true
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 28
     },
     {
-        "id": 20,
         "name": "Zain Minimalist Linen Set",
         "category": "Linen",
         "price": 2399,
+        "originalPrice": 4799,
         "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
         "sizes": [
             "5ft",
             "7ft",
@@ -431,6 +507,8 @@
             "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
         ],
         "room": "Living Room",
-        "isBestSeller": false
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 48
     }
 ]
