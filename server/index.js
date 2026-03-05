@@ -76,24 +76,7 @@ app.use((err, req, res, next) => {
 });
 
 // ─── MongoDB Connection (cached for serverless) ───────
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:Booyah%40123@cluster0.ldkdlzb.mongodb.net/Cluster0?appName=Cluster0';
-
-let isConnected = false;
-
-const connectDB = async () => {
-    if (isConnected) return;
-    try {
-        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
-        isConnected = true;
-        console.log('✅ Connected to MongoDB');
-    } catch (err) {
-        console.error('❌ MongoDB connection error:', err);
-        throw err;
-    }
-};
-
-// Connect immediately on startup (for local mostly)
-connectDB().catch(console.error);
+const connectDB = require('./config/db');
 
 // Ensure DB is connected before handling any requests
 app.use(async (req, res, next) => {
@@ -101,6 +84,7 @@ app.use(async (req, res, next) => {
         await connectDB();
         next();
     } catch (err) {
+        console.error('❌ Database connection error:', err);
         res.status(503).json({ message: 'Database connecting error', error: err.message });
     }
 });
