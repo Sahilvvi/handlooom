@@ -72,6 +72,49 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+// Admin: create user
+exports.createUser = async (req, res) => {
+    try {
+        const { firstName, lastName, email, password, role } = req.body;
+        const existingUser = await User.findOne({ email });
+        if (existingUser) return res.status(400).json({ message: 'User already exists' });
+
+        const newUserRole = role === 'admin' ? 'admin' : 'customer';
+        const user = new User({ firstName, lastName, email, password, role: newUserRole });
+        await user.save();
+
+        const userObj = { id: user._id, firstName, lastName, email, role: user.role };
+        res.status(201).json({ message: 'User created successfully', user: userObj });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// Admin: update user role
+exports.updateUserRole = async (req, res) => {
+    try {
+        const { role } = req.body;
+        if (!role || !['admin', 'customer'].includes(role)) {
+            return res.status(400).json({ message: 'Invalid role' });
+        }
+
+        // Don't allow an admin to demote themselves
+        if (req.user.id === req.params.id && role === 'customer') {
+            return res.status(400).json({ message: 'Cannot demote your own account' });
+        }
+
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        user.role = role;
+        await user.save();
+
+        res.json({ message: 'User role updated', user: { id: user._id, role: user.role, firstName: user.firstName, email: user.email } });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 // Change password (logged-in user)
 exports.changePassword = async (req, res) => {
     try {

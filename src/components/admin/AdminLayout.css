@@ -13,15 +13,16 @@
 }
 
 .admin-sidebar {
-    width: 260px;
-    background-color: var(--admin-sidebar);
+    width: 270px;
+    background: linear-gradient(180deg, var(--admin-sidebar) 0%, #0f172a 100%);
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 30px;
+    padding: 30px 20px;
     position: sticky;
     top: 0;
     height: 100vh;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
 }
 
 .admin-logo h1 {
@@ -48,15 +49,21 @@
     color: #94a3b8;
     text-decoration: none;
     font-size: 0.95rem;
-    padding: 12px 15px;
-    border-radius: 6px;
-    transition: all 0.3s;
+    padding: 14px 18px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
 }
 
 .admin-nav a:hover,
 .admin-nav a.active {
     color: white;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .admin-user-info {
@@ -83,26 +90,34 @@
 
 .admin-main {
     flex: 1;
-    padding: 40px;
-    max-width: 1200px;
+    padding: 40px 50px;
+    max-width: 1400px;
     margin: 0 auto;
+    background: #f1f5f9;
 }
 
 .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .admin-header h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: #1e293b;
+    font-weight: 700;
+    margin: 0;
 }
 
 .admin-content {
     background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    min-height: calc(100vh - 200px);
 }

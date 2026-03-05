@@ -82,13 +82,28 @@ let isConnected = false;
 
 const connectDB = async () => {
     if (isConnected) return;
-    await mongoose.connect(MONGODB_URI);
-    isConnected = true;
-    console.log('✅ Connected to MongoDB');
+    try {
+        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+        isConnected = true;
+        console.log('✅ Connected to MongoDB');
+    } catch (err) {
+        console.error('❌ MongoDB connection error:', err);
+        throw err;
+    }
 };
 
-// Connect immediately on startup
-connectDB().catch(err => console.error('❌ MongoDB connection error:', err));
+// Connect immediately on startup (for local mostly)
+connectDB().catch(console.error);
+
+// Ensure DB is connected before handling any requests
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(503).json({ message: 'Database connecting error', error: err.message });
+    }
+});
 
 // ─── Start server locally (not on Vercel) ────────────
 if (!process.env.VERCEL) {
