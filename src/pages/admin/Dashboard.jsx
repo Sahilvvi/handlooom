@@ -61,11 +61,11 @@ const Dashboard = () => {
 
             {/* Charts Section */}
             {stats && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+                <div className="dashboard-charts">
                     {/* Order Status Donut */}
-                    <div style={{ background: 'white', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-                        <h3 style={{ marginBottom: 16, color: '#1e293b', fontSize: '1rem', fontWeight: 600 }}>Orders by Status</h3>
-                        <div style={{ maxWidth: 220, margin: '0 auto' }}>
+                    <div className="chart-container donut">
+                        <h3 className="chart-title">Orders by Status</h3>
+                        <div className="donut-wrapper">
                             <Doughnut
                                 data={{
                                     labels: ['Placed', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'],
@@ -79,20 +79,30 @@ const Dashboard = () => {
                                         ], backgroundColor: ['#f59e0b', '#3b82f6', '#06b6d4', '#16a34a', '#ef4444'], borderWidth: 0
                                     }]
                                 }}
-                                options={{ plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } } }, cutout: '65%' }}
+                                options={{
+                                    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 10 } } },
+                                    cutout: '65%',
+                                    maintainAspectRatio: false
+                                }}
                             />
                         </div>
                     </div>
                     {/* Revenue Bar */}
-                    <div style={{ background: 'white', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-                        <h3 style={{ marginBottom: 16, color: '#1e293b', fontSize: '1rem', fontWeight: 600 }}>Recent Order Revenue (₹)</h3>
-                        <Bar
-                            data={{
-                                labels: (stats.recentOrders || []).map(o => o.orderNumber?.slice(-4) || '').reverse(),
-                                datasets: [{ label: 'Revenue', data: (stats.recentOrders || []).map(o => o.totalAmount || 0).reverse(), backgroundColor: 'rgba(239,111,49,0.75)', borderRadius: 4 }]
-                            }}
-                            options={{ plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } }, maintainAspectRatio: true }}
-                        />
+                    <div className="chart-container bar">
+                        <h3 className="chart-title">Recent Order Revenue (₹)</h3>
+                        <div className="bar-wrapper">
+                            <Bar
+                                data={{
+                                    labels: (stats.recentOrders || []).map(o => o.orderNumber?.slice(-4) || '').reverse(),
+                                    datasets: [{ label: 'Revenue', data: (stats.recentOrders || []).map(o => o.totalAmount || 0).reverse(), backgroundColor: 'rgba(239,111,49,0.75)', borderRadius: 4 }]
+                                }}
+                                options={{
+                                    plugins: { legend: { display: false } },
+                                    scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } },
+                                    maintainAspectRatio: false
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             )}
@@ -106,25 +116,27 @@ const Dashboard = () => {
                     {(!stats?.recentOrders || stats.recentOrders.length === 0) ? (
                         <p style={{ color: '#94a3b8', padding: '20px 0' }}>No orders yet.</p>
                     ) : (
-                        <table className="mini-orders-table">
-                            <thead>
-                                <tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Status</th></tr>
-                            </thead>
-                            <tbody>
-                                {stats.recentOrders.map(order => (
-                                    <tr key={order._id}>
-                                        <td>{order.orderNumber}</td>
-                                        <td>{order.shippingAddress?.firstName} {order.shippingAddress?.lastName}</td>
-                                        <td>₹{order.totalAmount?.toLocaleString('en-IN')}</td>
-                                        <td>
-                                            <span className="mini-status" style={{ background: statusColors[order.orderStatus] + '22', color: statusColors[order.orderStatus] }}>
-                                                {order.orderStatus}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className="orders-table-scroll">
+                            <table className="mini-orders-table">
+                                <thead>
+                                    <tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Status</th></tr>
+                                </thead>
+                                <tbody>
+                                    {stats.recentOrders.map(order => (
+                                        <tr key={order._id}>
+                                            <td>{order.orderNumber}</td>
+                                            <td>{order.shippingAddress?.firstName} {order.shippingAddress?.lastName}</td>
+                                            <td>₹{order.totalAmount?.toLocaleString('en-IN')}</td>
+                                            <td>
+                                                <span className="mini-status" style={{ background: statusColors[order.orderStatus] + '22', color: statusColors[order.orderStatus] }}>
+                                                    {order.orderStatus}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
                 </div>
 

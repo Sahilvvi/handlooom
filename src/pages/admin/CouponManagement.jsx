@@ -47,7 +47,7 @@ const CouponManagement = () => {
 
     return (
         <div style={pad}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
                 <h2 style={h2}>Coupons ({coupons.length})</h2>
                 <button onClick={() => setShowForm(!showForm)} style={btnAdd}>{showForm ? 'Cancel' : '+ Create Coupon'}</button>
             </div>
@@ -56,7 +56,7 @@ const CouponManagement = () => {
                 <form onSubmit={handleSubmit} style={{ background: '#f8fafc', padding: 24, borderRadius: 10, marginBottom: 24, border: '1px solid #e2e8f0' }}>
                     <h3 style={{ marginBottom: 16, color: '#1e293b' }}>New Coupon</h3>
                     {error && <p style={{ color: '#dc2626', marginBottom: 12 }}>{error}</p>}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
                         {[['code', 'Code (e.g. SAVE20)', 'text'], ['discountValue', 'Discount Value', 'number'], ['minOrderAmount', 'Min Order (₹)', 'number']].map(([n, ph, t]) => (
                             <div key={n}><label style={lbl}>{ph}</label><input style={inp} name={n} value={form[n]} placeholder={ph} type={t} onChange={e => setForm({ ...form, [n]: e.target.value })} required={n !== 'minOrderAmount'} /></div>
                         ))}
@@ -64,34 +64,36 @@ const CouponManagement = () => {
                         <div><label style={lbl}>Max Uses</label><input style={inp} type="number" value={form.maxUses} onChange={e => setForm({ ...form, maxUses: e.target.value })} /></div>
                         <div><label style={lbl}>Expires At</label><input style={inp} type="date" value={form.expiresAt} onChange={e => setForm({ ...form, expiresAt: e.target.value })} /></div>
                     </div>
-                    <button type="submit" style={{ ...btnAdd, marginTop: 16 }} disabled={saving}>{saving ? 'Saving...' : '✅ Save Coupon'}</button>
+                    <button type="submit" style={{ ...btnAdd, marginTop: 16, width: '100%' }} disabled={saving}>{saving ? 'Saving...' : '✅ Save Coupon'}</button>
                 </form>
             )}
 
             {coupons.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: 60, color: '#94a3b8' }}>No coupons yet. Create your first coupon above.</div>
             ) : (
-                <table style={tbl}>
-                    <thead><tr style={thead}>
-                        {['Code', 'Type', 'Discount', 'Min Order', 'Uses', 'Expires', 'Status', 'Actions'].map(h => (
-                            <th key={h} style={th}>{h}</th>
-                        ))}
-                    </tr></thead>
-                    <tbody>
-                        {coupons.map(c => (
-                            <tr key={c._id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                <td style={td}><strong style={{ fontFamily: 'monospace', color: '#EF6F31' }}>{c.code}</strong></td>
-                                <td style={td}>{c.discountType}</td>
-                                <td style={td}>{c.discountType === 'percentage' ? `${c.discountValue}%` : `₹${c.discountValue}`}</td>
-                                <td style={td}>₹{c.minOrderAmount || 0}</td>
-                                <td style={td}>{c.usedCount}/{c.maxUses}</td>
-                                <td style={td}>{c.expiresAt ? new Date(c.expiresAt).toLocaleDateString('en-IN') : '—'}</td>
-                                <td style={td}><span onClick={() => toggleActive(c)} style={{ cursor: 'pointer', padding: '4px 10px', borderRadius: 20, fontSize: '0.8rem', fontWeight: 600, background: c.isActive ? '#f0fdf4' : '#fef2f2', color: c.isActive ? '#16a34a' : '#dc2626' }}>{c.isActive ? 'Active' : 'Inactive'}</span></td>
-                                <td style={td}><button onClick={() => handleDelete(c._id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 600 }}>Delete</button></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div style={{ overflowX: 'auto', background: 'white', borderRadius: 8, boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+                    <table style={{ ...tbl, minWidth: 800, boxShadow: 'none' }}>
+                        <thead><tr style={thead}>
+                            {['Code', 'Type', 'Discount', 'Min Order', 'Uses', 'Expires', 'Status', 'Actions'].map(h => (
+                                <th key={h} style={th}>{h}</th>
+                            ))}
+                        </tr></thead>
+                        <tbody>
+                            {coupons.map(c => (
+                                <tr key={c._id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                    <td style={td}><strong style={{ fontFamily: 'monospace', color: '#EF6F31' }}>{c.code}</strong></td>
+                                    <td style={td}>{c.discountType}</td>
+                                    <td style={td}>{c.discountType === 'percentage' ? `${c.discountValue}%` : `₹${c.discountValue}`}</td>
+                                    <td style={td}>₹{c.minOrderAmount || 0}</td>
+                                    <td style={td}>{c.usedCount}/{c.maxUses}</td>
+                                    <td style={td}>{c.expiresAt ? new Date(c.expiresAt).toLocaleDateString('en-IN') : '—'}</td>
+                                    <td style={td}><span onClick={() => toggleActive(c)} style={{ cursor: 'pointer', padding: '4px 10px', borderRadius: 20, fontSize: '0.8rem', fontWeight: 600, background: c.isActive ? '#f0fdf4' : '#fef2f2', color: c.isActive ? '#16a34a' : '#dc2626' }}>{c.isActive ? 'Active' : 'Inactive'}</span></td>
+                                    <td style={td}><button onClick={() => handleDelete(c._id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 600 }}>Delete</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

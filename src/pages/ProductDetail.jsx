@@ -46,11 +46,19 @@ const ProductDetail = () => {
                 const allData = await allRes.json();
 
                 if (productData) {
-                    productData.images = getLocalImages(productData._id || productData.name || id);
+                    // Use real images if they exist, else fallback to mock ones
+                    if (!productData.images || productData.images.length === 0) {
+                        productData.images = getLocalImages(productData._id || productData.name || id);
+                    } else {
+                        // Ensure images are corrected with BASE_URL
+                        productData.images = productData.images.map(img => img.startsWith('http') ? img : `${BASE_URL}${img}`);
+                    }
                 }
 
                 setProduct(productData);
-                const similar = (allData || []).filter(p => p.category && productData.category && p.category === productData.category && p._id !== id);
+                const similar = (allData || [])
+                    .filter(p => p.isActive !== false) // ONLY active
+                    .filter(p => p.category && productData.category && p.category === productData.category && p._id !== id);
                 setSimilarProducts(similar.slice(0, 4));
                 setLoading(false);
 

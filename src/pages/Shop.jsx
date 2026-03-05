@@ -57,6 +57,7 @@ const Shop = () => {
         const searchTerm = queryParams.get('search')?.toLowerCase() || '';
 
         let filtered = allProducts.filter(p => {
+            const matchActive = p.isActive !== false;
             const matchPrice = p.price >= appliedPriceRange[0] && p.price <= appliedPriceRange[1];
             const matchTransparency = filters.transparency.length === 0 || filters.transparency.includes(p.transparency);
             const matchMaterial = filters.material.length === 0 || filters.material.includes(p.material);
@@ -70,7 +71,7 @@ const Shop = () => {
                 (p.fabric && p.fabric.toLowerCase().includes(searchTerm)) ||
                 (p.description && p.description.toLowerCase().includes(searchTerm));
 
-            return matchPrice && matchTransparency && matchMaterial && matchColor && matchCategory && matchFastDelivery && matchSearch;
+            return matchActive && matchPrice && matchTransparency && matchMaterial && matchColor && matchCategory && matchFastDelivery && matchSearch;
         });
 
         if (sort === 'Price: Low to High') {

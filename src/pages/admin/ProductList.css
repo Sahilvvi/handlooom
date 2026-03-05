@@ -78,3 +78,59 @@
 .btn-add-product:hover {
     background: #d4591b;
 }
+
+.product-list-container {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .product-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .btn-add-product {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .admin-table {
+        min-width: 600px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.status-badge.active {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bcf0da;
+}
+
+.status-badge.inactive {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.status-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}

@@ -158,3 +158,134 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Image Upload & Gallery Styles */
+.image-upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: #f8fafc;
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.upload-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.file-input-label {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.file-input-label:hover {
+    border-color: #EF6F31;
+    color: #EF6F31;
+}
+
+.upload-status {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.image-preview-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background: white;
+    border: 2px solid #e2e8f0;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.image-preview-item:hover {
+    border-color: #EF6F31;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.image-preview-item.is-thumbnail {
+    border-color: #EF6F31;
+    border-width: 3px;
+    box-shadow: 0 0 0 3px rgba(239, 111, 49, 0.1);
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-img {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s;
+}
+
+.remove-img:hover {
+    transform: scale(1.15);
+    background: #ef4444;
+}
+
+.thumbnail-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #EF6F31;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px 0;
+    letter-spacing: 0.5px;
+}
+
+.image-help-text {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 10px;
+    line-height: 1.4;
+}
+
+.image-help-text strong {
+    color: #475569;
+}

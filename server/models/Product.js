@@ -15,7 +15,8 @@ const productSchema = new mongoose.Schema({
     room: { type: String },
     isBestSeller: { type: Boolean, default: false },
     fastDelivery: { type: Boolean, default: false },
-    stock: { type: Number, default: 50 }
+    stock: { type: Number, default: 50 },
+    isActive: { type: Boolean, default: true }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

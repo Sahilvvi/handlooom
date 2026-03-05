@@ -94,6 +94,8 @@
     max-width: 1400px;
     margin: 0 auto;
     background: #f1f5f9;
+    min-width: 0;
+    /* Prevents flex items from overflowing */
 }
 
 .admin-header {
@@ -105,6 +107,33 @@
     padding: 20px 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--admin-sidebar);
+}
+
+.mobile-close {
+    display: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .admin-header h2 {
@@ -120,4 +149,88 @@
     border-radius: 12px;
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
     min-height: calc(100vh - 200px);
+    overflow-x: auto;
+    /* Handle table overflows */
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+}
+
+@media (max-width: 1024px) {
+    .admin-main {
+        padding: 30px 20px;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        left: -270px;
+        z-index: 1000;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .admin-sidebar.active {
+        left: 0;
+    }
+
+    .mobile-toggle,
+    .mobile-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .admin-logo h1 {
+        margin-bottom: 0;
+    }
+
+    .admin-logo {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .header-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .admin-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .admin-actions {
+        width: 100%;
+    }
+
+    .admin-actions .btn-primary {
+        display: block;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .admin-content {
+        padding: 20px;
+    }
 }

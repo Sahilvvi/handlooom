@@ -18,9 +18,10 @@ const NewArrivals = () => {
         fetch(`${BASE_URL}/api/products`)
             .then(r => r.json())
             .then(data => {
-                // Show the 2 most recently added products (last in array)
-                const sorted = Array.isArray(data) ? [...data].reverse() : [];
-                setProducts(sorted.slice(0, 2));
+                const activeOnes = Array.isArray(data) ? data.filter(p => p.isActive !== false) : [];
+                // Show most recent
+                const reversed = [...activeOnes].reverse();
+                setProducts(reversed.slice(0, 2));
             })
             .catch(() => { });
     }, []);

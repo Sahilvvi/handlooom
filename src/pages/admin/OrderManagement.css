@@ -119,3 +119,28 @@
     font-weight: 600;
     margin-top: 2px;
 }
+
+@media (max-width: 1024px) {
+    .om-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .om-summary {
+        justify-content: space-between;
+        order: -1;
+    }
+
+    .om-header input,
+    .om-header select {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .om-summary {
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import BASE_URL from '../../utils/api';
 import './ProductCard.css';
 
 // Fallback images if no DB images
@@ -13,11 +14,17 @@ const getHash = (seed = '') => {
 const ProductCard = ({ product }) => {
     const { addToCart } = useCart();
 
+    const getImgUrl = (img, fallback) => {
+        if (!img) return fallback;
+        if (img.startsWith('http')) return img;
+        return `${BASE_URL}${img}`;
+    };
+
     // Use actual DB images if available, else fallback to local
     const dbImages = product.images?.filter(Boolean) || [];
     const h = getHash(product._id || product.name);
-    const primary = dbImages[0] || FALLBACK[h % FALLBACK.length];
-    const secondary = dbImages[1] || FALLBACK[(h + 1) % FALLBACK.length];
+    const primary = getImgUrl(dbImages[0], FALLBACK[h % FALLBACK.length]);
+    const secondary = getImgUrl(dbImages[1], FALLBACK[(h + 1) % FALLBACK.length]);
 
     const discount = product.originalPrice && product.originalPrice > product.price
         ? Math.round((1 - product.price / product.originalPrice) * 100)

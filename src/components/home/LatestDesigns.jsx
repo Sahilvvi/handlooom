@@ -22,7 +22,8 @@ const LatestDesigns = () => {
             try {
                 const response = await fetch(`${BASE_URL}/api/products`);
                 const data = await response.json();
-                setProducts(data.slice(0, 8));
+                const activeOnes = data.filter(p => p.isActive !== false);
+                setProducts(activeOnes.slice(0, 8));
             } catch (err) {
                 console.error("Error fetching products:", err);
             }

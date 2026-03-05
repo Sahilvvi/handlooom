@@ -40,6 +40,22 @@ const ProductList = () => {
         }
     };
 
+    const handleToggleStatus = async (product) => {
+        try {
+            const token = localStorage.getItem('jannat_token');
+            const res = await fetch(`${BASE_URL}/api/products/${product._id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ isActive: !product.isActive })
+            });
+            if (res.ok) {
+                setProducts(products.map(p => p._id === product._id ? { ...p, isActive: !p.isActive } : p));
+            }
+        } catch (err) {
+            console.error('Error toggling status:', err);
+        }
+    };
+
     if (loading) return <div>Loading products...</div>;
 
     return (
@@ -56,19 +72,33 @@ const ProductList = () => {
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {products.map(product => (
-                        <tr key={product._id}>
+                        <tr key={product._id} style={{ opacity: product.isActive ? 1 : 0.6 }}>
                             <td>
-                                <img src={product.images[0] || 'https://via.placeholder.com/50'} alt={product.name} className="admin-thumb" />
+                                <img
+                                    src={product.images[0]?.startsWith('http') ? product.images[0] : `${BASE_URL}${product.images[0]}`}
+                                    alt={product.name}
+                                    className="admin-thumb"
+                                />
                             </td>
                             <td>{product.name}</td>
                             <td>{product.category}</td>
                             <td>₹{product.price}</td>
                             <td>{product.stock}</td>
+                            <td>
+                                <span
+                                    onClick={() => handleToggleStatus(product)}
+                                    className={`status-badge ${product.isActive ? 'active' : 'inactive'}`}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {product.isActive ? '✅ Active' : '🚫 Disabled'}
+                                </span>
+                            </td>
                             <td className="admin-actions-cell">
                                 <Link to={`/admin/products/edit/${product._id}`} className="btn-edit">Edit</Link>
                                 <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
