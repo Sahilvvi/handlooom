@@ -76,7 +76,7 @@ app.use((err, req, res, next) => {
 });
 
 // ─── MongoDB Connection (cached for serverless) ───────
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jannat_handloom';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:Booyah%40123@cluster0.ldkdlzb.mongodb.net/Cluster0?appName=Cluster0';
 
 let isConnected = false;
 
