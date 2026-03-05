@@ -6,7 +6,10 @@ async function test() {
     console.log('Detected Vercel URLs in frontend HTML:', apiUrlMatch);
 
     console.log('\nTesting backend CORS directly...');
-    const url = 'https://handlooom-4o43-uddcn9th8-sahilvvis-projects.vercel.app/api/products';
+    const url = 'https://server-eta-wheat-26.vercel.app/api/products';
+    // Also test root health check
+    const rootRes = await fetch('https://server-eta-wheat-26.vercel.app/');
+    console.log('Health check status:', rootRes.status, await rootRes.text());
     try {
         const res = await fetch(url, {
             method: 'OPTIONS',

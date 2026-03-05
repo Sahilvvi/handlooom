@@ -1,0 +1,1 @@
+mongodb+srv://admin:Booyah%40123@cluster0.ldkdlzb.mongodb.net/Cluster0?appName=Cluster0

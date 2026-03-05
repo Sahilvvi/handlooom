@@ -5,9 +5,13 @@ const fs = require('fs');
 const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Ensure /uploads dir exists
+// Ensure /uploads dir exists (skipped on Vercel read-only filesystem)
 const uploadsDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+try {
+    if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+} catch (e) {
+    console.warn('Could not create uploads dir (read-only filesystem on Vercel):', e.message);
+}
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadsDir),
