@@ -45,21 +45,27 @@ const ProductDetail = () => {
                 const productData = await productRes.json();
                 const allData = await allRes.json();
 
-                if (productData) {
+                // Check if productData is actually a product (has an _id)
+                if (productData && productData._id) {
                     // Use real images if they exist, else fallback to mock ones
                     if (!productData.images || productData.images.length === 0) {
                         productData.images = getLocalImages(productData._id || productData.name || id);
                     } else {
                         // Ensure images are corrected with BASE_URL
-                        productData.images = productData.images.map(img => img.startsWith('http') ? img : `${BASE_URL}${img}`);
+                        productData.images = productData.images.map(img => img && img.startsWith('http') ? img : `${BASE_URL}${img}`);
                     }
+                    setProduct(productData);
+
+                    if (Array.isArray(allData)) {
+                        const similar = allData
+                            .filter(p => p.isActive !== false)
+                            .filter(p => p.category && productData.category && p.category === productData.category && p._id !== id);
+                        setSimilarProducts(similar.slice(0, 4));
+                    }
+                } else {
+                    setProduct(null);
                 }
 
-                setProduct(productData);
-                const similar = (allData || [])
-                    .filter(p => p.isActive !== false) // ONLY active
-                    .filter(p => p.category && productData.category && p.category === productData.category && p._id !== id);
-                setSimilarProducts(similar.slice(0, 4));
                 setLoading(false);
 
                 // Check wishlist state
