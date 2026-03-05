@@ -31,8 +31,8 @@ app.use(cors({
     credentials: true
 }));
 
-// Handle OPTIONS preflight requests explicitly
-app.options('*', cors());
+// Handle OPTIONS preflight requests explicitly (Express 5 compatible wildcard)
+app.options('/{*path}', cors());
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
