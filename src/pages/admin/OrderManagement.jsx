@@ -110,7 +110,21 @@ const OrderManagement = () => {
                                         <div>{order.shippingAddress?.firstName} {order.shippingAddress?.lastName}</div>
                                         <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{order.shippingAddress?.email}</div>
                                     </td>
-                                    <td>{order.items?.length} item{order.items?.length > 1 ? 's' : ''}</td>
+                                    <td>
+                                        <div className="om-items-cell">
+                                            {order.items?.map((item, idx) => (
+                                                <div key={idx} className="om-item-row">
+                                                    <span className="om-item-name">{item.name}</span>
+                                                    <span className="om-item-qty">x{item.quantity}</span>
+                                                    {item.size && (
+                                                        <span className="om-item-size" title="Customer Size Selection">
+                                                            📏 {item.size}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </td>
                                     <td><strong>₹{order.totalAmount?.toLocaleString('en-IN')}</strong></td>
                                     <td>
                                         <span className={`pay-badge pay-${order.paymentStatus}`}>{order.paymentMode}</span>

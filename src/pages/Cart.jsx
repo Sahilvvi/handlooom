@@ -34,22 +34,23 @@ const Cart = () => {
                         const img = allLocalImages[hash % allLocalImages.length];
 
                         return (
-                            <div key={item._id} className="cart-item">
+                            <div key={`${item._id}-${item.size}`} className="cart-item">
                                 <img src={img} alt={item.name} className="cart-item-img" />
                                 <div className="cart-item-details">
                                     <h3>{item.name}</h3>
+                                    {item.size && <p className="cart-item-size">Size: {item.size}</p>}
                                     <p className="cart-item-category">{item.category}</p>
                                     <p className="cart-item-price">₹{item.price?.toLocaleString('en-IN')}</p>
                                 </div>
                                 <div className="cart-item-qty">
-                                    <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>−</button>
+                                    <button onClick={() => updateQuantity(item._id, item.quantity - 1, item.size)}>−</button>
                                     <span>{item.quantity}</span>
-                                    <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
+                                    <button onClick={() => updateQuantity(item._id, item.quantity + 1, item.size)}>+</button>
                                 </div>
                                 <div className="cart-item-total">
                                     ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                                 </div>
-                                <button className="cart-item-remove" onClick={() => removeFromCart(item._id)}>✕</button>
+                                <button className="cart-item-remove" onClick={() => removeFromCart(item._id, item.size)}>✕</button>
                             </div>
                         );
                     })}

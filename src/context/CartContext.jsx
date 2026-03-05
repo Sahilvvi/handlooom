@@ -14,26 +14,26 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem('jannat_cart', JSON.stringify(cartItems));
     }, [cartItems]);
 
-    const addToCart = (product, quantity = 1) => {
+    const addToCart = (product, quantity = 1, size = '') => {
         setCartItems(prev => {
-            const existing = prev.find(i => i._id === product._id);
+            const existing = prev.find(i => i._id === product._id && i.size === size);
             if (existing) {
-                return prev.map(i => i._id === product._id
+                return prev.map(i => (i._id === product._id && i.size === size)
                     ? { ...i, quantity: i.quantity + quantity }
                     : i
                 );
             }
-            return [...prev, { ...product, quantity }];
+            return [...prev, { ...product, quantity, size }];
         });
     };
 
-    const removeFromCart = (productId) => {
-        setCartItems(prev => prev.filter(i => i._id !== productId));
+    const removeFromCart = (productId, size = '') => {
+        setCartItems(prev => prev.filter(i => !(i._id === productId && i.size === size)));
     };
 
-    const updateQuantity = (productId, quantity) => {
-        if (quantity <= 0) { removeFromCart(productId); return; }
-        setCartItems(prev => prev.map(i => i._id === productId ? { ...i, quantity } : i));
+    const updateQuantity = (productId, quantity, size = '') => {
+        if (quantity <= 0) { removeFromCart(productId, size); return; }
+        setCartItems(prev => prev.map(i => (i._id === productId && i.size === size) ? { ...i, quantity } : i));
     };
 
     const clearCart = () => setCartItems([]);

@@ -16,9 +16,9 @@ const ProductDetail = () => {
     const [pincode, setPincode] = useState('');
     const [pincodeMsg, setPincodeMsg] = useState('');
     const [similarProducts, setSimilarProducts] = useState([]);
-    const [addedMsg, setAddedMsg] = useState('');
     const [wishlisted, setWishlisted] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+    const [size, setSize] = useState('');
 
     // All real local images available in /public folder
     const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
@@ -67,7 +67,7 @@ const ProductDetail = () => {
 
     const handleAddToCart = () => {
         if (!product) return;
-        addToCart(product, parseInt(quantity));
+        addToCart(product, parseInt(quantity), size);
         setAddedMsg('✅ Added to cart!');
         setTimeout(() => setAddedMsg(''), 2500);
     };
@@ -263,6 +263,17 @@ const ProductDetail = () => {
                                 <span>{quantity}</span>
                                 <button onClick={() => setQuantity(Math.min(10, quantity + 1))}>+</button>
                             </div>
+                        </div>
+
+                        <div className="selection-item-column">
+                            <label>Curtain Size / Customization:</label>
+                            <textarea
+                                placeholder="e.g. 5ft x 7ft or Width 48 inches..."
+                                value={size}
+                                onChange={(e) => setSize(e.target.value)}
+                                className="boutique-size-textarea"
+                            />
+                            <p className="size-hint">Mention your specific measurements for a perfect fit.</p>
                         </div>
                     </div>
 

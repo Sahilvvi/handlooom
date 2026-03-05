@@ -39,7 +39,8 @@ const Checkout = () => {
                         product: item._id,
                         name: item.name,
                         price: item.price || 0,
-                        quantity: item.quantity || 1
+                        quantity: item.quantity || 1,
+                        size: item.size || ''
                     })),
                     shippingAddress: {
                         firstName: formData.firstName, lastName: formData.lastName,
@@ -151,9 +152,13 @@ const Checkout = () => {
                         <h3>Order Summary</h3>
                         <div className="summary-list">
                             {cartItems.map(item => (
-                                <div key={item._id} className="summary-item">
+                                <div key={`${item._id}-${item.size}`} className="summary-item">
                                     <div className="item-img"><img src={getImg(item._id || item.name)} alt={item.name} /></div>
-                                    <div className="item-details"><strong>{item.name}</strong><p>× {item.quantity}</p></div>
+                                    <div className="item-details">
+                                        <strong>{item.name}</strong>
+                                        {item.size && <p style={{ fontSize: '12px', color: '#666', margin: '2px 0' }}>Size: {item.size}</p>}
+                                        <p>× {item.quantity}</p>
+                                    </div>
                                     <span>₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                                 </div>
                             ))}
