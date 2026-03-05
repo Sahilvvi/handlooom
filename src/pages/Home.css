@@ -191,11 +191,13 @@
 
 @media (max-width: 576px) {
     .product-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
     .room-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
     .features-grid {
