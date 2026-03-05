@@ -25,7 +25,23 @@ app.use(limiter);
 
 // ─── Standard Middleware ──────────────────────────────
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://jannatloom.com', 'https://www.jannatloom.com', 'https://jannatloom-frontend.vercel.app']
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            'http://localhost:5173',
+            'http://localhost:5174',
+            'https://jannathandloom.com',
+            'https://www.jannathandloom.com',
+            'https://jannatloom.com',
+            'https://www.jannatloom.com',
+        ];
+        // Allow Vercel preview URLs (any *.vercel.app domain)
+        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
