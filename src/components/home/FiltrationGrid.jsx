@@ -14,7 +14,7 @@ const FiltrationGrid = () => {
         <section className="filtration-section">
             <div className="container">
                 <div className="section-header-alt">
-                    <h2>Shop Curtains By Light Filteration</h2>
+                    <h2>Shop Curtains By Light Filtration</h2>
                     <p>Redefine your style</p>
                 </div>
                 <div className="filtration-grid">

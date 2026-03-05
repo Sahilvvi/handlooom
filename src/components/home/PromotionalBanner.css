@@ -18,7 +18,8 @@
 
 @media (max-width: 768px) {
     .hero-banner-img {
-        min-height: 250px;
-        object-fit: cover;
+        min-height: unset;
+        object-fit: contain;
+        height: auto;
     }
 }

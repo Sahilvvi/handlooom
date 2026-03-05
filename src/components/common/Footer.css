@@ -192,17 +192,24 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 650px) {
     .footer-grid {
         grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-column h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-social,
+    .payment-trust {
+        justify-content: center;
     }
 
     .footer-bottom-flex {
         flex-direction: column;
         text-align: center;
-    }
-
-    .payment-trust {
-        justify-content: center;
     }
 }

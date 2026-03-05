@@ -2,16 +2,22 @@
 
 :root {
   /* Color Palette */
-  --bg-primary: #FDFBF7; /* Ivory / Warm White */
-  --bg-secondary: #F7F3EE; /* Soft Beige */
-  --accent-sage: #889E8D; /* Sage Green */
-  --accent-rose: #D4A5A5; /* Dusty Rose */
-  --accent-gold: #C5A059; /* Muted Gold */
-  --text-main: #2C2C2C; /* Deep Charcoal */
+  --bg-primary: #FDFBF7;
+  /* Ivory / Warm White */
+  --bg-secondary: #F7F3EE;
+  /* Soft Beige */
+  --accent-sage: #889E8D;
+  /* Sage Green */
+  --accent-rose: #D4A5A5;
+  /* Dusty Rose */
+  --accent-gold: #C5A059;
+  /* Muted Gold */
+  --text-main: #2C2C2C;
+  /* Deep Charcoal */
   --text-muted: #666666;
   --white: #FFFFFF;
   --border-light: #EAE3D9;
-  
+
   /* Typography */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Poppins', sans-serif;
@@ -47,7 +53,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;
@@ -119,10 +130,28 @@ button {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fade-in {
   animation: fadeIn 0.8s ease forwards;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
 }

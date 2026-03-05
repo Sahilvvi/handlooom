@@ -312,18 +312,23 @@
     gap: 8px;
     padding: 14px 16px;
     border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .mobile-search input {
     flex: 1;
+    min-width: 0;
     padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 0.9rem;
     outline: none;
+    box-sizing: border-box;
 }
 
 .mobile-search button {
+    flex-shrink: 0;
     background: #EF6F31;
     color: white;
     border: none;
@@ -396,5 +401,19 @@
 
     .header-right {
         gap: 16px;
+    }
+
+    .logo h1 {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    .logo span {
+        font-size: 0.5rem;
+        letter-spacing: 3px;
+    }
+
+    .header-container {
+        gap: 10px;
     }
 }

@@ -141,6 +141,44 @@
 
 @media (max-width: 480px) {
     .designs-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .design-img {
+        height: 220px;
+    }
+
+    .design-info h3 {
+        font-size: 0.8rem;
+    }
+
+    .current-price {
+        font-size: 1rem;
+    }
+
+    .old-price {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .design-tabs {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        /* Scrollbar space */
+        scrollbar-width: none;
+        /* Hide for Firefox */
+    }
+
+    .design-tabs::-webkit-scrollbar {
+        display: none;
+        /* Hide for Chrome/Safari */
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
     }
 }
