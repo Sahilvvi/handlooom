@@ -53,6 +53,20 @@ app.use(express.urlencoded({ extended: true }));
 // ─── Static file serving for uploaded images ─────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ─── MongoDB Connection (cached for serverless) ───────
+const connectDB = require('./config/db');
+
+// Ensure DB is connected before handling any requests
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error('❌ Database connection error:', err);
+        res.status(503).json({ message: 'Database connecting error', error: err.message });
+    }
+});
+
 // ─── Routes ──────────────────────────────────────────
 app.use('/api/auth', authLimiter, require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
@@ -75,19 +89,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ─── MongoDB Connection (cached for serverless) ───────
-const connectDB = require('./config/db');
 
-// Ensure DB is connected before handling any requests
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (err) {
-        console.error('❌ Database connection error:', err);
-        res.status(503).json({ message: 'Database connecting error', error: err.message });
-    }
-});
 
 // ─── Start server locally (not on Vercel) ────────────
 if (!process.env.VERCEL) {
