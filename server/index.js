@@ -9,30 +9,38 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── CORS — must be FIRST before all other middleware ────
-app.use(cors({
+// ─── CORS Configuration ──────────────────────────────
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://jannathandloom.com',
+    'https://www.jannathandloom.com',
+    'https://jannatloom.com',
+    'https://www.jannatloom.com',
+];
+
+const corsOptions = {
     origin: function (origin, callback) {
-        const allowedOrigins = [
-            'http://localhost:5173',
-            'http://localhost:5174',
-            'https://jannathandloom.com',
-            'https://www.jannathandloom.com',
-            'https://jannatloom.com',
-            'https://www.jannatloom.com',
-        ];
         // Allow requests with no origin (mobile apps, Postman, etc.)
-        // Also allow any *.vercel.app preview deployment URL
-        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        if (!origin) return callback(null, true);
+
+        const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app');
+        if (isAllowed) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
-}));
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    optionsSuccessStatus: 204
+};
 
-// Handle OPTIONS preflight requests explicitly (Express 5 compatible wildcard)
-app.options('/{*path}', cors());
+app.use(cors(corsOptions));
+
+// Handle preflight requests for all routes
+app.options('*', cors(corsOptions));
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
