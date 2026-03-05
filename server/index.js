@@ -24,7 +24,9 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, message: { me
 app.use(limiter);
 
 // ─── Standard Middleware ──────────────────────────────
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://jannatloom.com', 'https://www.jannatloom.com', 'https://jannatloom-frontend.vercel.app']
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -59,6 +61,12 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jannat
 mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log('✅ Connected to MongoDB');
-        app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+        // Only listen on a port if not running on Vercel
+        if (!process.env.VERCEL) {
+            app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+        }
     })
     .catch(err => console.error('❌ MongoDB connection error:', err));
+
+// Export the app for Vercel
+module.exports = app;
