@@ -147,3 +147,38 @@
     background-color: var(--bg-secondary);
     /* Placeholder */
 }
+
+@media (max-width: 768px) {
+    .product-actions {
+        right: 15px;
+    }
+
+    .add-to-cart-overlay {
+        bottom: 0;
+        padding: 10px;
+        font-size: 0.75rem;
+        background-color: var(--accent-sage);
+    }
+
+    .product-name {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .product-info {
+        padding: 15px 5px;
+    }
+
+    .product-category {
+        font-size: 0.6rem;
+    }
+
+    .current-price {
+        font-size: 1rem;
+    }
+
+    .badge-best {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+    }
+}

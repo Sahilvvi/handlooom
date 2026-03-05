@@ -145,7 +145,17 @@ button {
   animation: fadeIn 0.8s ease forwards;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --section-padding: 60px 5%;
+  }
+}
+
 @media (max-width: 768px) {
+  :root {
+    --section-padding: 40px 15px;
+  }
+
   .section-title {
     font-size: 1.8rem;
     margin-bottom: 30px;
@@ -153,5 +163,18 @@ button {
 
   .container {
     padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
   }
 }

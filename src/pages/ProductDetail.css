@@ -309,11 +309,84 @@
     line-height: 1.6;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+    .product-detail-page {
+        padding-top: 20px;
+    }
+
+    .boutique-title {
+        font-size: 26px;
+    }
+
+    .boutique-price {
+        font-size: 24px;
+    }
+
+    .boutique-thumbnails {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: thin;
+    }
+
+    .boutique-thumb {
+        width: 70px;
+        height: 85px;
+        flex-shrink: 0;
+    }
 
     .spec-grid-boutique,
     .boutique-reviews-layout {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .boutique-highlights {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .boutique-tab-btn {
+        gap: 20px;
+        font-size: 12px;
+    }
+
+    .card-vibe {
+        padding: 20px;
+    }
+
+    .boutique-similar-section {
+        padding: 0 15px;
+        margin: 60px auto;
+    }
+
+    .boutique-similar-section h3 {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 480px) {
+    .boutique-title {
+        font-size: 22px;
+    }
+
+    .boutique-main-image {
+        border-radius: 12px;
+    }
+
+    .selection-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .selection-item label {
+        width: 100%;
+    }
+
+    .giant-rating-boutique {
+        font-size: 48px;
     }
 }
 

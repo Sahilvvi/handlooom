@@ -1,11 +1,11 @@
 import React from 'react';
-import './Home.css'; // Reusing some container styles
+import './StaticPages.css';
 import BASE_URL from '../utils/api';
 
 const StaticPage = ({ title, children }) => (
-    <div className="container" style={{ padding: '80px 20px', minHeight: '60vh' }}>
-        <h1 style={{ marginBottom: '30px', color: '#333', fontSize: '2.5rem' }}>{title}</h1>
-        <div style={{ lineHeight: '1.8', color: '#666', fontSize: '1.1rem' }}>
+    <div className="static-page-container container">
+        <h1 className="static-page-title">{title}</h1>
+        <div className="static-page-content">
             {children}
         </div>
     </div>
@@ -105,28 +105,30 @@ export const Contact = () => {
     };
 
     return (
-        <div className="container" style={{ padding: '60px 20px', minHeight: '60vh' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
+        <div className="static-page-container container">
+            <div className="contact-layout">
                 {/* Info */}
                 <div>
-                    <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: '#1e293b', marginBottom: '20px' }}>Contact Us</h1>
+                    <h1 className="static-page-title">Contact Us</h1>
                     <p style={{ color: '#64748b', marginBottom: '30px', lineHeight: 1.7 }}>We're here to help with any queries about orders, products, or returns. Reach out — we respond within 24 hours.</p>
-                    {[
-                        { icon: '📞', label: 'Phone', val: '+91 98765 43210 (Mon-Sat, 10AM-7PM)' },
-                        { icon: '📧', label: 'Email', val: 'help@jannatloom.com' },
-                        { icon: '📍', label: 'Address', val: 'Jannat Handloom HQ, Sector 62, Noida, UP - 201301' },
-                        { icon: '🕐', label: 'Hours', val: 'Monday to Saturday, 10AM - 7PM IST' }
-                    ].map(({ icon, label, val }) => (
-                        <div key={label} style={{ display: 'flex', gap: '14px', marginBottom: '20px' }}>
-                            <span style={{ fontSize: '1.5rem' }}>{icon}</span>
-                            <div><strong style={{ display: 'block', color: '#334155', fontSize: '0.85rem', marginBottom: '4px' }}>{label}</strong><span style={{ color: '#64748b' }}>{val}</span></div>
-                        </div>
-                    ))}
+                    <div className="contact-info-list">
+                        {[
+                            { icon: '📞', label: 'Phone', val: '+91 98765 43210 (Mon-Sat, 10AM-7PM)' },
+                            { icon: '📧', label: 'Email', val: 'help@jannatloom.com' },
+                            { icon: '📍', label: 'Address', val: 'Jannat Handloom HQ, Sector 62, Noida, UP - 201301' },
+                            { icon: '🕐', label: 'Hours', val: 'Monday to Saturday, 10AM - 7PM IST' }
+                        ].map(({ icon, label, val }) => (
+                            <div key={label} className="contact-info-item">
+                                <span style={{ fontSize: '1.5rem' }}>{icon}</span>
+                                <div><strong style={{ display: 'block', color: '#334155', fontSize: '0.85rem', marginBottom: '4px' }}>{label}</strong><span style={{ color: '#64748b' }}>{val}</span></div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 {/* Form */}
-                <div>
+                <div className="contact-form-card">
                     {status === 'success' ? (
-                        <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '12px', padding: '40px', textAlign: 'center' }}>
+                        <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '3rem', marginBottom: '12px' }}>✅</div>
                             <h3 style={{ color: '#16a34a', marginBottom: '8px' }}>Message Sent!</h3>
                             <p style={{ color: '#64748b' }}>We'll get back to you within 24 hours.</p>
@@ -136,12 +138,12 @@ export const Contact = () => {
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             <h2 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#1e293b' }}>Send us a message</h2>
                             {typeof status === 'string' && status && status !== 'success' && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 14px', borderRadius: '6px', fontSize: '0.9rem' }}>{status}</div>}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div className="contact-form-grid">
                                 {[['name', 'Full Name', 'text', true], ['email', 'Email Address', 'email', true],].map(([n, ph, t, req]) => (
                                     <input key={n} name={n} value={form[n]} onChange={handleChange} placeholder={ph} type={t} required={req} style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
                                 ))}
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div className="contact-form-grid">
                                 <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone (optional)" type="tel" style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
                                 <input name="subject" value={form.subject} onChange={handleChange} placeholder="Subject" style={{ padding: '12px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none' }} />
                             </div>

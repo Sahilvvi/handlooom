@@ -1,0 +1,78 @@
+/* Static Pages & Contact Form Styles */
+.static-page-container {
+    padding: 80px 20px;
+    min-height: 60vh;
+}
+
+.static-page-title {
+    margin-bottom: 30px;
+    color: #1e293b;
+    font-size: 2.8rem;
+    font-family: var(--font-heading);
+}
+
+.static-page-content {
+    line-height: 1.8;
+    color: #444;
+    font-size: 1.1rem;
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+}
+
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contact-info-item {
+    display: flex;
+    gap: 15px;
+}
+
+.contact-form-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+}
+
+.contact-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 968px) {
+    .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .static-page-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .static-page-container {
+        padding: 40px 15px;
+    }
+
+    .static-page-title {
+        font-size: 1.8rem;
+    }
+
+    .contact-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form-card {
+        padding: 25px;
+    }
+}

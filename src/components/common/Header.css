@@ -389,6 +389,7 @@
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
+        order: 3;
     }
 
     .header-nav {
@@ -399,21 +400,47 @@
         display: none;
     }
 
-    .header-right {
-        gap: 16px;
+    .header-top {
+        padding: 10px 0;
+    }
+
+    .header-container {
+        gap: 10px;
+    }
+
+    .header-left {
+        flex: 1;
     }
 
     .logo h1 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         letter-spacing: 1px;
     }
 
     .logo span {
         font-size: 0.5rem;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
     }
 
-    .header-container {
-        gap: 10px;
+    .header-right {
+        gap: 12px;
+    }
+
+    .cart-badge {
+        top: -5px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo h1 {
+        font-size: 1rem;
+    }
+
+    .header-right {
+        gap: 8px;
     }
 }
