@@ -55,8 +55,8 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, message: { me
 app.use(limiter);
 
 // ─── Standard Middleware ──────────────────────────────
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // ─── Static file serving (Fallback for old images) ────
 app.use('/uploads', (req, res) => {
