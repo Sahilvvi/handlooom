@@ -58,12 +58,8 @@ app.use(limiter);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ─── Static file serving (Fallback for old images) ────
-app.use('/uploads', (req, res) => {
-    // Vercel is read-only. Old images on disk are not available.
-    // New images use Base64 (data: URLs) which bypass this.
-    res.status(404).json({ message: 'Image folder not available on this server environment.' });
-});
+// ─── Static file serving for uploaded images ─────────
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ─── MongoDB Connection (cached for serverless) ───────
 const connectDB = require('./config/db');

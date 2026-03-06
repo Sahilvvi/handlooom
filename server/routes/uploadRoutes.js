@@ -1,11 +1,24 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Use memory storage for Vercel (read-only filesystem)
-const storage = multer.memoryStorage();
+// Ensure /uploads dir exists locally
+const uploadsDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// disk storage for Hostinger (permanent filesystem)
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadsDir),
+    filename: (req, file, cb) => {
+        const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+        cb(null, `${unique}${path.extname(file.originalname)}`);
+    }
+});
 
 const fileFilter = (req, file, cb) => {
     const allowed = /jpeg|jpg|png|webp|gif/;
@@ -19,7 +32,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage,
     fileFilter,
-    limits: { fileSize: 4 * 1024 * 1024 } // 4MB limit for Vercel
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
 // POST /api/upload — upload single image
@@ -27,43 +40,34 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 
-        const b64 = req.file.buffer.toString('base64');
-        const dataUrl = `data:${req.file.mimetype};base64,${b64}`;
-
-        res.json({ url: dataUrl, filename: req.file.originalname });
+        // Return relative path for database storage
+        const filePath = `/uploads/${req.file.filename}`;
+        res.json({ url: filePath, filename: req.file.filename });
     } catch (err) {
-        res.status(500).json({ message: 'Error processing image', error: err.message });
+        res.status(500).json({ message: 'Error saving image', error: err.message });
     }
 });
 
-// POST /api/upload/multiple — upload multiple images
+// POST /api/upload/multiple
 router.post('/multiple', protect, admin, upload.array('images', 5), (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ message: 'No files uploaded' });
         }
-
-        const urls = req.files.map(f => {
-            const b64 = f.buffer.toString('base64');
-            return {
-                url: `data:${f.mimetype};base64,${b64}`,
-                filename: f.originalname
-            };
-        });
-
+        const urls = req.files.map(f => ({
+            url: `/uploads/${f.filename}`,
+            filename: f.filename
+        }));
         res.json({ urls });
     } catch (err) {
-        res.status(500).json({ message: 'Error processing images', error: err.message });
+        res.status(500).json({ message: 'Error saving images', error: err.message });
     }
 });
 
-// Multer Error Handling Middleware
+// Multer Error Handling
 router.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) {
-        if (err.code === 'LIMIT_FILE_SIZE') {
-            return res.status(400).json({ message: 'File too large. Max limit is 4MB.' });
-        }
-        return res.status(400).json({ message: err.message });
+        return res.status(400).json({ message: `Upload error: ${err.message}` });
     }
     next(err);
 });
