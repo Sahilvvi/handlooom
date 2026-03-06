@@ -68,26 +68,38 @@ const EditProduct = () => {
         setUploading(true);
         setError('');
         const token = localStorage.getItem('jannat_token');
-        const uploadData = new FormData();
-        files.forEach(f => uploadData.append('images', f));
 
-        try {
-            const res = await fetch(`${BASE_URL}/api/upload/multiple`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: uploadData
-            });
-            const data = await res.json();
-            if (res.ok) {
-                setImages([...images, ...data.urls.map(u => u.url)]);
-            } else {
-                setError(data.message || 'Upload failed');
+        const newImages = [];
+        let hasError = false;
+
+        for (const file of files) {
+            try {
+                const uploadData = new FormData();
+                uploadData.append('image', file); // Single upload
+
+                const res = await fetch(`${BASE_URL}/api/upload`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: uploadData
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    newImages.push(data.url);
+                } else {
+                    hasError = true;
+                    setError(data.message || 'One or more images failed');
+                }
+            } catch (err) {
+                hasError = true;
+                setError('Upload error');
             }
-        } catch {
-            setError('Upload error');
-        } finally {
-            setUploading(false);
         }
+
+        if (newImages.length > 0) {
+            setImages(prev => [...prev, ...newImages]);
+        }
+        setUploading(false);
     };
 
     const removeImage = (index) => {
