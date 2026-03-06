@@ -52,7 +52,7 @@ const ProductDetail = () => {
                         productData.images = getLocalImages(productData._id || productData.name || id);
                     } else {
                         // Ensure images are corrected with BASE_URL
-                        productData.images = productData.images.map(img => img && img.startsWith('http') ? img : `${BASE_URL}${img}`);
+                        productData.images = productData.images.map(img => (img && (img.startsWith('http') || img.startsWith('data:'))) ? img : `${BASE_URL}${img}`);
                     }
                     setProduct(productData);
 

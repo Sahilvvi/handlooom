@@ -184,7 +184,7 @@ const EditProduct = () => {
                         <div className="images-grid">
                             {images.map((img, idx) => (
                                 <div key={idx} className={`image-preview-item ${idx === thumbnailIndex ? 'is-thumbnail' : ''}`} onClick={() => setThumbnailIndex(idx)}>
-                                    <img src={img.startsWith('http') ? img : `${BASE_URL}${img}`} alt="" />
+                                    <img src={(img.startsWith('http') || img.startsWith('data:')) ? img : `${BASE_URL}${img}`} alt="" />
                                     <button type="button" className="remove-img" onClick={(e) => { e.stopPropagation(); removeImage(idx); }}>&times;</button>
                                     {idx === thumbnailIndex && <div className="thumbnail-badge">Main Thumbnail</div>}
                                 </div>

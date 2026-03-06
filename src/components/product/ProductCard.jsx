@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
 
     const getImgUrl = (img, fallback) => {
         if (!img) return fallback;
-        if (img.startsWith('http')) return img;
+        if (img.startsWith('http') || img.startsWith('data:')) return img;
         return `${BASE_URL}${img}`;
     };
 
