@@ -1,0 +1,52 @@
+name: Deploy to Hostinger via SSH
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch if it is different
+
+jobs:
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 📦 Install Frontend Dependencies
+        run: npm install
+
+      - name: 🏗️ Build Frontend
+        run: node hostinger_build.cjs
+
+      - name: 📂 Sync Frontend via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 65002 # Your specific Hostinger SSH port
+          source: "./dist/*"
+          target: "/domains/jannatloom.com/public_html" # Adjust 'jannatloom.com' if your domain is different
+          strip_components: 1 # This removes the 'dist' folder name, copying only files inside it
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync Backend via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 65002 # Your specific Hostinger SSH port
+          source: "./server/*"
+          target: "/domains/api.jannatloom.com/public_html" # Modify to point to your Node.jsx api domain folder or backend folder
+          strip_components: 1
