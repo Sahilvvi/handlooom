@@ -1,0 +1,33 @@
+name: Deploy to Hostinger via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 📦 Install Frontend Dependencies
+        run: npm install
+
+      - name: 🏗️ Build Frontend
+        run: node hostinger_build.cjs
+
+      - name: 📂 Sync Frontend via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 82.25.83.161 # Hardcoded for your convenience
+          username: u549028972 # Hardcoded for your convenience
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /domains/violet-narwhal-474691.hostingersite.com/public_html/
