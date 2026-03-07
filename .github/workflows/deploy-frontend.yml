@@ -31,3 +31,18 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /domains/violet-narwhal-474691.hostingersite.com/public_html/
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync Backend via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 82.25.83.161 # Same Hardcoded IP
+          username: u549028972 # Same Hardcoded Username
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./server/
+          server-dir: /domains/rosybrown-koala-703473.hostingersite.com/public_html/
