@@ -39,37 +39,29 @@ const AddProduct = () => {
         setError('');
         const token = localStorage.getItem('jannat_token');
 
-        const newImages = [];
-        let hasError = false;
+        try {
+            const uploadData = new FormData();
+            files.forEach(file => uploadData.append('images', file));
 
-        for (const file of files) {
-            try {
-                const uploadData = new FormData();
-                uploadData.append('image', file); // Use single upload key
+            const res = await fetch(`${BASE_URL}/api/upload/multiple`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: uploadData
+            });
 
-                const res = await fetch(`${BASE_URL}/api/upload`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    body: uploadData
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    newImages.push(data.url);
-                } else {
-                    hasError = true;
-                    setError(data.message || 'One or more images failed to upload');
-                }
-            } catch (err) {
-                hasError = true;
-                setError('Upload connection error');
+            const data = await res.json();
+            if (res.ok && data.urls) {
+                const uploadedUrls = data.urls.map(u => u.url);
+                setImages(prev => [...prev, ...uploadedUrls]);
+            } else {
+                setError(data.message || 'One or more images failed to upload');
             }
+        } catch (err) {
+            setError('Upload connection error');
+        } finally {
+            setUploading(false);
+            e.target.value = null; // reset file input
         }
-
-        if (newImages.length > 0) {
-            setImages(prev => [...prev, ...newImages]);
-        }
-        setUploading(false);
     };
 
     const removeImage = (index) => {

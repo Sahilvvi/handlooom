@@ -69,37 +69,29 @@ const EditProduct = () => {
         setError('');
         const token = localStorage.getItem('jannat_token');
 
-        const newImages = [];
-        let hasError = false;
+        try {
+            const uploadData = new FormData();
+            files.forEach(file => uploadData.append('images', file));
 
-        for (const file of files) {
-            try {
-                const uploadData = new FormData();
-                uploadData.append('image', file); // Single upload
+            const res = await fetch(`${BASE_URL}/api/upload/multiple`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: uploadData
+            });
 
-                const res = await fetch(`${BASE_URL}/api/upload`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    body: uploadData
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    newImages.push(data.url);
-                } else {
-                    hasError = true;
-                    setError(data.message || 'One or more images failed');
-                }
-            } catch (err) {
-                hasError = true;
-                setError('Upload error');
+            const data = await res.json();
+            if (res.ok && data.urls) {
+                const uploadedUrls = data.urls.map(u => u.url);
+                setImages(prev => [...prev, ...uploadedUrls]);
+            } else {
+                setError(data.message || 'One or more images failed to upload');
             }
+        } catch (err) {
+            setError('Upload connection error');
+        } finally {
+            setUploading(false);
+            e.target.value = null;
         }
-
-        if (newImages.length > 0) {
-            setImages(prev => [...prev, ...newImages]);
-        }
-        setUploading(false);
     };
 
     const removeImage = (index) => {

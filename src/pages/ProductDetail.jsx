@@ -19,6 +19,7 @@ const ProductDetail = () => {
     const [wishlisted, setWishlisted] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
     const [size, setSize] = useState('');
+    const [addedMsg, setAddedMsg] = useState('');
 
     // All real local images available in /public folder
     const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
