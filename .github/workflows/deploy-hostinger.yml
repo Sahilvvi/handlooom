@@ -30,7 +30,7 @@ jobs:
           username: u549028972 # Hardcoded for your convenience
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: /domains/jannatloom.com/public_html/
+          server-dir: /domains/violet-narwhal-474691.hostingersite.com/public_html/
 
   deploy-backend:
     runs-on: ubuntu-latest
@@ -45,4 +45,4 @@ jobs:
           username: u549028972 # Hardcoded for your convenience
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./server/
-          server-dir: /domains/api.jannatloom.com/public_html/
+          server-dir: /domains/violet-narwhal-474691.hostingersite.com/public_html/server/
