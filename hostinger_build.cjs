@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 // --- CONFIGURATION ---
-const PRODUCTION_BACKEND_URL = 'https://api.jannatloom.com'; // CHANGE THIS to your actual Hostinger Backend URL
+const PRODUCTION_BACKEND_URL = 'https://rosybrown-koala-703473.hostingersite.com'; // CHANGE THIS to your actual Hostinger Backend URL
 // --------------------
 
 console.log('🚀 Starting Hostinger Production Build...');
