@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // Handle preflight requests for all routes
-app.options('*', cors());
+app.options(/(.*)/, cors());
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
