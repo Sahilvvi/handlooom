@@ -28,7 +28,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: 65002 # Your specific Hostinger SSH port
           source: "./dist/*"
           target: "/domains/jannatloom.com/public_html" # Adjust 'jannatloom.com' if your domain is different
@@ -45,7 +45,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: 65002 # Your specific Hostinger SSH port
           source: "./server/*"
           target: "/domains/api.jannatloom.com/public_html" # Modify to point to your Node.jsx api domain folder or backend folder
