@@ -26,8 +26,8 @@ jobs:
       - name: 📂 Sync Frontend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: 82.25.83.161 # Hardcoded for your convenience
+          username: u549028972 # Hardcoded for your convenience
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /domains/jannatloom.com/public_html/
@@ -41,8 +41,8 @@ jobs:
       - name: 📂 Sync Backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: 82.25.83.161 # Hardcoded for your convenience
+          username: u549028972 # Hardcoded for your convenience
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./server/
           server-dir: /domains/api.jannatloom.com/public_html/
