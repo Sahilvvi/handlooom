@@ -1,3 +1,12 @@
+// ─── Catch ALL crashes and log them ─────────────────
+process.on('uncaughtException', (err) => {
+    console.error('💥 UNCAUGHT EXCEPTION:', err.message);
+    console.error(err.stack);
+});
+process.on('unhandledRejection', (reason) => {
+    console.error('💥 UNHANDLED REJECTION:', reason);
+});
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,41 +15,19 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+console.log('✅ Modules loaded. Starting server...');
+console.log('PORT env:', process.env.PORT);
+console.log('MONGODB_URI env set:', !!process.env.MONGODB_URI);
+
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
+
 
 // ─── CORS Configuration ──────────────────────────────
-const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'https://jannathandloom.com',
-    'https://www.jannathandloom.com',
-    'https://jannatloom.com',
-    'https://www.jannatloom.com',
-];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow requests with no origin (mobile apps, Postman, etc.)
-        if (!origin) return callback(null, true);
-
-        const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app');
-        if (isAllowed) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    optionsSuccessStatus: 204
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Handle preflight requests for all routes
-app.options('*', cors(corsOptions));
+app.options('*', cors());
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -97,12 +84,11 @@ app.use((err, req, res, next) => {
     });
 });
 
+// ─── Always start server (Hostinger needs this) ──────
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+}).on('error', (err) => {
+    console.error('❌ Server failed to start:', err.message);
+});
 
-
-// ─── Start server locally (not on Vercel) ────────────
-if (!process.env.VERCEL) {
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-}
-
-// Export the app for Vercel serverless
 module.exports = app;
