@@ -45,4 +45,4 @@ jobs:
           username: u549028972 # Same Hardcoded Username
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./server/
-          server-dir: /domains/rosybrown-koala-703473.hostingersite.com/public_html/
+          server-dir: /domains/rosybrown-koala-703473.hostingersite.com/public_html/server/
