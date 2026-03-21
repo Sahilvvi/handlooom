@@ -17,11 +17,14 @@ function search($dir) {
     }
 }
 
-$dirsToSearch = [ __DIR__, realpath(__DIR__ . '/../') ];
+$dirsToSearch = [ 
+    realpath(__DIR__ . '/../../violet-narwhal-474691.hostingersite.com/'), 
+    realpath(__DIR__ . '/../../rosybrown-koala-703473.hostingersite.com/') 
+];
 
 foreach ($dirsToSearch as $b) {
     if ($b) {
-        echo "Searching: $b\n";
+        echo "Searching Sibling Domain: $b\n";
         search($b);
     }
 }
