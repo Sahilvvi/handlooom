@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ./domains/violet-narwhal-474691.hostingersite.com/public_html/
+          server-dir: ./domains/jannathandloom.com/public_html/
 
       - name: 🔧 Sync Backend Live (Node.js -> server)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./server/
-          server-dir: ./domains/rosybrown-koala-703473.hostingersite.com/public_html/server/
+          server-dir: ./domains/jannathandloom.com/server/
           exclude: |
             **/.env
             **/node_modules/**
