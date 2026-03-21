@@ -2,10 +2,13 @@
 header('Content-Type: text/plain');
 ini_set('max_execution_time', 300);
 
-echo "Broadest Directory Scan Started...\n";
+echo "Deep Dive Scan Started...\n";
 
+$count = 0;
 function search($dir) {
-    if (strpos($dir, 'node_modules') !== false) return; // Skip entirely
+    global $count;
+    if ($count > 10) return;
+    if (strpos($dir, 'node_modules') !== false) return; 
     $files = @scandir($dir);
     if (!$files) return;
     foreach ($files as $f) {
@@ -13,18 +16,17 @@ function search($dir) {
         if (strpos($f, '.') === 0) continue;
         $path = $dir . '/' . $f;
         
-        // Find ANY png image anywhere matching the pattern except the logo
-        if (strpos(strtolower($f), '.png') !== false && $f !== 'logo.png') {
-            echo "\n-> CRITICAL FOUND IMAGE PATH:\n" . $path . "\n";
-            exit; // Stop entirely to capture just one true path format
+        if (strpos(strtolower($f), '.png') !== false && strpos($path, 'public/banner') === false && strpos($path, 'logo.png') === false) {
+            echo "FOUND: " . $path . "\n";
+            $count++;
         }
         
         if (is_dir($path)) search($path);
     }
 }
 
-$start = realpath(__DIR__ . '/..'); // /home/uXXXXX/domains/jannathandloom.com
-echo "Starting physical scan from: " . $start . "\n";
+$start = realpath(__DIR__ . '/..'); 
+echo "Starting scan from: " . $start . "\n";
 search($start);
-echo "\nNo arbitrary PNGs found recursively.";
+echo "\nScan complete.";
 ?>
