@@ -2,8 +2,8 @@
     {
         "name": "Noor Linen Sheer Curtain",
         "category": "Sheer",
-        "price": 1899,
-        "originalPrice": 3799,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Premium Linen",
         "material": "Linen",
         "transparency": "Sheer",
@@ -19,7 +19,10 @@
         ],
         "description": "The Noor Linen Sheer Curtain brings a touch of ethereal beauty to any room. Crafted from high-quality linen, it filters sunlight beautifully while maintaining privacy.",
         "images": [
-            "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/1/1.png",
+            "/uploads/products/1/2.png",
+            "/uploads/products/1/3.png",
+            "/uploads/products/1/4.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -29,8 +32,8 @@
     {
         "name": "Meher Velvet Blackout Drape",
         "category": "Blackout",
-        "price": 3499,
-        "originalPrice": 6999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Luxury Velvet",
         "material": "Velvet",
         "transparency": "Blackout",
@@ -45,7 +48,15 @@
         ],
         "description": "Experience peak luxury with our Meher Velvet series. Designed for complete light blockage and superior thermal insulation with a rich, soft texture.",
         "images": [
-            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/2/10.png",
+            "/uploads/products/2/11.png",
+            "/uploads/products/2/12.png",
+            "/uploads/products/2/13.png",
+            "/uploads/products/2/14.png",
+            "/uploads/products/2/6.png",
+            "/uploads/products/2/7.png",
+            "/uploads/products/2/8.png",
+            "/uploads/products/2/9.png"
         ],
         "room": "Bedroom",
         "isBestSeller": true,
@@ -55,8 +66,8 @@
     {
         "name": "Sahara Cotton Printed Curtain",
         "category": "Printed",
-        "price": 2299,
-        "originalPrice": 4599,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "100% Cotton",
         "material": "Cotton",
         "transparency": "Semi-Sheer",
@@ -72,7 +83,22 @@
         ],
         "description": "Inspired by traditional handloom prints, the Sahara series adds a warm, ethnic touch to your modern Indian home.",
         "images": [
-            "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/3/16.png",
+            "/uploads/products/3/17.png",
+            "/uploads/products/3/18.png",
+            "/uploads/products/3/19.png",
+            "/uploads/products/3/20.png",
+            "/uploads/products/3/21.png",
+            "/uploads/products/3/22.png",
+            "/uploads/products/3/23.png",
+            "/uploads/products/3/24.png",
+            "/uploads/products/3/25.png",
+            "/uploads/products/3/26.png",
+            "/uploads/products/3/27.png",
+            "/uploads/products/3/28.png",
+            "/uploads/products/3/29.png",
+            "/uploads/products/3/30.png",
+            "/uploads/products/3/31.png"
         ],
         "room": "Dining Area",
         "isBestSeller": false,
@@ -82,8 +108,8 @@
     {
         "name": "Aafreen Sage Blackout Panel",
         "category": "Blackout",
-        "price": 2899,
-        "originalPrice": 5799,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Polyester Blend",
         "material": "Polyester",
         "transparency": "Blackout",
@@ -96,7 +122,19 @@
         ],
         "description": "A minimalist approach to luxury. The Aafreen panel provides excellent blackout performance with a subtle, elegant sheen.",
         "images": [
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/4/33.png",
+            "/uploads/products/4/34.png",
+            "/uploads/products/4/35.png",
+            "/uploads/products/4/36.png",
+            "/uploads/products/4/37.png",
+            "/uploads/products/4/38.png",
+            "/uploads/products/4/39.png",
+            "/uploads/products/4/40.png",
+            "/uploads/products/4/41.png",
+            "/uploads/products/4/42.png",
+            "/uploads/products/4/43.png",
+            "/uploads/products/4/44.png",
+            "/uploads/products/4/45.png"
         ],
         "room": "Bedroom",
         "isBestSeller": true,
@@ -106,8 +144,8 @@
     {
         "name": "Gul Linen Textured Curtain",
         "category": "Linen",
-        "price": 2499,
-        "originalPrice": 4999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Slub Linen",
         "material": "Linen",
         "transparency": "Semi-Sheer",
@@ -122,7 +160,13 @@
         ],
         "description": "Richly textured with a natural hand-feel, the Gul series is perfect for those who appreciate organic elegance.",
         "images": [
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/5/47.png",
+            "/uploads/products/5/48.png",
+            "/uploads/products/5/49.png",
+            "/uploads/products/5/50.png",
+            "/uploads/products/5/51.png",
+            "/uploads/products/5/52.png",
+            "/uploads/products/5/53.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -132,8 +176,8 @@
     {
         "name": "Zoya Sheer Embroidered Drape",
         "category": "Sheer",
-        "price": 2199,
-        "originalPrice": 4399,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Faux Silk Sheer",
         "material": "Silk Blend",
         "transparency": "Sheer",
@@ -147,7 +191,9 @@
         ],
         "description": "Delicate floral embroidery on premium sheer fabric. The Zoya drape adds a romantic, feminine touch to your interiors.",
         "images": [
-            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/6/55.png",
+            "/uploads/products/6/56.png",
+            "/uploads/products/6/57.png"
         ],
         "room": "Bedroom",
         "isBestSeller": false,
@@ -157,8 +203,8 @@
     {
         "name": "Aria Velvet Gold Border Curtain",
         "category": "Velvet",
-        "price": 3999,
-        "originalPrice": 7999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Heavy Velvet",
         "material": "Velvet",
         "transparency": "Opaque",
@@ -172,7 +218,12 @@
         ],
         "description": "Royal aesthetics for grand living spaces. Features a delicate gold-thread ethnic border for that premium Indian touch.",
         "images": [
-            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/7/59.png",
+            "/uploads/products/7/60.png",
+            "/uploads/products/7/61.png",
+            "/uploads/products/7/62.png",
+            "/uploads/products/7/63.png",
+            "/uploads/products/7/64.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -182,8 +233,8 @@
     {
         "name": "Tara Cotton Striped Panel",
         "category": "Printed",
-        "price": 1499,
-        "originalPrice": 2999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Cotton Canvas",
         "material": "Cotton",
         "transparency": "Semi-Sheer",
@@ -198,7 +249,14 @@
         ],
         "description": "Clean, modern, and versatile. The Tara series features subtle handloom-inspired stripes for a relaxed aesthetic.",
         "images": [
-            "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/8/66.png",
+            "/uploads/products/8/67.png",
+            "/uploads/products/8/68.png",
+            "/uploads/products/8/69.png",
+            "/uploads/products/8/70.png",
+            "/uploads/products/8/71.png",
+            "/uploads/products/8/72.png",
+            "/uploads/products/8/73.png"
         ],
         "room": "Kids Room",
         "isBestSeller": false,
@@ -208,8 +266,8 @@
     {
         "name": "Ira Textured Jute Blend",
         "category": "Linen",
-        "price": 2699,
-        "originalPrice": 5399,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Jute-Cotton Blend",
         "material": "Jute",
         "transparency": "Semi-Sheer",
@@ -223,7 +281,22 @@
         ],
         "description": "A perfect marriage of rustic texture and modern softness. Ideal for spaces that bridge indoor and outdoor vibes.",
         "images": [
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/9/75.png",
+            "/uploads/products/9/76.png",
+            "/uploads/products/9/77.png",
+            "/uploads/products/9/78.png",
+            "/uploads/products/9/79.png",
+            "/uploads/products/9/80.png",
+            "/uploads/products/9/81.png",
+            "/uploads/products/9/82.png",
+            "/uploads/products/9/83.png",
+            "/uploads/products/9/84.png",
+            "/uploads/products/9/85.png",
+            "/uploads/products/9/86.png",
+            "/uploads/products/9/87.png",
+            "/uploads/products/9/88.png",
+            "/uploads/products/9/89.png",
+            "/uploads/products/9/90.png"
         ],
         "room": "Dining Area",
         "isBestSeller": true,
@@ -233,8 +306,8 @@
     {
         "name": "Kiara Pastel Sheer Set",
         "category": "Sheer",
-        "price": 1799,
-        "originalPrice": 3599,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Organza Sheer",
         "material": "Polyester",
         "transparency": "Sheer",
@@ -249,7 +322,12 @@
         ],
         "description": "Soft pastel tones in a lightweight organza sheer. Perfect for creating a dreamy, light-filled atmosphere.",
         "images": [
-            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/10/92.png",
+            "/uploads/products/10/93.png",
+            "/uploads/products/10/94.png",
+            "/uploads/products/10/95.png",
+            "/uploads/products/10/96.png",
+            "/uploads/products/10/97.png"
         ],
         "room": "Kids Room",
         "isBestSeller": false,
@@ -259,8 +337,8 @@
     {
         "name": "Riva Metallic Print Blackout",
         "category": "Blackout",
-        "price": 3299,
-        "originalPrice": 6599,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Jacquard",
         "material": "Polyester",
         "transparency": "Blackout",
@@ -274,7 +352,23 @@
         ],
         "description": "Contemporary luxury at its best. Features a subtle metallic jacquard weave for a sophisticated shimmer.",
         "images": [
-            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/11/100.png",
+            "/uploads/products/11/101.png",
+            "/uploads/products/11/102.png",
+            "/uploads/products/11/103.png",
+            "/uploads/products/11/104.png",
+            "/uploads/products/11/105.png",
+            "/uploads/products/11/106.png",
+            "/uploads/products/11/107.png",
+            "/uploads/products/11/108.png",
+            "/uploads/products/11/109.png",
+            "/uploads/products/11/110.png",
+            "/uploads/products/11/111.png",
+            "/uploads/products/11/112.png",
+            "/uploads/products/11/113.png",
+            "/uploads/products/11/114.png",
+            "/uploads/products/11/115.png",
+            "/uploads/products/11/99.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -284,8 +378,8 @@
     {
         "name": "Siya Handloom Cotton Drape",
         "category": "Printed",
-        "price": 1999,
-        "originalPrice": 3999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Handloom Cotton",
         "material": "Cotton",
         "transparency": "Opaque",
@@ -300,7 +394,14 @@
         ],
         "description": "Authentic handloom texture with traditional block prints. A celebration of Indian craftsmanship.",
         "images": [
-            "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/12/117.png",
+            "/uploads/products/12/118.png",
+            "/uploads/products/12/119.png",
+            "/uploads/products/12/120.png",
+            "/uploads/products/12/121.png",
+            "/uploads/products/12/122.png",
+            "/uploads/products/12/123.png",
+            "/uploads/products/12/124.png"
         ],
         "room": "Living Room",
         "isBestSeller": false,
@@ -310,8 +411,8 @@
     {
         "name": "Maya Crushed Velvet Luxury",
         "category": "Velvet",
-        "price": 3799,
-        "originalPrice": 7599,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Crushed Velvet",
         "material": "Velvet",
         "transparency": "Opaque",
@@ -325,7 +426,10 @@
         ],
         "description": "Interplay of light and shadow. The Maya series features a crushed texture that reflects light beautifully.",
         "images": [
-            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/13/126.png",
+            "/uploads/products/13/127.png",
+            "/uploads/products/13/128.png",
+            "/uploads/products/13/129.png"
         ],
         "room": "Bedroom",
         "isBestSeller": true,
@@ -335,8 +439,8 @@
     {
         "name": "Ojas Geometric Print Curtain",
         "category": "Printed",
-        "price": 1699,
-        "originalPrice": 3399,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Polyester Cotton",
         "material": "Polyester",
         "transparency": "Semi-Sheer",
@@ -351,7 +455,10 @@
         ],
         "description": "Modern geometric patterns for the contemporary home. Durable, easy-to-maintain, and stylish.",
         "images": [
-            "https://images.unsplash.com/photo-1536340332372-fe030e463a56?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/14/131.png",
+            "/uploads/products/14/132.png",
+            "/uploads/products/14/133.png",
+            "/uploads/products/14/134.png"
         ],
         "room": "Dining Area",
         "isBestSeller": false,
@@ -361,8 +468,8 @@
     {
         "name": "Hasa Dual-Tone Sheer",
         "category": "Sheer",
-        "price": 1999,
-        "originalPrice": 3999,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Voile",
         "material": "Cotton",
         "transparency": "Sheer",
@@ -377,7 +484,17 @@
         ],
         "description": "A sophisticated dual-tone effect that changes depth with the light. Elegant and understated.",
         "images": [
-            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/15/136.png",
+            "/uploads/products/15/137.png",
+            "/uploads/products/15/138.png",
+            "/uploads/products/15/139.png",
+            "/uploads/products/15/140.png",
+            "/uploads/products/15/141.png",
+            "/uploads/products/15/142.png",
+            "/uploads/products/15/143.png",
+            "/uploads/products/15/144.png",
+            "/uploads/products/15/145.png",
+            "/uploads/products/15/146.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -387,8 +504,8 @@
     {
         "name": "Deva Silk Blend Opacity",
         "category": "Blackout",
-        "price": 3899,
-        "originalPrice": 7799,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Silk Blend",
         "material": "Silk Blend",
         "transparency": "Blackout",
@@ -402,7 +519,11 @@
         ],
         "description": "The pinnacle of opulence. Silk-like finish with heavy blackout lining for ultimate comfort.",
         "images": [
-            "https://images.unsplash.com/photo-1541004995602-b3e89b7899a2?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/16/148.png",
+            "/uploads/products/16/149.png",
+            "/uploads/products/16/150.png",
+            "/uploads/products/16/151.png",
+            "/uploads/products/16/152.png"
         ],
         "room": "Living Room",
         "isBestSeller": true,
@@ -412,8 +533,8 @@
     {
         "name": "Kavi Boho Tassel Curtain",
         "category": "Printed",
-        "price": 2199,
-        "originalPrice": 4399,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Cotton Linen",
         "material": "Cotton",
         "transparency": "Semi-Sheer",
@@ -428,7 +549,15 @@
         ],
         "description": "Bohemian vibes for the free-spirited home. Features hand-tied tassels for a playful touch.",
         "images": [
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/17/154.png",
+            "/uploads/products/17/155.png",
+            "/uploads/products/17/156.png",
+            "/uploads/products/17/157.png",
+            "/uploads/products/17/158.png",
+            "/uploads/products/17/159.png",
+            "/uploads/products/17/160.png",
+            "/uploads/products/17/161.png",
+            "/uploads/products/17/162.png"
         ],
         "room": "Kids Room",
         "isBestSeller": false,
@@ -438,8 +567,8 @@
     {
         "name": "Nila Water-Resistant Sheer",
         "category": "Sheer",
-        "price": 1599,
-        "originalPrice": 3199,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Synthetic Sheer",
         "material": "Polyester",
         "transparency": "Sheer",
@@ -453,7 +582,11 @@
         ],
         "description": "Practical luxury. Ideal for bathrooms or kitchens, combining beauty with moisture resistance.",
         "images": [
-            "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/18/164.png",
+            "/uploads/products/18/165.png",
+            "/uploads/products/18/166.png",
+            "/uploads/products/18/167.png",
+            "/uploads/products/18/168.png"
         ],
         "room": "Dining Area",
         "isBestSeller": false,
@@ -463,8 +596,8 @@
     {
         "name": "Yara Floral Jacquard Panel",
         "category": "Blackout",
-        "price": 3199,
-        "originalPrice": 6399,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Jacquard",
         "material": "Polyester",
         "transparency": "Blackout",
@@ -478,7 +611,13 @@
         ],
         "description": "Subtle floral motifs woven directly into the fabric. Timeless, elegant, and durable.",
         "images": [
-            "https://images.unsplash.com/photo-1615873968403-89e068629275?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/19/170.png",
+            "/uploads/products/19/171.png",
+            "/uploads/products/19/172.png",
+            "/uploads/products/19/173.png",
+            "/uploads/products/19/174.png",
+            "/uploads/products/19/175.png",
+            "/uploads/products/19/176.png"
         ],
         "room": "Bedroom",
         "isBestSeller": true,
@@ -488,8 +627,8 @@
     {
         "name": "Zain Minimalist Linen Set",
         "category": "Linen",
-        "price": 2399,
-        "originalPrice": 4799,
+        "price": 299,
+        "originalPrice": 999,
         "fabric": "Premium Linen",
         "material": "Linen",
         "transparency": "Semi-Sheer",
@@ -504,11 +643,347 @@
         ],
         "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
         "images": [
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop"
+            "/uploads/products/20/178.png",
+            "/uploads/products/20/179.png",
+            "/uploads/products/20/180.png",
+            "/uploads/products/20/181.png",
+            "/uploads/products/20/182.png",
+            "/uploads/products/20/183.png",
+            "/uploads/products/20/184.png",
+            "/uploads/products/20/185.png"
         ],
         "room": "Living Room",
         "isBestSeller": false,
         "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 21",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/21/187.png",
+            "/uploads/products/21/188.png",
+            "/uploads/products/21/189.png",
+            "/uploads/products/21/190.png",
+            "/uploads/products/21/191.png",
+            "/uploads/products/21/192.png",
+            "/uploads/products/21/193.png",
+            "/uploads/products/21/194.png",
+            "/uploads/products/21/195.png",
+            "/uploads/products/21/196.png",
+            "/uploads/products/21/197.png",
+            "/uploads/products/21/198.png",
+            "/uploads/products/21/199.png",
+            "/uploads/products/21/200.png",
+            "/uploads/products/21/201.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 22",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/22/203.png",
+            "/uploads/products/22/204.png",
+            "/uploads/products/22/205.png",
+            "/uploads/products/22/206.png",
+            "/uploads/products/22/207.png",
+            "/uploads/products/22/208.png",
+            "/uploads/products/22/209.png",
+            "/uploads/products/22/210.png",
+            "/uploads/products/22/211.png",
+            "/uploads/products/22/212.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 23",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/23/214.png",
+            "/uploads/products/23/215.png",
+            "/uploads/products/23/216.png",
+            "/uploads/products/23/217.png",
+            "/uploads/products/23/218.png",
+            "/uploads/products/23/219.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 24",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/24/221.png",
+            "/uploads/products/24/222.png",
+            "/uploads/products/24/223.png",
+            "/uploads/products/24/224.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": false,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 25",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/25/226.png",
+            "/uploads/products/25/227.png",
+            "/uploads/products/25/228.png",
+            "/uploads/products/25/229.png",
+            "/uploads/products/25/230.png",
+            "/uploads/products/25/231.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true,
+        "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 26",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/26/233.png",
+            "/uploads/products/26/234.png",
+            "/uploads/products/26/235.png",
+            "/uploads/products/26/236.png",
+            "/uploads/products/26/237.png",
+            "/uploads/products/26/238.png",
+            "/uploads/products/26/239.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": false,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 27",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/27/241.png",
+            "/uploads/products/27/242.png",
+            "/uploads/products/27/243.png",
+            "/uploads/products/27/244.png",
+            "/uploads/products/27/245.png",
+            "/uploads/products/27/246.png",
+            "/uploads/products/27/247.png",
+            "/uploads/products/27/248.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 28",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/28/250.png",
+            "/uploads/products/28/251.png",
+            "/uploads/products/28/252.png",
+            "/uploads/products/28/253.png",
+            "/uploads/products/28/254.png",
+            "/uploads/products/28/255.png",
+            "/uploads/products/28/256.png",
+            "/uploads/products/28/257.png",
+            "/uploads/products/28/258.png",
+            "/uploads/products/28/259.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": true,
+        "fastDelivery": false,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 29",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/29/261.png",
+            "/uploads/products/29/262.png",
+            "/uploads/products/29/263.png",
+            "/uploads/products/29/264.png",
+            "/uploads/products/29/265.png",
+            "/uploads/products/29/266.png",
+            "/uploads/products/29/267.png",
+            "/uploads/products/29/268.png",
+            "/uploads/products/29/269.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": true,
+        "stock": 48
+    },
+    {
+        "name": "Premium Handloom Curtain Series 30",
+        "category": "Linen",
+        "price": 299,
+        "originalPrice": 999,
+        "fabric": "Premium Linen",
+        "material": "Linen",
+        "transparency": "Semi-Sheer",
+        "sizes": [
+            "5ft",
+            "7ft",
+            "9ft"
+        ],
+        "colors": [
+            "Charcoal",
+            "Deep Navy"
+        ],
+        "description": "Modern, dark linen for a sophisticated, moody atmosphere. High durability and classic appeal.",
+        "images": [
+            "/uploads/products/30/271.png",
+            "/uploads/products/30/272.png",
+            "/uploads/products/30/273.png",
+            "/uploads/products/30/274.png"
+        ],
+        "room": "Living Room",
+        "isBestSeller": false,
+        "fastDelivery": false,
         "stock": 48
     }
 ]

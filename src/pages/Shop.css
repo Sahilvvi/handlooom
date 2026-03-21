@@ -256,6 +256,28 @@ input:checked+.slider:before {
     gap: 20px;
 }
 
+.load-more-section {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.load-more-btn {
+    background: #1a1a1a;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    background: #c5a059;
+    transform: translateY(-2px);
+}
+
 .no-products {
     text-align: center;
     padding: 60px;
@@ -290,3 +312,79 @@ input:checked+.slider:before {
         margin-bottom: 20px;
     }
 }
+
+@media (max-width: 600px) {
+    .shop-top-bar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .view-as {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* --- Loading Skeleton --- */
+.shop-loading-skeleton {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+.skeleton-sidebar {
+    width: 280px;
+    height: 600px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-main {
+    flex: 1;
+}
+
+.skeleton-toolbar {
+    height: 60px;
+    background: #f0f0f0;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.skeleton-product-card {
+    height: 400px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@media (max-width: 1024px) {
+    .skeleton-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .shop-loading-skeleton { flex-direction: column; }
+    .skeleton-sidebar { width: 100%; height: 100px; }
+    .skeleton-grid { grid-template-columns: 1fr; }
+}
+

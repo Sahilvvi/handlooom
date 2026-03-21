@@ -1,20 +1,36 @@
 .wide-promo-section {
-    padding: 20px 0;
+    padding: 40px 0;
     background-color: #fff;
 }
 
 .wide-banner {
-    background: linear-gradient(to right, #FDF1F3, #F6CBD2);
-    border-radius: 8px;
-    padding: 30px 50px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, #fff5f6 0%, #fde2e7 100%);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 15px 35px rgba(214, 69, 97, 0.1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(214, 69, 97, 0.05);
+}
+
+.wide-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(214, 69, 97, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
 }
 
 .wide-banner-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 .left-promo {
@@ -23,56 +39,63 @@
 }
 
 .splash-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
     font-style: italic;
-    color: #222;
+    color: #1a1a1a;
+    line-height: 1.2;
 }
 
 .colours-text {
-    font-size: 2.8rem;
+    font-size: 4rem;
     color: #D64561;
-    line-height: 1;
-    margin: 0;
+    line-height: 0.9;
+    margin: 5px 0 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
 }
 
 .colours-text span {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-style: italic;
-    color: #222;
-    font-size: 2rem;
+    color: #1a1a1a;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: normal;
 }
 
 .divider {
     width: 2px;
-    height: 80px;
-    background-color: #D64561;
+    height: 100px;
+    background: linear-gradient(180deg, transparent 0%, #D64561 50%, transparent 100%);
     opacity: 0.3;
 }
 
 .middle-promo {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .upto {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 800;
     color: #D64561;
 }
 
 .percent {
-    font-size: 5rem;
-    font-weight: 700;
+    font-size: 7rem;
+    font-weight: 900;
     color: #D64561;
     line-height: 1;
+    letter-spacing: -5px;
 }
 
 .plus {
-    font-size: 3rem;
+    font-size: 4rem;
     color: #D64561;
     font-weight: 300;
 }
@@ -83,51 +106,55 @@
 }
 
 .upto-small {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 800;
     color: #D64561;
-    margin-bottom: -5px;
 }
 
 .amount {
-    font-size: 4rem;
-    font-weight: 700;
+    font-size: 5rem;
+    font-weight: 900;
     color: #D64561;
     line-height: 1;
+    letter-spacing: -2px;
 }
 
 .right-promo {
-    max-width: 150px;
+    max-width: 200px;
 }
 
 .cashback-label {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #D64561;
-    line-height: 1.2;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.1;
     display: block;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+    .percent { font-size: 5rem; }
+    .amount { font-size: 4rem; }
 }
 
 @media (max-width: 1024px) {
+    .wide-banner { padding: 40px; }
     .wide-banner-content {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
+        gap: 30px;
     }
-
-    .divider {
-        display: none;
-    }
-
-    .colours-text {
-        font-size: 2rem;
-    }
-
-    .percent {
-        font-size: 3rem;
-    }
-
-    .amount {
-        font-size: 2.5rem;
-    }
+    .divider { display: none; }
+    .colours-text { font-size: 3rem; }
+    .colours-text span { font-size: 1.8rem; }
+    .percent { font-size: 5rem; }
 }
+
+@media (max-width: 768px) {
+    .wide-banner { padding: 30px 20px; }
+    .percent { font-size: 4rem; letter-spacing: -2px; }
+    .amount { font-size: 3.5rem; }
+    .splash-text { font-size: 1.5rem; }
+    .colours-text { font-size: 2.2rem; }
+    .plus { font-size: 2.5rem; }
+}

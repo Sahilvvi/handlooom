@@ -1,4 +1,4 @@
-name: Deploy to Hostinger via FTP
+name: Deploy Live to Hostinger
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy-frontend:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -17,32 +17,29 @@ jobs:
         with:
           node-version: 18
 
-      - name: 📦 Install Frontend Dependencies
-        run: npm install
+      - name: 📦 Install Frontend Dependencies & Build
+        run: |
+          npm install
+          npm run build
 
-      - name: 🏗️ Build Frontend
-        run: node hostinger_build.cjs
-
-      - name: 📂 Sync Frontend via FTP
+      - name: 🚀 Sync Frontend Live (React -> public_html)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: 82.25.83.161 # Hardcoded for your convenience
-          username: u549028972 # Hardcoded for your convenience
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: /domains/violet-narwhal-474691.hostingersite.com/public_html/
+          server-dir: ./domains/jannathloom.com/public_html/
 
-  deploy-backend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-
-      - name: 📂 Sync Backend via FTP
+      - name: 🔧 Sync Backend Live (Node.js -> server)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: 82.25.83.161 # Same Hardcoded IP
-          username: u549028972 # Same Hardcoded Username
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./server/
-          server-dir: /domains/rosybrown-koala-703473.hostingersite.com/public_html/server/
+          server-dir: ./domains/jannathloom.com/server/
+          exclude: |
+            **/.env
+            **/node_modules/**
+            **/uploads/**

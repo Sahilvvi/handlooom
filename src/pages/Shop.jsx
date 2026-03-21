@@ -21,16 +21,22 @@ const Shop = () => {
         priceRange: [391, 2449],
         fastDelivery: false
     });
+    const [visibleCount, setVisibleCount] = useState(24);
 
     const [appliedPriceRange, setAppliedPriceRange] = useState([391, 2449]);
 
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/api/products`);
-                const data = await response.json();
+                // Fetch first 100 for filtering/sorting baseline, or paginated if needed
+                // For now, let's fetch a chunk that's manageable but enough for filters
+                const response = await fetch(`${BASE_URL}/api/products?limit=100`);
+                const resData = await response.json();
+                
+                const data = resData.products || resData; // Handle both structures
+
                 setAllProducts(data);
-                setProducts(data);
+                setProducts(data.slice(0, 24)); // Initial display
 
                 // Set initial price range based on data
                 if (data.length > 0) {
@@ -80,8 +86,8 @@ const Shop = () => {
             filtered.sort((a, b) => b.price - a.price);
         }
 
-        setProducts(filtered);
-    }, [filters, appliedPriceRange, sort, allProducts, urlCategory, location.search]);
+        setProducts(filtered.slice(0, visibleCount));
+    }, [filters, appliedPriceRange, sort, allProducts, urlCategory, location.search, visibleCount]);
 
     const handleCheckboxChange = (type, value) => {
         setFilters(prev => {
@@ -118,8 +124,6 @@ const Shop = () => {
         }).length;
     };
 
-    if (loading) return <div className="loading-container">Loading collection...</div>;
-
     const transparencyOptions = [...new Set(allProducts.map(p => p.transparency))].filter(Boolean).map(t => ({ label: t, count: getCount('transparency', t) }));
     const materialOptions = [...new Set(allProducts.map(p => p.material))].filter(Boolean).map(m => ({ label: m, count: getCount('material', m) }));
     const colorOptions = [
@@ -133,8 +137,22 @@ const Shop = () => {
     return (
         <div className="shop-page">
             <div className="container shop-container">
-                <aside className="shop-sidebar">
-                    <div className="filter-section">
+                {loading ? (
+                    <div className="shop-loading-skeleton">
+                        <aside className="skeleton-sidebar"></aside>
+                        <main className="skeleton-main">
+                            <div className="skeleton-toolbar"></div>
+                            <div className="skeleton-grid">
+                                {[...Array(12)].map((_, i) => (
+                                    <div key={i} className="skeleton-product-card"></div>
+                                ))}
+                            </div>
+                        </main>
+                    </div>
+                ) : (
+                    <>
+                        <aside className="shop-sidebar">
+                            <div className="filter-section">
                         <h3>Filters</h3>
                         <div className="fast-delivery">
                             <label className="switch">
@@ -262,6 +280,14 @@ const Shop = () => {
                         ))}
                     </div>
 
+                    {allProducts.length > visibleCount && (
+                        <div className="load-more-section">
+                            <button className="load-more-btn" onClick={() => setVisibleCount(prev => prev + 24)}>
+                                Load More Designs
+                            </button>
+                        </div>
+                    )}
+
                     {products.length === 0 && (
                         <div className="no-products">
                             <h3>No curtains found for these filters.</h3>
@@ -269,9 +295,11 @@ const Shop = () => {
                         </div>
                     )}
                 </main>
-            </div>
-        </div>
-    );
+            </>
+        )}
+    </div>
+</div>
+);
 };
 
 export default Shop;

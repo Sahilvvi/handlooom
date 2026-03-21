@@ -128,6 +128,38 @@ button {
   margin: 15px auto 0;
 }
 
+/* Standardized Alternative Section Header */
+.section-header-alt {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.section-header-alt h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.section-header-alt p {
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  color: #64748b;
+  font-weight: 500;
+}
+
+.section-header-alt::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #EF6F31;
+  margin: 20px auto 0;
+  border-radius: 2px;
+}
+
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -171,10 +203,30 @@ button {
     font-size: 1.5rem;
   }
 
+  .container {
+    padding: 0 10px;
+  }
+
   .btn-primary {
     padding: 10px 20px;
     font-size: 0.8rem;
     width: 100%;
     text-align: center;
   }
+}
+
+/* Global Responsive Fixes */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.main-content {
+  overflow-x: hidden;
 }

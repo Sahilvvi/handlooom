@@ -3,8 +3,24 @@ const Product = require('../models/Product');
 // Get all products
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find();
-        res.json(products);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const products = await Product.find({ isActive: { $ne: false } })
+            .select('name price images originalPrice category transparency material fastDelivery isActive colors room isBestSeller description')
+            .skip(skip)
+            .limit(limit)
+            .lean();
+        
+        const total = await Product.countDocuments();
+        
+        res.json({
+            products,
+            total,
+            page,
+            pages: Math.ceil(total / limit)
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

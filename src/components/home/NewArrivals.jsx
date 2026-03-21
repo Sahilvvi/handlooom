@@ -1,71 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import BASE_URL from '../../utils/api';
+import BASE_URL, { getImgUrl } from '../../utils/api';
 import './NewArrivals.css';
 
-const allLocalImages = ['/d1.png', '/d2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png'];
+// Actual photos only
 
-const getImg = (seed = '', offset = 0) => {
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) % allLocalImages.length;
-    return allLocalImages[(hash + offset) % allLocalImages.length];
-};
+const NewArrivals = ({ products = [], loading = false }) => {
+    // Get 6 most recent arrivals
+    const arrivals = [...products]
+        .filter(p => p.isActive !== false && p.images?.length > 0)
+        .reverse()
+        .slice(0, 6);
 
-const NewArrivals = () => {
-    const [products, setProducts] = useState([]);
+    if (loading && arrivals.length === 0) return (
+        <div className="container" style={{ padding: '80px 0', textAlign: 'center' }}>
+            <div className="skeleton-loader-bar"></div>
+        </div>
+    );
 
-    useEffect(() => {
-        fetch(`${BASE_URL}/api/products`)
-            .then(r => r.json())
-            .then(data => {
-                const activeOnes = Array.isArray(data) ? data.filter(p => p.isActive !== false) : [];
-                // Show most recent
-                const reversed = [...activeOnes].reverse();
-                setProducts(reversed.slice(0, 2));
-            })
-            .catch(() => { });
-    }, []);
+    if (arrivals.length === 0) return null;
 
     return (
-        <section className="new-arrivals-section">
+        <section className="new-arrivals-premium">
             <div className="container">
-                <div className="section-header-alt">
-                    <h2>New Arrivals</h2>
-                    <p>We Love New Things, Don't You?</p>
-                </div>
-                <div className="arrivals-grid">
-                    {products.length > 0 ? products.map((product, index) => (
-                        <Link key={product._id} to={`/product/${product._id}`} className="arrival-card">
-                            <div className="arrival-img">
-                                <img src={getImg(product._id || product.name, index)} alt={product.name} />
-                                {product.isBestSeller && <span className="new-tag">Best Seller</span>}
-                                {!product.isBestSeller && <span className="new-tag">New</span>}
-                            </div>
-                            <div className="arrival-info">
-                                <h3>{product.name}</h3>
-                                <div className="price-row">
-                                    <span className="current-price">₹ {product.price?.toLocaleString('en-IN')}</span>
-                                    <span className="old-price">₹ {Math.round(product.price * 1.27).toLocaleString('en-IN')}</span>
-                                    <span className="discount-tag">21% OFF</span>
-                                </div>
-                            </div>
+                <div className="arrivals-layout">
+                    <div className="arrivals-info-box">
+                        <span className="accent-tag">Just In</span>
+                        <h2>The New Season</h2>
+                        <p>Discover fresh textures and artisan patterns designed for the contemporary home sanctuary.</p>
+                        <Link to="/shop" className="text-cta">
+                            <span>Explore Newest Designs</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </Link>
-                    )) : (
-                        // Skeleton fallback while loading
-                        [0, 1].map(i => (
-                            <div key={i} className="arrival-card skeleton-card">
-                                <div className="skeleton-img"></div>
-                                <div className="skeleton-text"></div>
-                            </div>
-                        ))
-                    )}
-                </div>
-                <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                    <Link to="/shop" className="view-all-btn">View All New Arrivals →</Link>
+                    </div>
+
+                    <div className="arrivals-grid">
+                        {arrivals.map((product) => {
+                            const imgUrl = getImgUrl(product.images[0]);
+
+                            return (
+                                <Link key={product._id} to={`/product/${product._id}`} className="arrival-item-card">
+                                    <div className="arrival-img-box">
+                                        <img src={imgUrl} alt={product.name} loading="lazy" />
+                                        <div className="arrival-status">New</div>
+                                    </div>
+                                    <div className="arrival-details">
+                                        <h4>{product.name}</h4>
+                                        <div className="arrival-pricing">
+                                            <span className="price-tag">₹{product.price}</span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </section>
     );
 };
+
 
 export default NewArrivals;

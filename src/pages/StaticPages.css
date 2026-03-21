@@ -1,78 +1,241 @@
-/* Static Pages & Contact Form Styles */
-.static-page-container {
-    padding: 80px 20px;
-    min-height: 60vh;
+.static-page-premium {
+    padding-bottom: 120px;
+    background: #fdfbf7;
+    min-height: 100vh;
 }
 
-.static-page-title {
-    margin-bottom: 30px;
-    color: #1e293b;
-    font-size: 2.8rem;
-    font-family: var(--font-heading);
+.static-page-hero {
+    padding: 100px 0 60px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 80px;
 }
 
-.static-page-content {
-    line-height: 1.8;
-    color: #444;
+.static-bread {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #c5a059;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.static-title-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.static-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.static-content-card {
+    background: white;
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+}
+
+.static-content-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #1a1a1a;
+}
+
+.static-content-card p {
     font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 25px;
 }
 
-.contact-layout {
+/* --- Story Page Expansion --- */
+.story-section {
+    margin: 100px 0;
+}
+
+.story-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
+    align-items: center;
 }
 
-.contact-info-list {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.story-grid.reverse {
+    direction: rtl;
 }
 
-.contact-info-item {
-    display: flex;
-    gap: 15px;
+.story-grid.reverse > * {
+    direction: ltr; /* Reset text direction inside rtl grid */
 }
 
-.contact-form-card {
+.story-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.08);
+    object-fit: cover;
+    height: 500px;
+}
+
+.section-tag {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #c5a059;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.story-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+.story-text p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.story-text.full-width {
+    max-width: 800px;
+}
+
+.story-text.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.story-stats-section {
+    background: #1a1a1a;
+    color: white;
+    padding: 100px 0;
+    margin: 120px 0;
+    border-radius: 30px;
+}
+
+.stats-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: #c5a059;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #888;
+}
+
+/* --- Contact Page Expansion --- */
+.contact-main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 100px;
+    margin-bottom: 120px;
+}
+
+.contact-card-premium {
     background: #fff;
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
     border: 1px solid #f0f0f0;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
 }
 
-.contact-form-grid {
+.contact-card-premium h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.c-info {
+    margin-top: 20px;
+}
+
+.c-info strong {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c5a059;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.faq-tease {
+    padding: 100px 0;
+    border-top: 1px solid #eee;
+}
+
+.faq-tease h2 {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.faq-preview-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
 }
 
-@media (max-width: 968px) {
-    .contact-layout {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
+.faq-item-small h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
 
-    .static-page-title {
-        font-size: 2.2rem;
-    }
+.faq-item-small p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.premium-btn-alt {
+    background: none;
+    border: 2px solid #1a1a1a;
+    padding: 15px 30px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.premium-btn-alt:hover {
+    background: #1a1a1a;
+    color: white;
+}
+
+@media (max-width: 1024px) {
+    .story-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .story-grid.reverse { direction: ltr; }
+    .stats-grid-premium { grid-template-columns: 1fr 1fr; }
+    .contact-main-grid { grid-template-columns: 1fr; }
+    .faq-preview-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
-    .static-page-container {
-        padding: 40px 15px;
-    }
-
-    .static-page-title {
-        font-size: 1.8rem;
-    }
-
-    .contact-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-form-card {
-        padding: 25px;
-    }
+    .story-text h2 { font-size: 2.2rem; }
+    .stat-card h3 { font-size: 2.5rem; }
+    .stats-grid-premium { grid-template-columns: 1fr; }
 }

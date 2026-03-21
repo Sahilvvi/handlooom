@@ -28,7 +28,15 @@ import Wishlist from './pages/Wishlist';
 import TrackOrder from './pages/TrackOrder';
 import './App.css';
 
-const Layout = ({ children }) => <><Header />{children}<Footer /></>;
+const Layout = ({ children }) => (
+  <>
+    <Header />
+    <main className="main-content">
+      {children}
+    </main>
+    <Footer />
+  </>
+);
 
 function App() {
   return (

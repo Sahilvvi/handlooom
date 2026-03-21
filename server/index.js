@@ -34,33 +34,24 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 200,
+    max: 5000, 
     message: { message: 'Too many requests from this IP, please try again after 15 minutes.' }
 });
-const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, message: { message: 'Too many login attempts, please try again later.' } });
-
-app.use(limiter);
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { message: 'Too many login attempts, please try again later.' } });
 
 // ─── Standard Middleware ──────────────────────────────
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ─── Static file serving for uploaded images ─────────
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// ─── Static file serving (Served BEFORE rate limiting) ─
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ─── MongoDB Connection (cached for serverless) ───────
+// ─── Apply rate limit only to API routes ─────────────
+app.use('/api', limiter);
+
+
+// ─── MongoDB Connection (connect ONCE at startup) ────
 const connectDB = require('./config/db');
-
-// Ensure DB is connected before handling any requests
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (err) {
-        console.error('❌ Database connection error:', err);
-        res.status(503).json({ message: 'Database connecting error', error: err.message });
-    }
-});
 
 // ─── Routes ──────────────────────────────────────────
 app.use('/api/auth', authLimiter, require('./routes/authRoutes'));
@@ -71,9 +62,23 @@ app.use('/api/coupons', require('./routes/couponRoutes'));
 app.use('/api/banners', require('./routes/bannerRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
 
-// ─── Health check ────────────────────────────────────
-app.get('/', (req, res) => res.json({ message: 'Jannat Handloom API ✅', version: '2.0' }));
+// ─── Health check & Frontend Serving ─────────────────
+app.get('/api', (req, res) => res.json({ message: 'Jannat Handloom API ✅', version: '2.0' }));
+
+// Serve the React frontend 'public' directory (we will build it here)
+const frontendPath = path.join(__dirname, 'public');
+app.use(express.static(frontendPath));
+
+// All unknown routes should serve the React app (Client-side routing)
+app.get(/(.*)/, (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
+        if (err) {
+            res.json({ message: 'Jannat Handloom API ✅', version: '2.0', note: 'Frontend not found in server/public' });
+        }
+    });
+});
 
 // ─── Global Error Handler ────────────────────────────
 app.use((err, req, res, next) => {
@@ -84,11 +89,18 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ─── Always start server (Hostinger needs this) ──────
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-}).on('error', (err) => {
-    console.error('❌ Server failed to start:', err.message);
-});
+// ─── Connect DB then start server ───────────────────
+connectDB()
+    .then(() => {
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`🚀 Server running on port ${PORT}`);
+        }).on('error', (err) => {
+            console.error('❌ Server failed to start:', err.message);
+        });
+    })
+    .catch(err => {
+        console.error('❌ MongoDB connection failed, server not started:', err.message);
+        process.exit(1);
+    });
 
 module.exports = app;

@@ -1,32 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import BASE_URL from '../../utils/api';
+import BASE_URL, { getImgUrl } from '../../utils/api';
 import './ProductCard.css';
-
-// Fallback images if no DB images
-const FALLBACK = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png'];
-const getHash = (seed = '') => {
-    let h = 0;
-    for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % FALLBACK.length;
-    return h;
-};
 
 const ProductCard = ({ product }) => {
     const { addToCart } = useCart();
 
-    const getImgUrl = (img, fallback) => {
-        if (!img) return fallback;
-        if (img.startsWith('http') || img.startsWith('data:')) return img;
-        return `${BASE_URL}${img}`;
-    };
-
-    // Use actual DB images if available, else fallback to local
+    // Use standardized helper
     const dbImages = product.images?.filter(Boolean) || [];
-    const h = getHash(product._id || product.name);
-    const primary = getImgUrl(dbImages[0], FALLBACK[h % FALLBACK.length]);
-    const secondary = getImgUrl(dbImages[1], FALLBACK[(h + 1) % FALLBACK.length]);
+    const primary = getImgUrl(dbImages[0]);
+    const secondary = getImgUrl(dbImages[1] || dbImages[0]);
 
     const discount = product.originalPrice && product.originalPrice > product.price
+
         ? Math.round((1 - product.price / product.originalPrice) * 100)
         : null;
 
@@ -61,14 +47,17 @@ const ProductCard = ({ product }) => {
                     src={primary}
                     alt={product.name}
                     className="primary-img"
-                    onError={e => { e.target.src = FALLBACK[h % FALLBACK.length]; }}
+                    loading="lazy"
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/d1.png'; }}
                 />
                 <img
                     src={secondary}
                     alt={product.name}
                     className="secondary-img"
-                    onError={e => { e.target.src = FALLBACK[(h + 1) % FALLBACK.length]; }}
+                    loading="lazy"
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/d1.png'; }}
                 />
+
                 <div className="product-actions">
                     <button className="action-btn" title="Add to Wishlist" onClick={handleWishlist}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -80,9 +69,9 @@ const ProductCard = ({ product }) => {
                 <span className="product-category">{product.category}</span>
                 <h3 className="product-name">{product.name}</h3>
                 <div className="product-price">
-                    <span className="current-price">₹{product.price?.toLocaleString('en-IN')}</span>
+                    <span className="current-price">₹{product.price}</span>
                     {product.originalPrice > product.price && (
-                        <span className="original-price">₹{product.originalPrice?.toLocaleString('en-IN')}</span>
+                        <span className="original-price">₹{product.originalPrice}</span>
                     )}
                 </div>
                 <div className="product-colors">

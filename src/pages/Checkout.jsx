@@ -26,55 +26,112 @@ const Checkout = () => {
     const shipping = cartTotal >= 999 ? 0 : 99;
     const total = cartTotal + shipping;
 
+    const loadRazorpay = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (step === 1) { setStep(2); return; }
-        if (step === 2) {
-            setSubmitting(true);
-            setError('');
-            try {
-                const token = localStorage.getItem('jannat_token');
-                const orderPayload = {
-                    items: cartItems.map(item => ({
-                        product: item._id,
-                        name: item.name,
-                        price: item.price || 0,
-                        quantity: item.quantity || 1,
-                        size: item.size || ''
-                    })),
-                    shippingAddress: {
-                        firstName: formData.firstName, lastName: formData.lastName,
-                        email: formData.email, phone: formData.phone,
-                        address: formData.address, city: formData.city,
-                        state: formData.state, pincode: formData.pincode
-                    },
-                    paymentMode: formData.paymentMode,
-                    subtotal: cartTotal,
-                    shippingCost: shipping,
-                    totalAmount: total
-                };
+        
+        setSubmitting(true);
+        setError('');
+
+        try {
+            const token = localStorage.getItem('jannat_token');
+            const orderPayload = {
+                items: cartItems.map(item => ({
+                    product: item._id, name: item.name, price: item.price || 0,
+                    quantity: item.quantity || 1, size: item.size || ''
+                })),
+                shippingAddress: {
+                    firstName: formData.firstName, lastName: formData.lastName,
+                    email: formData.email, phone: formData.phone,
+                    address: formData.address, city: formData.city,
+                    state: formData.state, pincode: formData.pincode
+                },
+                paymentMode: formData.paymentMode,
+                subtotal: cartTotal,
+                shippingCost: shipping,
+                totalAmount: total
+            };
+
+            // CASE 1: COD
+            if (formData.paymentMode === 'COD') {
                 const res = await fetch(`${BASE_URL}/api/orders`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-                    },
+                    headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
                     body: JSON.stringify(orderPayload)
                 });
                 const data = await res.json();
-                if (res.ok) {
-                    setOrderNumber(data.orderNumber);
-                    clearCart();
-                    setStep(3);
-                } else {
-                    setError(data.message || 'Something went wrong. Please try again.');
-                }
-            } catch (err) {
-                setError('Unable to connect to server. Please check your internet or try again later.');
-                console.error(err);
+                if (res.ok) { setOrderNumber(data.orderNumber); clearCart(); setStep(3); } 
+                else { setError(data.message || 'Error creating order'); }
+            } 
+            // CASE 2: ONLINE (Card/UPI via Razorpay)
+            else {
+                const res = await loadRazorpay();
+                if (!res) { alert("Razorpay SDK failed to load. Are you online?"); setSubmitting(false); return; }
+
+                // 1. Create Order in Razorpay
+                const orderRes = await fetch(`${BASE_URL}/api/payments/orders`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: total, currency: 'INR', receipt: `order_rcpt_${Date.now()}` })
+                });
+                const razorpayOrder = await orderRes.json();
+
+                // 2. Open Modal
+                const options = {
+                    key: "rzp_test_example_id", // Should be in env but for demo let's use example
+                    amount: razorpayOrder.amount,
+                    currency: razorpayOrder.currency,
+                    name: "Jannat Handloom",
+                    description: "Artisanal Excellence Home Decor",
+                    image: "/logo.png",
+                    order_id: razorpayOrder.id,
+                    handler: async (response) => {
+                        // 3. Verify on server
+                        const verifyRes = await fetch(`${BASE_URL}/api/payments/verify`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature
+                            })
+                        });
+                        const verifyData = await verifyRes.json();
+                        
+                        if (verifyData.status === 'success') {
+                            // 4. Create Final Order
+                            const finalRes = await fetch(`${BASE_URL}/api/orders`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+                                body: JSON.stringify({ ...orderPayload, razorpayPaymentId: response.razorpay_payment_id, paymentStatus: 'paid' })
+                            });
+                            const finalData = await finalRes.json();
+                            if (finalRes.ok) { setOrderNumber(finalData.orderNumber); clearCart(); setStep(3); }
+                        } else {
+                            alert("Payment verification failed. Please contact us.");
+                        }
+                    },
+                    prefill: { name: `${formData.firstName} ${formData.lastName}`, email: formData.email, contact: formData.phone },
+                    theme: { color: "#C5A059" }
+                };
+                const rzp = new window.Razorpay(options);
+                rzp.open();
             }
-            setSubmitting(false);
+        } catch (err) {
+            setError('Submission failed. Please check your network.');
+            console.error(err);
         }
+        setSubmitting(false);
     };
 
     if (cartItems.length === 0 && step < 3) {

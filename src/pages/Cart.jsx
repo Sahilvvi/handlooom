@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { getImgUrl } from '../utils/api';
 import './Cart.css';
 
 const Cart = () => {
@@ -27,11 +28,7 @@ const Cart = () => {
             <div className="cart-layout">
                 <div className="cart-items-list">
                     {cartItems.map(item => {
-                        const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
-                        let hash = 0;
-                        const seed = item._id || item.name || '';
-                        for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) % allLocalImages.length;
-                        const img = allLocalImages[hash % allLocalImages.length];
+                        const img = getImgUrl(item.images?.[0]);
 
                         return (
                             <div key={`${item._id}-${item.size}`} className="cart-item">

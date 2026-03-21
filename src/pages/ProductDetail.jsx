@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/product/ProductCard';
-import BASE_URL from '../utils/api';
+import BASE_URL, { getImgUrl } from '../utils/api';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -52,8 +52,8 @@ const ProductDetail = () => {
                     if (!productData.images || productData.images.length === 0) {
                         productData.images = getLocalImages(productData._id || productData.name || id);
                     } else {
-                        // Ensure images are corrected with BASE_URL
-                        productData.images = productData.images.map(img => (img && (img.startsWith('http') || img.startsWith('data:'))) ? img : `${BASE_URL}${img}`);
+                        // Ensure images are corrected with getImgUrl
+                        productData.images = productData.images.map(img => getImgUrl(img));
                     }
                     setProduct(productData);
 
