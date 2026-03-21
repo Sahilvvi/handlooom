@@ -15,13 +15,13 @@ export const getImgUrl = (img) => {
     return path; // Browser handles this relative to current origin (localhost:5173 in dev)
   }
 
-  // 2. If it already has /uploads/, route it via /api/ to ensure it hits Node.js backend on Hostinger
+  // 2. If it already has /uploads/, let Apache pull it directly from public_html
   if (path.startsWith('/uploads/')) {
-    return `${BASE_URL}/api${path}`;
+    return `${BASE_URL}${path}`;
   }
 
-  // 3. Otherwise treat as a database path that needs /api/uploads/
-  return `${BASE_URL}/api/uploads${path}`;
+  // 3. Otherwise treat as a database path that needs /uploads/
+  return `${BASE_URL}/uploads${path}`;
 };
 
 export default BASE_URL;
