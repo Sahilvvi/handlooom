@@ -1,7 +1,7 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
+  "name": "jannat-handloom-backend-api",
+  "version": "1.0.1",
+  "description": "Backend API for Jannat Handloom React Storefront",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
