@@ -2,32 +2,29 @@
 header('Content-Type: text/plain');
 ini_set('max_execution_time', 300);
 
-echo "Bypassing Hostinger Security Locks...\n";
+echo "Broadest Directory Scan Started...\n";
 
 function search($dir) {
+    if (strpos($dir, 'node_modules') !== false) return; // Skip entirely
     $files = @scandir($dir);
     if (!$files) return;
     foreach ($files as $f) {
         if ($f === '.' || $f === '..') continue;
-        if ($f === 'node_modules') continue;
-        if (strpos($f, '.') === 0) continue; // Skip hidden dirs like .git
+        if (strpos($f, '.') === 0) continue;
         $path = $dir . '/' . $f;
-        if ($f === '1.png') echo "FOUND: " . $path . "\n";
+        
+        // Find ANY png image anywhere matching the pattern except the logo
+        if (strpos(strtolower($f), '.png') !== false && $f !== 'logo.png') {
+            echo "\n-> CRITICAL FOUND IMAGE PATH:\n" . $path . "\n";
+            exit; // Stop entirely to capture just one true path format
+        }
+        
         if (is_dir($path)) search($path);
     }
 }
 
-$dirsToSearch = [ 
-    realpath(__DIR__ . '/../../violet-narwhal-474691.hostingersite.com/'), 
-    realpath(__DIR__ . '/../../rosybrown-koala-703473.hostingersite.com/') 
-];
-
-foreach ($dirsToSearch as $b) {
-    if ($b) {
-        echo "Searching Sibling Domain: $b\n";
-        search($b);
-    }
-}
-
-echo "\nPure PHP Scan complete.";
+$start = realpath(__DIR__ . '/..'); // /home/uXXXXX/domains/jannathandloom.com
+echo "Starting physical scan from: " . $start . "\n";
+search($start);
+echo "\nNo arbitrary PNGs found recursively.";
 ?>
