@@ -43,8 +43,32 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { m
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ─── Static file serving (Served BEFORE rate limiting) ─
-app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
+// ─── Bullet-Proof Static file serving for images ───────
+const fs = require('fs');
+
+app.use('/api/uploads', (req, res, next) => {
+    // Prevent query strings from breaking the paths
+    let imgPath = req.path.split('?')[0];
+
+    // Try all the common Hostinger extraction paths where the user might have accidentally dropped the images
+    const possiblePaths = [
+        path.join(__dirname, 'uploads', imgPath),
+        path.join(__dirname, '../public_html/uploads', imgPath),
+        path.join(__dirname, '../public_html/uploads/uploads', imgPath),
+        path.join(__dirname, '../../public_html/uploads', imgPath)
+    ];
+
+    for (let p of possiblePaths) {
+        if (fs.existsSync(p)) {
+            // Set headers completely removing HTML to fix CDN 422 errors
+            res.setHeader('Content-Type', 'image/' + path.extname(p).slice(1));
+            return res.sendFile(p);
+        }
+    }
+    // If we reach here, file is TRULY missing across all possible directories
+    // Return a graceful 404 rather than calling next() which serves index.html and crashes Hostinger CDN
+    res.status(404).send('Image physically missing on your hostinger paths.');
+});
 
 // ─── Apply rate limit only to API routes ─────────────
 app.use('/api', limiter);

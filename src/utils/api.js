@@ -15,13 +15,13 @@ export const getImgUrl = (img) => {
     return path; // Browser handles this relative to current origin (localhost:5173 in dev)
   }
 
-  // 2. If it already has /uploads/, let Apache pull it directly from public_html
+  // 2. If it already has /uploads/, let Node.js dynamically find the folder
   if (path.startsWith('/uploads/')) {
-    return `${BASE_URL}${path}`;
+    return `${BASE_URL}/api${path}`;
   }
 
-  // 3. Otherwise treat as a database path that needs /uploads/
-  return `${BASE_URL}/uploads${path}`;
+  // 3. Otherwise treat as a database path that needs /api/uploads/
+  return `${BASE_URL}/api/uploads${path}`;
 };
 
 export default BASE_URL;
