@@ -43,30 +43,64 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { m
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ─── Bullet-Proof Static file serving for images ───────
+// ─── Self-Healing Asset Locator (Finds uploads dynamically safely) ───
 const fs = require('fs');
 
+let globalUploadBasePath = null;
+
+// Only runs once sequentially down the hostinger root to find the actual user's folder
+function initializeAssetLocator() {
+    console.log('Searching Hostinger file tree for the hidden uploads folder...');
+    const searchQueue = [path.join(__dirname, '../../')]; // start at /home/uXXXXX/domains/jannathandloom.com
+    
+    let iterations = 0;
+    while(searchQueue.length > 0 && iterations < 3000) {
+        iterations++;
+        const currentDir = searchQueue.shift();
+        
+        try {
+            const files = fs.readdirSync(currentDir);
+            for (let f of files) {
+                if (f === 'node_modules' || f.startsWith('.')) continue;
+                
+                const fullPath = path.join(currentDir, f);
+                const stat = fs.statSync(fullPath);
+                
+                if (stat.isDirectory()) {
+                    // Check if this directory specifically holds our products structure
+                    if (f === 'products' && fs.existsSync(path.join(fullPath, '1/1.png'))) {
+                         globalUploadBasePath = currentDir;
+                         console.log('✅ AI Found true image path at: ', globalUploadBasePath);
+                         return; // Done
+                    }
+                    searchQueue.push(fullPath);
+                }
+            }
+        } catch(e) { } // Ignore permission denied folders
+    }
+    console.log('❌ Could not locate the products folder physically anywhere on Hostinger.');
+}
+
+// Fire the scanner once immediately
+initializeAssetLocator();
+
 app.use('/api/uploads', (req, res, next) => {
-    // Prevent query strings from breaking the paths
     let imgPath = req.path.split('?')[0];
 
-    // Try all the common Hostinger extraction paths where the user might have accidentally dropped the images
-    const possiblePaths = [
-        path.join(__dirname, 'uploads', imgPath),
-        path.join(__dirname, '../public_html/uploads', imgPath),
-        path.join(__dirname, '../public_html/uploads/uploads', imgPath),
-        path.join(__dirname, '../../public_html/uploads', imgPath)
-    ];
+    // Strip leading /uploads prefix if it exists to match the inner structure properly
+    if (imgPath.startsWith('/uploads/')) {
+        imgPath = imgPath.replace('/uploads/', '/');
+    }
 
-    for (let p of possiblePaths) {
-        if (fs.existsSync(p)) {
-            // Set headers completely removing HTML to fix CDN 422 errors
-            res.setHeader('Content-Type', 'image/' + path.extname(p).slice(1));
-            return res.sendFile(p);
+    if (globalUploadBasePath) {
+        const exactPhysicalPath = path.join(globalUploadBasePath, imgPath);
+        if (fs.existsSync(exactPhysicalPath)) {
+            res.setHeader('Content-Type', 'image/' + path.extname(exactPhysicalPath).slice(1));
+            // Add caching explicitly so standard CDNs embrace it
+            res.setHeader('Cache-Control', 'public, max-age=31536000');
+            return res.sendFile(exactPhysicalPath);
         }
     }
-    // If we reach here, file is TRULY missing across all possible directories
-    // Return a graceful 404 rather than calling next() which serves index.html and crashes Hostinger CDN
     res.status(404).send('Image physically missing on your hostinger paths.');
 });
 

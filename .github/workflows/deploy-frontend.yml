@@ -1,4 +1,4 @@
-name: Deploy Live to Hostinger
+name: Deploy Live to Hostinger (SSH)
 
 on:
   push:
@@ -17,29 +17,55 @@ jobs:
         with:
           node-version: 18
 
-      - name: 📦 Install Frontend Dependencies & Build
+      - name: 📦 Install & Build Frontend
         run: |
           npm install
           npm run build
 
-      - name: 🚀 Sync Frontend Live (React -> public_html)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 🧹 Clean Remote Folders (Optional safety)
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./domains/jannathandloom.com/public_html/
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            mkdir -p domains/jannathandloom.com/public_html
+            mkdir -p domains/jannathandloom.com/nodejs
+            # Remove old vite hash files from public_html to prevent bloat
+            find domains/jannathandloom.com/public_html -type f -not -name '.htaccess' -delete
 
-      - name: 🔧 Sync Backend Live (Node.js -> server)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 🚀 Upload Frontend (dist -> public_html)
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./server/
-          server-dir: ./domains/jannathandloom.com/nodejs/
-          exclude: |
-            **/.env
-            **/node_modules/**
-            **/uploads/**
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "dist/*"
+          target: "domains/jannathandloom.com/public_html"
+          strip_components: 1
+
+      - name: 🔧 Upload Backend (server -> nodejs)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "server/*"
+          target: "domains/jannathandloom.com/nodejs"
+          strip_components: 1
+
+      - name: ⚡ Install Backend Dependencies & Restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd domains/jannathandloom.com/nodejs
+            npm install --production
+            # Trigger a restart if using Hostinger Passenger/Node Manager
+            touch tmp/restart.txt || true
