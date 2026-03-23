@@ -29,7 +29,7 @@ jobs:
         with:
           host: 82.25.83.161
           username: u549028972
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: Vrushali@123456789
           port: 65002
           script: |
             mkdir -p domains/jannathandloom.com/public_html
@@ -42,7 +42,7 @@ jobs:
         with:
           host: 82.25.83.161
           username: u549028972
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: Vrushali@123456789
           port: 65002
           source: "dist/*"
           target: "domains/jannathandloom.com/public_html/"
@@ -53,7 +53,7 @@ jobs:
         with:
           host: 82.25.83.161
           username: u549028972
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: Vrushali@123456789
           port: 65002
           source: "server/*"
           target: "domains/jannathandloom.com/nodejs/"
@@ -64,7 +64,7 @@ jobs:
         with:
           host: 82.25.83.161
           username: u549028972
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: Vrushali@123456789
           port: 65002
           script: |
             cd domains/jannathandloom.com/nodejs
