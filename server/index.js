@@ -148,11 +148,15 @@ app.use((err, req, res, next) => {
 // ─── Connect DB then start server ───────────────────
 connectDB()
     .then(() => {
-        app.listen(PORT, '0.0.0.0', () => {
-            console.log(`🚀 Server running on port ${PORT}`);
-        }).on('error', (err) => {
-            console.error('❌ Server failed to start:', err.message);
-        });
+        const listenCallback = () => console.log(`🚀 Server running on: ${PORT}`);
+        
+        // Hostinger (Phusion Passenger) may provide a socket path in PORT
+        // Socket paths MUST be listened to without an IP.
+        if (isNaN(PORT)) {
+            app.listen(PORT, listenCallback);
+        } else {
+            app.listen(PORT, '0.0.0.0', listenCallback);
+        }
     })
     .catch(err => {
         console.error('❌ MongoDB connection failed, server not started:', err.message);

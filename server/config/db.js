@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI;
+let MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-    throw new Error('❌ MONGODB_URI is not defined in environment variables. Critical for production.');
+    console.error('⚠️ MONGODB_URI is not defined in environment variables. Falling back to localhost for now/debugging.');
+    MONGODB_URI = 'mongodb://localhost:27017/jannat'; // fallback
 }
 
 /**
