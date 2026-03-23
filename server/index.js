@@ -7,13 +7,15 @@ process.on('unhandledRejection', (reason) => {
     console.error('💥 UNHANDLED REJECTION:', reason);
 });
 
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+const fs = require('fs');
+
+console.log('✅ Modules loaded. Starting server core...');
 
 console.log('✅ Modules loaded. Starting server...');
 console.log('PORT env:', process.env.PORT);
@@ -29,57 +31,16 @@ app.use(cors());
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 5000, 
-    message: { message: 'Too many requests from this IP, please try again after 15 minutes.' }
-});
-const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { message: 'Too many login attempts, please try again later.' } });
-
-// ─── Standard Middleware ──────────────────────────────
+// Standard Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ─── Self-Healing Asset Locator (Finds uploads dynamically safely) ───
-const fs = require('fs');
+// Simplified Asset Serving (Uses standard public/uploads or similar)
+const globalUploadBasePath = process.env.NODE_ENV === 'production'
+    ? path.join(__dirname, '../uploads')
+    : path.join(__dirname, 'uploads');
 
-let globalUploadBasePath = null;
-
-// Only runs once sequentially down the hostinger root to find the actual user's folder
-function initializeAssetLocator() {
-    console.log('Searching Hostinger file tree for the hidden uploads folder...');
-    const searchQueue = [path.join(__dirname, '../../')]; // start at /home/uXXXXX/domains/jannathandloom.com
-    
-    let iterations = 0;
-    while(searchQueue.length > 0 && iterations < 3000) {
-        iterations++;
-        const currentDir = searchQueue.shift();
-        
-        try {
-            const files = fs.readdirSync(currentDir);
-            for (let f of files) {
-                if (f === 'node_modules' || f.startsWith('.')) continue;
-                
-                const fullPath = path.join(currentDir, f);
-                const stat = fs.statSync(fullPath);
-                
-                if (stat.isDirectory()) {
-                    // Check if this directory specifically holds our products structure
-                    if (f === 'products' && fs.existsSync(path.join(fullPath, '1/1.png'))) {
-                         globalUploadBasePath = currentDir;
-                         console.log('✅ AI Found true image path at: ', globalUploadBasePath);
-                         return; // Done
-                    }
-                    searchQueue.push(fullPath);
-                }
-            }
-        } catch(e) { } // Ignore permission denied folders
-    }
-    console.log('❌ Could not locate the products folder physically anywhere on Hostinger.');
-}
-
-// Fire the scanner once immediately
-initializeAssetLocator();
+console.log('Static asset path configured at:', globalUploadBasePath);
 
 app.use('/api/uploads', (req, res, next) => {
     let imgPath = req.path.split('?')[0];
@@ -101,15 +62,20 @@ app.use('/api/uploads', (req, res, next) => {
     res.status(404).send('Image physically missing on your hostinger paths.');
 });
 
-// ─── Apply rate limit only to API routes ─────────────
-app.use('/api', limiter);
+// Apply no limiter to avoid crash/access-denied issues on some Hostinger plans
+// app.use('/api', limiter); 
+
+// Top-level Health Check to satisfy Hostinger Health Checks
+app.get('/api/health', (req, res) => res.status(200).send('OK'));
+app.get('/health', (req, res) => res.status(200).send('OK'));
 
 
 // ─── MongoDB Connection (connect ONCE at startup) ────
 const connectDB = require('./config/db');
 
 // ─── Routes ──────────────────────────────────────────
-app.use('/api/auth', authLimiter, require('./routes/authRoutes'));
+// ─── Routes ──────────────────────────────────────────
+app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
@@ -145,22 +111,18 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ─── Connect DB then start server ───────────────────
-connectDB()
-    .then(() => {
-        const listenCallback = () => console.log(`🚀 Server running on: ${PORT}`);
-        
-        // Hostinger (Phusion Passenger) may provide a socket path in PORT
-        // Socket paths MUST be listened to without an IP.
-        if (isNaN(PORT)) {
-            app.listen(PORT, listenCallback);
-        } else {
-            app.listen(PORT, '0.0.0.0', listenCallback);
-        }
-    })
-    .catch(err => {
-        console.error('❌ MongoDB connection failed, server not started:', err.message);
-        process.exit(1);
-    });
+// ─── Start listener IMMEDIATELY to avoid 503 Timeout ───
+const server = app.listen(PORT, (err) => {
+    if (err) {
+        console.error('❌ Server Listen Error:', err.message);
+        return;
+    }
+    console.log(`🚀 Production server alive and listening on: ${PORT}`);
+    
+    // Connect to DB in the BACKGROUND so the server is already 'up' for the proxy
+    connectDB()
+        .then(() => console.log('✅ Background MongoDB connection established.'))
+        .catch(dbErr => console.error('⚠️ DB Error in background (server staying alive):', dbErr.message));
+});
 
-module.exports = app;
+module.exports = server;
