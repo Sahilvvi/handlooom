@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // Handle preflight requests for all routes
-app.options(/(.*)/, cors());
+app.options(/.*/, cors());
 
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -130,7 +130,7 @@ const frontendPath = path.join(__dirname, 'public');
 app.use(express.static(frontendPath));
 
 // All unknown routes should serve the React app (Client-side routing)
-app.get(/(.*)/, (req, res) => {
+app.get(/.*/, (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
         if (err) {
             res.json({ message: 'Jannat Handloom API ✅', version: '2.0', note: 'Frontend not found in server/public' });
