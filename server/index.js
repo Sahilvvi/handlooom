@@ -26,9 +26,6 @@ const PORT = process.env.PORT || 3000;
 // ─── CORS Configuration ──────────────────────────────
 app.use(cors());
 
-// Handle preflight requests for all routes
-app.options(/.*/, cors());
-
 // ─── Security Middleware ──────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
@@ -130,10 +127,11 @@ const frontendPath = path.join(__dirname, 'public');
 app.use(express.static(frontendPath));
 
 // All unknown routes should serve the React app (Client-side routing)
-app.get(/.*/, (req, res) => {
+// Using a middleware catch-all is safer in Express 5 than problematic wildcard strings
+app.use((req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
         if (err) {
-            res.json({ message: 'Jannat Handloom API ✅', version: '2.0', note: 'Frontend not found in server/public' });
+            res.status(404).json({ message: 'Jannat Handloom API ✅', version: '2.0', note: 'Frontend not found in server/public' });
         }
     });
 });
