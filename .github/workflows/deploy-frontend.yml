@@ -18,13 +18,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Frontend Dependencies
-        run: npm install
+      - name: Build Frontend into Server Public
+        run: |
+          npm install
+          cd server && npm install
+          cd ..
+          npm run build -- --outDir server/public
+          # Remove local node_modules before upload to avoid cross-platform issues
+          # and to speed up SCP. We will reinstall on the server.
+          rm -rf server/node_modules
+          rm -rf node_modules
 
-      - name: Build Frontend
-        run: npm run build
-
-      - name: Prepare Hostinger Folders (SSH)
+      - name: Prepare Hostinger Folder (SSH)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 82.25.83.161
@@ -33,22 +38,11 @@ jobs:
           port: 65002
           script: |
             mkdir -p domains/jannathandloom.com/public_html
-            mkdir -p domains/jannathandloom.com/nodejs
-            # Clean old frontend files
-            find domains/jannathandloom.com/public_html/ -mindepth 1 ! -name '.htaccess' -delete
+            # Clean old files to ensure a fresh deployment
+            # We preserve the uploads folder to keep product images!
+            find domains/jannathandloom.com/public_html/ -mindepth 1 -not -path '*/uploads*' -delete
 
-      - name: Deploy Frontend to Hostinger (SCP)
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 82.25.83.161
-          username: u549028972
-          password: Vrushali@123456789
-          port: 65002
-          source: "dist/*"
-          target: "domains/jannathandloom.com/public_html/"
-          strip_components: 1
-
-      - name: Deploy Backend to Hostinger (SCP)
+      - name: Deploy Unified App to Hostinger (SCP)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 82.25.83.161
@@ -56,10 +50,10 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           source: "server/*"
-          target: "domains/jannathandloom.com/nodejs/"
+          target: "domains/jannathandloom.com/public_html/"
           strip_components: 1
 
-      - name: Install Backend Dependencies & Restart Node.js
+      - name: Install Final Dependencies & Restart
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 82.25.83.161
@@ -67,8 +61,10 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           script: |
-            cd domains/jannathandloom.com/nodejs
+            cd domains/jannathandloom.com/public_html
             npm install --production
-            # Touch restart file for Node.js apps
+            # Ensure the uploads directory exists
+            mkdir -p uploads
+            # Restart mechanism
             mkdir -p tmp
             touch tmp/restart.txt
