@@ -1,3 +1,10 @@
+<IfModule mod_passenger.c>
+  PassengerEnabled On
+  PassengerAppRoot /home/u549028972/domains/jannathandloom.com/public_html
+  PassengerAppType node
+  PassengerStartupFile index.js
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
