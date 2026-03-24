@@ -68,3 +68,13 @@ exports.deleteProduct = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+// Delete ALL products (Admin only)
+exports.deleteAllProducts = async (req, res) => {
+    try {
+        await Product.deleteMany({});
+        res.json({ message: 'All products cleared successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error clearing products' });
+    }
+};

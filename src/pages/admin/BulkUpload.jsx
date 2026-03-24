@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BASE_URL from '../../utils/api';
 import './AddProduct.css'; 
@@ -10,6 +10,17 @@ const BulkUpload = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const token = localStorage.getItem('jannat_token');
+
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (status === 'processing') {
+                e.preventDefault();
+                e.returnValue = 'Upload in progress. Leaving will cancel the process. Are you sure?';
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [status]);
 
     const addLog = (msg) => setLogs(prev => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev.slice(0, 50)]);
 
@@ -135,6 +146,11 @@ const BulkUpload = () => {
                     </>
                 ) : (
                     <div className="processing-status">
+                         {status === 'processing' && (
+                            <div style={{ position: 'fixed', top: 20, right: 20, background: '#ef4444', color: 'white', padding: '10px 20px', borderRadius: 8, zIndex: 9999, fontWeight: 700, boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+                                ⚠️ UPLOAD IN PROGRESS - DON'T SWITCH PAGES
+                            </div>
+                        )}
                         <div className="progress-bar-container" style={{ height: '12px', background: '#e2e8f0', borderRadius: '6px', overflow: 'hidden', marginBottom: '15px' }}>
                             <div 
                                 className="progress-fill" 

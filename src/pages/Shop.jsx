@@ -1,305 +1,190 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/product/ProductCard';
 import BASE_URL from '../utils/api';
 import './Shop.css';
 
 const Shop = () => {
     const { category: urlCategory } = useParams();
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    const searchTerm = searchParams.get('search')?.toLowerCase() || '';
+    
     const [allProducts, setAllProducts] = useState([]);
-    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState('grid');
     const [sort, setSort] = useState('Recommended');
+    const [visibleCount, setVisibleCount] = useState(24);
 
-    // Advanced Filters State
     const [filters, setFilters] = useState({
         transparency: [],
         material: [],
         color: [],
-        priceRange: [391, 2449],
-        fastDelivery: false
+        priceRange: [0, 10000],
     });
-    const [visibleCount, setVisibleCount] = useState(24);
-
-    const [appliedPriceRange, setAppliedPriceRange] = useState([391, 2449]);
 
     useEffect(() => {
-        const fetchAllProducts = async () => {
+        const fetchAll = async () => {
             try {
-                // Fetch first 100 for filtering/sorting baseline, or paginated if needed
-                // For now, let's fetch a chunk that's manageable but enough for filters
-                const response = await fetch(`${BASE_URL}/api/products?limit=100`);
-                const resData = await response.json();
+                const res = await fetch(`${BASE_URL}/api/products?limit=500`);
+                const data = await res.json();
+                const productsArray = data.products || data;
+                setAllProducts(productsArray);
                 
-                const data = resData.products || resData; // Handle both structures
-
-                setAllProducts(data);
-                setProducts(data.slice(0, 24)); // Initial display
-
-                // Set initial price range based on data
-                if (data.length > 0) {
-                    const prices = data.map(p => p.price);
-                    const min = Math.min(...prices);
-                    const max = Math.max(...prices);
-                    setFilters(prev => ({ ...prev, priceRange: [min, max] }));
-                    setAppliedPriceRange([min, max]);
+                if (productsArray.length > 0) {
+                    const prices = productsArray.map(p => p.price);
+                    setFilters(f => ({ ...f, priceRange: [Math.min(...prices), Math.max(...prices)] }));
                 }
-
-                setLoading(false);
             } catch (err) {
-                console.error('Error fetching products:', err);
+                console.error("Shop fetch error:", err);
+            } finally {
                 setLoading(false);
             }
         };
-        fetchAllProducts();
+        fetchAll();
     }, []);
 
-    useEffect(() => {
-        if (allProducts.length === 0) return;
-
-        const queryParams = new URLSearchParams(location.search);
-        const searchTerm = queryParams.get('search')?.toLowerCase() || '';
-
-        let filtered = allProducts.filter(p => {
-            const matchActive = p.isActive !== false;
-            const matchPrice = p.price >= appliedPriceRange[0] && p.price <= appliedPriceRange[1];
+    const filteredProducts = useMemo(() => {
+        let result = allProducts.filter(p => {
+            const matchSearch = !searchTerm || 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.category.toLowerCase().includes(searchTerm) ||
+                (p.tags && p.tags.join(' ').toLowerCase().includes(searchTerm));
+            
+            const matchCategory = !urlCategory || p.category.toLowerCase() === urlCategory.toLowerCase();
+            const matchPrice = p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1];
             const matchTransparency = filters.transparency.length === 0 || filters.transparency.includes(p.transparency);
             const matchMaterial = filters.material.length === 0 || filters.material.includes(p.material);
-            const matchColor = filters.color.length === 0 || (p.colors && p.colors.some(c => filters.color.includes(c)));
-            const matchCategory = !urlCategory || p.category.toLowerCase() === urlCategory.toLowerCase();
-            const matchFastDelivery = !filters.fastDelivery || p.fastDelivery === true;
-            const matchSearch = !searchTerm ||
-                p.name.toLowerCase().includes(searchTerm) ||
-                p.category.toLowerCase().includes(searchTerm) ||
-                (p.material && p.material.toLowerCase().includes(searchTerm)) ||
-                (p.fabric && p.fabric.toLowerCase().includes(searchTerm)) ||
-                (p.description && p.description.toLowerCase().includes(searchTerm));
-
-            return matchActive && matchPrice && matchTransparency && matchMaterial && matchColor && matchCategory && matchFastDelivery && matchSearch;
+            
+            return matchSearch && matchCategory && matchPrice && matchTransparency && matchMaterial && (p.isActive !== false);
         });
 
-        if (sort === 'Price: Low to High') {
-            filtered.sort((a, b) => a.price - b.price);
-        } else if (sort === 'Price: High to Low') {
-            filtered.sort((a, b) => b.price - a.price);
-        }
+        if (sort === 'Price: Low to High') result.sort((a,b) => a.price - b.price);
+        if (sort === 'Price: High to Low') result.sort((a,b) => b.price - a.price);
+        
+        return result;
+    }, [allProducts, searchTerm, urlCategory, filters, sort]);
 
-        setProducts(filtered.slice(0, visibleCount));
-    }, [filters, appliedPriceRange, sort, allProducts, urlCategory, location.search, visibleCount]);
+    const displayProducts = filteredProducts.slice(0, visibleCount);
 
-    const handleCheckboxChange = (type, value) => {
-        setFilters(prev => {
-            const current = prev[type];
-            const updated = current.includes(value)
-                ? current.filter(item => item !== value)
-                : [...current, value];
-            return { ...prev, [type]: updated };
-        });
+    const toggleFilter = (type, val) => {
+        setFilters(prev => ({
+            ...prev,
+            [type]: prev[type].includes(val) ? prev[type].filter(x => x !== val) : [...prev[type], val]
+        }));
     };
 
-    const handlePriceApply = () => {
-        setAppliedPriceRange(filters.priceRange);
-    };
-
-    const handlePriceReset = () => {
-        const prices = allProducts.map(p => p.price);
-        const min = Math.min(...prices);
-        const max = Math.max(...prices);
-        setFilters({
-            transparency: [],
-            material: [],
-            color: [],
-            priceRange: [min, max],
-            fastDelivery: false
-        });
-        setAppliedPriceRange([min, max]);
-    };
-
-    const getCount = (type, value) => {
-        return allProducts.filter(p => {
-            if (type === 'color') return p.colors && p.colors.includes(value);
-            return p[type] === value;
-        }).length;
-    };
-
-    const transparencyOptions = [...new Set(allProducts.map(p => p.transparency))].filter(Boolean).map(t => ({ label: t, count: getCount('transparency', t) }));
-    const materialOptions = [...new Set(allProducts.map(p => p.material))].filter(Boolean).map(m => ({ label: m, count: getCount('material', m) }));
-    const colorOptions = [
-        { label: 'Brown', color: '#5D4037' },
-        { label: 'Blue', color: '#1976D2' },
-        { label: 'White', color: '#FFFFFF' },
-        { label: 'Grey', color: '#9E9E9E' },
-        { label: 'Beige', color: '#F5F5DC' }
-    ].map(c => ({ ...c, count: getCount('color', c.label) })).filter(c => c.count > 0);
+    if (loading) return (
+        <div className="shop-skeleton-container container">
+            <div className="skeleton-hero"></div>
+            <div className="skeleton-content">
+                <div className="skeleton-sidebar"></div>
+                <div className="skeleton-grid">
+                    {[1,2,3,4,5,6].map(i => <div key={i} className="skeleton-card"></div>)}
+                </div>
+            </div>
+        </div>
+    );
 
     return (
-        <div className="shop-page">
-            <div className="container shop-container">
-                {loading ? (
-                    <div className="shop-loading-skeleton">
-                        <aside className="skeleton-sidebar"></aside>
-                        <main className="skeleton-main">
-                            <div className="skeleton-toolbar"></div>
-                            <div className="skeleton-grid">
-                                {[...Array(12)].map((_, i) => (
-                                    <div key={i} className="skeleton-product-card"></div>
-                                ))}
-                            </div>
-                        </main>
-                    </div>
-                ) : (
-                    <>
-                        <aside className="shop-sidebar">
-                            <div className="filter-section">
-                        <h3>Filters</h3>
-                        <div className="fast-delivery">
-                            <label className="switch">
-                                <input
-                                    type="checkbox"
-                                    checked={filters.fastDelivery}
-                                    onChange={(e) => setFilters({ ...filters, fastDelivery: e.target.checked })}
-                                />
-                                <span className="slider round"></span>
-                            </label>
-                            <span>FAST DELIVERY</span>
+        <div className="shop-premium-page">
+            <header className="shop-hero-premium">
+                <div className="container">
+                    <span className="breadcrumb-alt">Collection / {urlCategory || 'All Designs'}</span>
+                    <h1>{searchTerm ? `Results for "${searchTerm}"` : (urlCategory || 'Artisanal Collection')}</h1>
+                    <p>{filteredProducts.length} unique masterpieces discovered</p>
+                </div>
+            </header>
+
+            <div className="container shop-layout-premium">
+                <aside className="filters-sidebar-premium">
+                    <div className="filter-widget">
+                        <h3>Materiality</h3>
+                        <div className="filter-options">
+                            {['Velvet', 'Linen', 'Cotton', 'Sheer', 'Silk'].map(m => (
+                                <button 
+                                    key={m} 
+                                    className={`filter-chip ${filters.material.includes(m) ? 'active' : ''}`}
+                                    onClick={() => toggleFilter('material', m)}
+                                >
+                                    {m}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="filter-accordion">
-                        <div className="accordion-item">
-                            <div className="accordion-header">PRICE RANGE</div>
-                            <div className="accordion-content">
-                                <div className="price-inputs">
-                                    <span>₹{filters.priceRange[0]}</span>
-                                    <span>₹{filters.priceRange[1]}</span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min="391"
-                                    max="2449"
-                                    value={filters.priceRange[1]}
-                                    onChange={(e) => setFilters({ ...filters, priceRange: [filters.priceRange[0], parseInt(e.target.value)] })}
-                                    className="price-slider"
-                                />
-                                <div className="price-actions">
-                                    <button className="apply-btn" onClick={handlePriceApply}>Apply</button>
-                                    <button className="reset-link" onClick={handlePriceReset}>Reset</button>
-                                </div>
-                            </div>
+                    <div className="filter-widget">
+                        <h3>Light Play</h3>
+                        <div className="filter-options-stack">
+                            {['Blackout', 'Room Darkening', 'Light Filtering', 'Sheer'].map(t => (
+                                <label key={t} className="premium-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        checked={filters.transparency.includes(t)}
+                                        onChange={() => toggleFilter('transparency', t)}
+                                    />
+                                    <span className="check-text">{t}</span>
+                                </label>
+                            ))}
                         </div>
+                    </div>
 
-                        <div className="accordion-item">
-                            <div className="accordion-header">TRANSPARENCY</div>
-                            <div className="accordion-content">
-                                {transparencyOptions.map(opt => (
-                                    <label key={opt.label} className="checkbox-item">
-                                        <input
-                                            type="checkbox"
-                                            checked={filters.transparency.includes(opt.label)}
-                                            onChange={() => handleCheckboxChange('transparency', opt.label)}
-                                        />
-                                        <span>{opt.label}</span>
-                                        <span className="count">({opt.count})</span>
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="accordion-item">
-                            <div className="accordion-header">MATERIAL</div>
-                            <div className="accordion-content">
-                                {materialOptions.map(opt => (
-                                    <label key={opt.label} className="checkbox-item">
-                                        <input
-                                            type="checkbox"
-                                            checked={filters.material.includes(opt.label)}
-                                            onChange={() => handleCheckboxChange('material', opt.label)}
-                                        />
-                                        <span>{opt.label}</span>
-                                        <span className="count">({opt.count})</span>
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="accordion-item">
-                            <div className="accordion-header">COLOR</div>
-                            <div className="accordion-content">
-                                {colorOptions.map(opt => (
-                                    <label key={opt.label} className="checkbox-item color-item">
-                                        <input
-                                            type="checkbox"
-                                            checked={filters.color.includes(opt.label)}
-                                            onChange={() => handleCheckboxChange('color', opt.label)}
-                                        />
-                                        <span className="color-swatch" style={{ backgroundColor: opt.color, border: opt.label === 'White' ? '1px solid #ddd' : 'none' }}></span>
-                                        <span>{opt.label}</span>
-                                        <span className="count">({opt.count})</span>
-                                    </label>
-                                ))}
+                    <div className="filter-widget">
+                        <h3>Price Refinement</h3>
+                        <div className="price-slider-luxury">
+                            <input 
+                                type="range" 
+                                min="0" 
+                                max="10000" 
+                                value={filters.priceRange[1]} 
+                                onChange={(e) => setFilters({...filters, priceRange: [filters.priceRange[0], parseInt(e.target.value)]})}
+                            />
+                            <div className="price-labels">
+                                <span>₹{filters.priceRange[0]}</span>
+                                <span>₹{filters.priceRange[1]}</span>
                             </div>
                         </div>
                     </div>
                 </aside>
 
-                <main className="shop-main">
-                    <div className="shop-top-bar">
-                        <div className="sort-by">
-                            <span>Sort By :</span>
-                            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                <main className="shop-content-premium">
+                    <div className="shop-controls-premium">
+                        <div className="control-left">
+                            <button className={`view-toggle ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => setViewMode('grid')}>Grid</button>
+                            <button className={`view-toggle ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')}>List</button>
+                        </div>
+                        <div className="control-right">
+                            <span>Sort by:</span>
+                            <select value={sort} onChange={e => setSort(e.target.value)}>
                                 <option>Recommended</option>
                                 <option>Price: Low to High</option>
                                 <option>Price: High to Low</option>
                             </select>
                         </div>
-                        <div className="view-as">
-                            <span>View As</span>
-                            <button
-                                className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                                onClick={() => setViewMode('list')}
-                            >
-                                <div className="bar-icon"></div>
-                                <div className="bar-icon"></div>
-                            </button>
-                            <button
-                                className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                                onClick={() => setViewMode('grid')}
-                            >
-                                <div className="bar-icon"></div>
-                                <div className="bar-icon"></div>
-                                <div className="bar-icon"></div>
-                            </button>
+                    </div>
+
+                    {filteredProducts.length > 0 ? (
+                        <div className={`products-display-premium ${viewMode}`}>
+                            {displayProducts.map(p => (
+                                <ProductCard key={p._id} product={p} viewMode={viewMode} />
+                            ))}
                         </div>
-                    </div>
-
-                    <div className={`products-${viewMode}`}>
-                        {products.map(product => (
-                            <ProductCard key={product._id} product={product} />
-                        ))}
-                    </div>
-
-                    {allProducts.length > visibleCount && (
-                        <div className="load-more-section">
-                            <button className="load-more-btn" onClick={() => setVisibleCount(prev => prev + 24)}>
-                                Load More Designs
-                            </button>
+                    ) : (
+                        <div className="empty-shop-premium">
+                            <h2>No Designs Found</h2>
+                            <p>Try refining your filters or search terms.</p>
+                            <button onClick={() => setFilters({transparency:[], material:[], color:[], priceRange:[0, 10000]})} className="btn-clear">Clear All Filters</button>
                         </div>
                     )}
 
-                    {products.length === 0 && (
-                        <div className="no-products">
-                            <h3>No curtains found for these filters.</h3>
-                            <button onClick={handlePriceReset} className="reset-all-btn">Reset All Filters</button>
+                    {filteredProducts.length > visibleCount && (
+                        <div className="load-more-premium">
+                            <button onClick={() => setVisibleCount(v => v + 24)}>Discover More</button>
                         </div>
                     )}
                 </main>
-            </>
-        )}
-    </div>
-</div>
-);
+            </div>
+        </div>
+    );
 };
 
 export default Shop;

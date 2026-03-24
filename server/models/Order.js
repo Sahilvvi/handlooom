@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema({
         state: String,
         pincode: String
     },
-    paymentMode: { type: String, enum: ['UPI', 'Card', 'COD'], default: 'COD' },
+    paymentMode: { type: String, enum: ['UPI', 'Card', 'COD', 'Razorpay'], default: 'COD' },
     paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
     orderStatus: {
         type: String,
@@ -31,7 +31,10 @@ const orderSchema = new mongoose.Schema({
     subtotal: { type: Number, required: true },
     shippingCost: { type: Number, default: 0 },
     totalAmount: { type: Number, required: true },
-    orderNumber: { type: String, unique: true }
+    orderNumber: { type: String, unique: true },
+    razorpayOrderId: String,
+    razorpayPaymentId: String,
+    razorpaySignature: String
 }, { timestamps: true });
 
 // Auto-generate order number

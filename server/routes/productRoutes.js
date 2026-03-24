@@ -8,6 +8,7 @@ router.get('/:id', getProductById);
 
 router.post('/', protect, admin, createProduct);
 router.put('/:id', protect, admin, updateProduct);
+router.delete('/all', protect, admin, require('../controllers/productController').deleteAllProducts);
 router.delete('/:id', protect, admin, deleteProduct);
 
 module.exports = router;

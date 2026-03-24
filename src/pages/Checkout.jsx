@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import BASE_URL from '../utils/api';
+import BASE_URL, { getImgUrl } from '../utils/api';
 import './Checkout.css';
 
-const allLocalImages = ['/s1.png', '/s2.png', '/d1.png', '/d2.png', '/f1.png', '/f2.png', '/g1.png', '/g2.png', '/h1.png', '/h2.png', '/q1.png', '/q2.png', '/q3.png'];
-const getImg = (seed = '') => { let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % allLocalImages.length; return allLocalImages[h]; };
-
 const Checkout = () => {
+    const navigate = useNavigate();
     const { cartItems, cartTotal, clearCart } = useCart();
     const { user } = useAuth();
     const [step, setStep] = useState(1);
@@ -23,7 +21,7 @@ const Checkout = () => {
     });
     const [error, setError] = useState('');
 
-    const shipping = cartTotal >= 999 ? 0 : 99;
+    const shipping = cartTotal >= 4999 ? 0 : 150;
     const total = cartTotal + shipping;
 
     const loadRazorpay = () => {
@@ -36,10 +34,14 @@ const Checkout = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleStep1Submit = (e) => {
         e.preventDefault();
-        if (step === 1) { setStep(2); return; }
-        
+        setStep(2);
+        window.scrollTo(0,0);
+    };
+
+    const handleFinalSubmit = async (e) => {
+        e.preventDefault();
         setSubmitting(true);
         setError('');
 
@@ -62,7 +64,6 @@ const Checkout = () => {
                 totalAmount: total
             };
 
-            // CASE 1: COD
             if (formData.paymentMode === 'COD') {
                 const res = await fetch(`${BASE_URL}/api/orders`, {
                     method: 'POST',
@@ -71,32 +72,27 @@ const Checkout = () => {
                 });
                 const data = await res.json();
                 if (res.ok) { setOrderNumber(data.orderNumber); clearCart(); setStep(3); } 
-                else { setError(data.message || 'Error creating order'); }
+                else { setError(data.message || 'Payment processing error'); }
             } 
-            // CASE 2: ONLINE (Card/UPI via Razorpay)
             else {
-                const res = await loadRazorpay();
-                if (!res) { alert("Razorpay SDK failed to load. Are you online?"); setSubmitting(false); return; }
+                const sdkRes = await loadRazorpay();
+                if (!sdkRes) { alert("Secure Gateway unavailable."); setSubmitting(false); return; }
 
-                // 1. Create Order in Razorpay
-                const orderRes = await fetch(`${BASE_URL}/api/payments/orders`, {
+                const orderRes = await fetch(`${BASE_URL}/api/payments/order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: total, currency: 'INR', receipt: `order_rcpt_${Date.now()}` })
+                    body: JSON.stringify({ amount: total, currency: 'INR' })
                 });
                 const razorpayOrder = await orderRes.json();
 
-                // 2. Open Modal
                 const options = {
-                    key: "rzp_test_example_id", // Should be in env but for demo let's use example
+                    key: "rzp_live_SUdnaFrzLtWS41",
                     amount: razorpayOrder.amount,
                     currency: razorpayOrder.currency,
                     name: "Jannat Handloom",
-                    description: "Artisanal Excellence Home Decor",
-                    image: "/logo.png",
+                    description: "Order Checkout",
                     order_id: razorpayOrder.id,
                     handler: async (response) => {
-                        // 3. Verify on server
                         const verifyRes = await fetch(`${BASE_URL}/api/payments/verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -109,16 +105,19 @@ const Checkout = () => {
                         const verifyData = await verifyRes.json();
                         
                         if (verifyData.status === 'success') {
-                            // 4. Create Final Order
                             const finalRes = await fetch(`${BASE_URL}/api/orders`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
-                                body: JSON.stringify({ ...orderPayload, razorpayPaymentId: response.razorpay_payment_id, paymentStatus: 'paid' })
+                                body: JSON.stringify({ 
+                                    ...orderPayload, 
+                                    razorpayOrderId: response.razorpay_order_id,
+                                    razorpayPaymentId: response.razorpay_payment_id, 
+                                    razorpaySignature: response.razorpay_signature,
+                                    paymentStatus: 'paid' 
+                                })
                             });
                             const finalData = await finalRes.json();
                             if (finalRes.ok) { setOrderNumber(finalData.orderNumber); clearCart(); setStep(3); }
-                        } else {
-                            alert("Payment verification failed. Please contact us.");
                         }
                     },
                     prefill: { name: `${formData.firstName} ${formData.lastName}`, email: formData.email, contact: formData.phone },
@@ -128,117 +127,137 @@ const Checkout = () => {
                 rzp.open();
             }
         } catch (err) {
-            setError('Submission failed. Please check your network.');
-            console.error(err);
+            setError('Global synchronization error. Refresh and try again.');
+        } finally {
+            setSubmitting(false);
         }
-        setSubmitting(false);
     };
 
     if (cartItems.length === 0 && step < 3) {
         return (
-            <div className="cart-empty container" style={{ padding: '80px 20px', textAlign: 'center', minHeight: '50vh' }}>
-                <div style={{ fontSize: '3rem' }}>🛒</div>
-                <h2>Your cart is empty</h2>
-                <Link to="/shop" style={{ color: '#ed6c0d', fontWeight: 600 }}>Continue Shopping</Link>
+            <div className="premium-empty-view container">
+                <h1>Cart Intention</h1>
+                <p>Your journey begins with selecting a masterpiece.</p>
+                <Link to="/shop" className="btn-luxury">Explore Boutique</Link>
             </div>
         );
     }
 
     return (
-        <div className="checkout-page container">
-            <div className="checkout-stepper">
-                <div className={`step ${step >= 1 ? 'active' : ''}`}>Information</div>
-                <div className="divider"></div>
-                <div className={`step ${step >= 2 ? 'active' : ''}`}>Payment</div>
-                <div className="divider"></div>
-                <div className={`step ${step >= 3 ? 'active' : ''}`}>Confirmation</div>
-            </div>
+        <div className="checkout-premium-page container">
+            <header className="checkout-header-alt">
+                <div className="stepper-luxury">
+                    <span className={step >= 1 ? 'active' : ''}>Destiny</span>
+                    <span className={step >= 2 ? 'active' : ''}>Payment</span>
+                    <span className={step >= 3 ? 'active' : ''}>Confirmation</span>
+                </div>
+            </header>
 
-            {step < 3 ? (
-                <div className="checkout-layout">
-                    <div className="checkout-form-container">
-                        <form onSubmit={handleSubmit}>
-                            {step === 1 && (
-                                <div className="fade-in">
-                                    <h2>Contact Information</h2>
-                                    <input type="email" placeholder="Email Address" required className="form-input" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                                    <h2 className="mt-40">Shipping Address</h2>
-                                    <div className="form-row">
-                                        <input type="text" placeholder="First Name" required className="form-input" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
-                                        <input type="text" placeholder="Last Name" required className="form-input" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
-                                    </div>
-                                    <input type="text" placeholder="Complete Address" required className="form-input" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
-                                    <div className="form-row">
-                                        <input type="text" placeholder="City" required className="form-input" value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} />
-                                        <input type="text" placeholder="State" required className="form-input" value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} />
-                                    </div>
-                                    <div className="form-row">
-                                        <input type="text" placeholder="Pincode" required className="form-input" value={formData.pincode} onChange={(e) => setFormData({ ...formData, pincode: e.target.value })} />
-                                        <input type="tel" placeholder="Phone Number" required className="form-input" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
-                                    </div>
-                                    <button type="submit" className="btn-primary w-100 mt-40">Continue to Payment</button>
+            <div className="checkout-main-grid">
+                <section className="checkout-input-zone">
+                    {step === 1 && (
+                        <form onSubmit={handleStep1Submit} className="premium-form-step">
+                            <div className="form-section-luxury">
+                                <h3>Contact Narrative</h3>
+                                <div className="input-group-luxury active">
+                                    <input type="email" placeholder=" " required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                                    <label>Email Address</label>
                                 </div>
-                            )}
-                            {step === 2 && (
-                                <div className="fade-in">
-                                    <h2>Payment Method</h2>
-                                    <div className="payment-options">
-                                        {[{ v: 'COD', icon: '🚚', title: 'Cash on Delivery', sub: 'Pay upon receiving' }, { v: 'UPI', icon: '📱', title: 'UPI (GPay / PhonePe)', sub: 'Instant activation' }, { v: 'Card', icon: '💳', title: 'Debit / Credit Card', sub: 'Powered by Razorpay' }].map(opt => (
-                                            <label key={opt.v} className={`payment-card ${formData.paymentMode === opt.v ? 'selected' : ''}`}>
-                                                <input type="radio" name="payment" value={opt.v} checked={formData.paymentMode === opt.v} onChange={() => setFormData({ ...formData, paymentMode: opt.v })} />
-                                                <span style={{ fontSize: '1.5rem' }}>{opt.icon}</span>
-                                                <div className="payment-info"><strong>{opt.title}</strong><p>{opt.sub}</p></div>
-                                            </label>
-                                        ))}
+                            </div>
+
+                            <div className="form-section-luxury">
+                                <h3>Shipping Coordinates</h3>
+                                <div className="dual-inputs">
+                                    <div className="input-group-luxury active">
+                                        <input type="text" placeholder=" " required value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} />
+                                        <label>First Name</label>
                                     </div>
-                                    <div className="payment-actions">
-                                        <button type="button" className="btn-text" onClick={() => setStep(1)}>← Return to shipping</button>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                            {error && <p className="error-msg-boutique" style={{ color: '#CC0000', fontSize: '14px', textAlign: 'right', margin: 0 }}>{error}</p>}
-                                            <button type="submit" className="btn-primary" disabled={submitting}>
-                                                {submitting ? 'Placing Order...' : 'Place Order'}
-                                            </button>
+                                    <div className="input-group-luxury active">
+                                        <input type="text" placeholder=" " required value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} />
+                                        <label>Last Name</label>
+                                    </div>
+                                </div>
+                                <div className="input-group-luxury active">
+                                    <input type="text" placeholder=" " required value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                                    <label>Full Address</label>
+                                </div>
+                                <div className="dual-inputs">
+                                    <input type="text" placeholder="City" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} />
+                                    <input type="text" placeholder="State" required value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} />
+                                </div>
+                                <div className="dual-inputs">
+                                    <input type="text" placeholder="Pincode" required value={formData.pincode} onChange={e => setFormData({...formData, pincode: e.target.value})} />
+                                    <input type="tel" placeholder="Phone" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                                </div>
+                            </div>
+                            <button type="submit" className="btn-luxury-lg">Confirm Address</button>
+                        </form>
+                    )}
+
+                    {step === 2 && (
+                        <div className="premium-payment-step">
+                            <h3>Selection Method</h3>
+                            <div className="payment-grid-luxury">
+                                {['COD', 'Online'].map(m => (
+                                    <div key={m} className={`payment-card-alt ${formData.paymentMode === m ? 'active' : ''}`} onClick={() => setFormData({...formData, paymentMode: m})}>
+                                        <div className="dot"></div>
+                                        <div className="txt">
+                                            <strong>{m === 'COD' ? 'Traditional COD' : 'Secure Digital'}</strong>
+                                            <span>{m === 'COD' ? 'Pay at your doorstep' : 'Cards, UPI, Netbanking'}</span>
                                         </div>
                                     </div>
-                                </div>
-                            )}
-                        </form>
-                    </div>
-
-                    <aside className="order-summary">
-                        <h3>Order Summary</h3>
-                        <div className="summary-list">
-                            {cartItems.map(item => (
-                                <div key={`${item._id}-${item.size}`} className="summary-item">
-                                    <div className="item-img"><img src={getImg(item._id || item.name)} alt={item.name} /></div>
-                                    <div className="item-details">
-                                        <strong>{item.name}</strong>
-                                        {item.size && <p style={{ fontSize: '12px', color: '#666', margin: '2px 0' }}>Size: {item.size}</p>}
-                                        <p>× {item.quantity}</p>
-                                    </div>
-                                    <span>₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+                            <div className="final-actions">
+                                <button onClick={() => setStep(1)} className="btn-back">Edit Address</button>
+                                <button onClick={handleFinalSubmit} className="btn-luxury-lg" disabled={submitting}>
+                                    {submitting ? 'Processing...' : `Pay ₹${total.toLocaleString('en-IN')}`}
+                                </button>
+                            </div>
+                            {error && <p className="error-alert">{error}</p>}
                         </div>
-                        <div className="summary-totals">
-                            <div className="total-row"><span>Subtotal</span><span>₹{cartTotal.toLocaleString('en-IN')}</span></div>
-                            <div className="total-row"><span>Shipping</span><span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span></div>
-                            <div className="total-row grand-total"><span>Total</span><span>₹{total.toLocaleString('en-IN')}</span></div>
+                    )}
+
+                    {step === 3 && (
+                        <div className="checkout-success-luxury">
+                            <div className="success-lottie">✓</div>
+                            <h1>Gratitude Expressed</h1>
+                            <p>Order {orderNumber} has been secured. A vision of elegance is on its way.</p>
+                            <div className="success-btns">
+                                <Link to="/account/orders" className="btn-luxury">Track Order</Link>
+                                <Link to="/" className="btn-luxury-white">Home</Link>
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                {step < 3 && (
+                    <aside className="checkout-summary-luxury">
+                        <div className="summary-card-inner">
+                            <h3>Curated Choice</h3>
+                            <div className="summary-items">
+                                {cartItems.map(item => (
+                                    <div key={item._id} className="summary-item-alt">
+                                        <div className="img-box">
+                                            <img src={getImgUrl(item.images?.[0])} alt={item.name} />
+                                        </div>
+                                        <div className="info-box">
+                                            <strong>{item.name}</strong>
+                                            <span>Qty: {item.quantity}</span>
+                                        </div>
+                                        <div className="price-box">₹{(item.price * item.quantity).toLocaleString()}</div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="summary-foot">
+                                <div className="row"><span>Authenticity Subtotal</span><span>₹{cartTotal.toLocaleString()}</span></div>
+                                <div className="row"><span>Boutique Shipping</span><span>{shipping === 0 ? 'Complimentary' : `₹${shipping}`}</span></div>
+                                <div className="row grand"><span>Final Investment</span><span>₹{total.toLocaleString()}</span></div>
+                            </div>
                         </div>
                     </aside>
-                </div>
-            ) : (
-                <div className="success-view fade-in">
-                    <div className="success-icon">✅</div>
-                    <h1>Thank you, {formData.firstName}!</h1>
-                    <p>Your order <strong>{orderNumber}</strong> has been placed successfully.</p>
-                    <p>We've sent a confirmation email to <strong>{formData.email}</strong></p>
-                    <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '30px' }}>
-                        <Link to="/account" className="btn-primary" style={{ padding: '14px 28px', borderRadius: '6px', textDecoration: 'none', background: '#ed6c0d', color: 'white', fontWeight: '600' }}>Track Order</Link>
-                        <Link to="/" className="btn-primary" style={{ padding: '14px 28px', borderRadius: '6px', textDecoration: 'none', background: '#1e293b', color: 'white', fontWeight: '600' }}>Continue Shopping</Link>
-                    </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

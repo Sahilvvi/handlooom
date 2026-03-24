@@ -47,6 +47,26 @@ const ProductList = () => {
         }
     };
 
+    const handleClearAll = async () => {
+        if (!window.confirm('⚠️ CRITICAL WARNING: Remove ALL products from the database? This cannot be undone!')) return;
+        if (!window.confirm('Are you absolutely sure? This will delete all 250+ products permanently.')) return;
+        
+        try {
+            const token = localStorage.getItem('jannat_token');
+            const res = await fetch(`${BASE_URL}/api/products/all`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                alert('Success: All products have been cleared.');
+                setPage(1);
+                fetchProducts();
+            }
+        } catch (err) {
+            console.error('Clear All failed:', err);
+        }
+    };
+
     const toggleStatus = async (id, currentStatus) => {
         try {
             const token = localStorage.getItem('jannat_token');
@@ -76,6 +96,7 @@ const ProductList = () => {
                     </p>
                 </div>
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                    <button onClick={handleClearAll} className="btn-delete-all" style={{ background: '#ef4444', color: 'white', border: 'none', padding: '10px 16px', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}>🗑️ Clear All Inventory</button>
                     <Link to="/admin/products/bulk" className="btn-add-product" style={{ background: '#1e293b' }}>🚀 Bulk Upload</Link>
                     <Link to="/admin/products/new" className="btn-add-product">+ Add Product</Link>
                 </div>

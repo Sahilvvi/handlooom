@@ -218,95 +218,121 @@ export const Contact = () => {
             subtitle="Bespoke Assistance for Your Beautiful Home"
         >
             <div className="contact-main-grid fade-in">
-                <div className="contact-form-section">
-                    <h2>Send an Inquiry</h2>
+                <div className="contact-info-panel">
+                    <div className="contact-header-premium">
+                        <span className="section-tag">Get in Touch</span>
+                        <h2>Send an Inquiry</h2>
+                        <p>Our concierge remains available to assist you with styling consultations, order tracking, or any artisanal inquiries.</p>
+                    </div>
+
                     {status === 'success' ? (
-                        <div className="form-success-state">
-                            <div className="success-icon">✨</div>
-                            <h2>Message Received</h2>
-                            <p>Our concierge will reach out within 24 hours.</p>
-                            <button onClick={() => setStatus('')} className="premium-btn-alt">Send Another Enquiry</button>
+                        <div className="form-success-state-premium">
+                            <div className="success-lottie">✓</div>
+                            <h3>Inquiry Received</h3>
+                            <p>An artisan from our concierge team will reach out to you at the earliest.</p>
+                            <button onClick={() => setStatus('')} className="premium-btn-alt">Send Another Message</button>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="premium-form">
-                            <div className="form-row-premium">
-                                <div className="form-group-premium">
-                                    <label>Full Name</label>
-                                    <input name="name" value={form.name} onChange={handleChange} placeholder="John Doe" required />
+                        <form onSubmit={handleSubmit} className="premium-contact-form">
+                            <div className="premium-input-row">
+                                <div className="premium-input-group">
+                                    <input name="name" value={form.name} onChange={handleChange} required placeholder=" " id="form_name" />
+                                    <label htmlFor="form_name">Full Name</label>
                                 </div>
-                                <div className="form-group-premium">
-                                    <label>Email Address</label>
-                                    <input name="email" value={form.email} onChange={handleChange} placeholder="john@example.com" type="email" required />
+                                <div className="premium-input-group">
+                                    <input name="email" value={form.email} onChange={handleChange} required type="email" placeholder=" " id="form_email" />
+                                    <label htmlFor="form_email">Email Address</label>
                                 </div>
                             </div>
-                            <div className="form-group-premium">
-                                <label>Subject</label>
-                                <input name="subject" value={form.subject} onChange={handleChange} placeholder="Styling Consultation" />
+                            <div className="premium-input-group">
+                                <input name="subject" value={form.subject} onChange={handleChange} placeholder=" " id="form_subject" />
+                                <label htmlFor="form_subject">Subject (Optional)</label>
                             </div>
-                            <div className="form-group-premium">
-                                <label>Message</label>
-                                <textarea name="message" value={form.message} onChange={handleChange} placeholder="How can we assist you?" required rows={6} />
+                            <div className="premium-input-group">
+                                <textarea name="message" value={form.message} onChange={handleChange} required placeholder=" " id="form_message" rows={6} />
+                                <label htmlFor="form_message">How can we assist you today?</label>
                             </div>
-                            <button type="submit" disabled={loading} className="form-submit-premium">
-                                {loading ? 'Submitting...' : 'Send Enquiry'}
+                            
+                            <button type="submit" disabled={loading} className="premium-form-submit">
+                                {loading ? (
+                                    <span className="loader-text">Processing...</span>
+                                ) : (
+                                    <span className="button-content">Send Message <i className="icon-arrow-right"></i></span>
+                                )}
                             </button>
-                            {typeof status === 'string' && status && status !== 'success' && <div className="form-error-premium">{status}</div>}
+                            
+                            {typeof status === 'string' && status && status !== 'success' && (
+                                <div className="premium-form-error">{status}</div>
+                            )}
                         </form>
                     )}
                 </div>
 
-                <aside className="contact-details-sidebar">
-                    <div className="contact-card-premium">
-                        <h3>Flagship Showroom</h3>
-                        <p>Visit us to feel the textures and receive personalized styling guidance.</p>
-                        <div className="c-info">
-                            <strong>Address:</strong>
-                            <p>102, Handloom Plaza, Sector 18, Delhi, India</p>
+                <div className="contact-sidebar-premium">
+                    <div className="contact-widget">
+                        <h3>Direct Concierge</h3>
+                        <div className="widget-item">
+                            <i className="icon">✉</i>
+                            <div>
+                                <span>Support Email</span>
+                                <p>concierge@jannatloom.com</p>
+                            </div>
                         </div>
-                        <div className="c-info">
-                            <strong>Hours:</strong>
-                            <p>Mon - Sat: 10:00 AM - 8:00 PM</p>
-                        </div>
-                    </div>
-
-                    <div className="contact-card-premium">
-                        <h3>Direct Lines</h3>
-                        <div className="c-info">
-                            <strong>Concierge:</strong>
-                            <p>concierge@jannatloom.com</p>
-                        </div>
-                        <div className="c-info">
-                            <strong>Phone:</strong>
-                            <p>+91 99999 00000</p>
+                        <div className="widget-item">
+                            <i className="icon">📞</i>
+                            <div>
+                                <span>Bespoke Sales</span>
+                                <p>+91 99999 00000</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="contact-card-premium">
-                        <h3>B2B Inquiries</h3>
-                        <p>For hotels, interior designers, and corporate projects, please email our project lead.</p>
-                        <p>projects@jannatloom.com</p>
+                    <div className="contact-widget accent">
+                        <h3>Experience Centers</h3>
+                        <div className="widget-item">
+                            <i className="icon">📍</i>
+                            <div>
+                                <span>Delhi Showroom</span>
+                                <p>102, Handloom Plaza, Sector 18, Delhi, 110027</p>
+                            </div>
+                        </div>
+                        <div className="widget-item">
+                            <i className="icon">📍</i>
+                            <div>
+                                <span>Mumbai Gallery</span>
+                                <p>45, Heritage Road, Bandra West, Mumbai, 400050</p>
+                            </div>
+                        </div>
                     </div>
-                </aside>
+
+                    <div className="contact-social-tease">
+                        <span>Follow Our Artistry</span>
+                        <div className="social-links-minimal">
+                            <a href="#">Instagram</a>
+                            <a href="#">Pinterest</a>
+                            <a href="#">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <section className="faq-tease fade-in">
-                <h2>Frequently Asked Inquiries</h2>
-                <div className="faq-preview-grid">
-                    <div className="faq-item-small">
-                        <h4>Do you offer worldwide shipping?</h4>
-                        <p>Yes, we ship our artisanal collections globally to over 50 countries.</p>
+            <section className="contact-faq-tease">
+                <div className="tease-header">
+                    <h2>Immediate Clarity</h2>
+                    <p>Brief answers to our most frequent artisanal inquiries.</p>
+                </div>
+                <div className="tease-grid">
+                    <div className="tease-card">
+                        <h4>Global Logistics</h4>
+                        <p>We deliver our artisanal drapes to over 50 countries worldwide with specialized handle-with-care packaging.</p>
                     </div>
-                    <div className="faq-item-small">
-                        <h4>Can I request custom sizes?</h4>
-                        <p>Absolutely. We specialize in bespoke sizes tailored to your specific windows.</p>
+                    <div className="tease-card">
+                        <h4>Bespoke Sizes</h4>
+                        <p>Custom dimensions can be crafted for your specific windows. Simply mention 'Bespoke' in your inquiry.</p>
                     </div>
-                    <div className="faq-item-small">
-                        <h4>What is the lead time?</h4>
-                        <p>As our products are hand-woven, standard lead time is 7-10 business days for dispatch.</p>
-                    </div>
-                    <div className="faq-item-small">
-                        <h4>Do you provide fabric samples?</h4>
-                        <p>Yes, swatches can be requested through our concierge for selected collections.</p>
+                    <div className="tease-card">
+                        <h4>Lead Times</h4>
+                        <p>As every piece is hand-woven, please allow 7-12 business days for your order to be ready for its journey.</p>
                     </div>
                 </div>
             </section>

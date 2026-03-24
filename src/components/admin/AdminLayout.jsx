@@ -37,7 +37,7 @@ const AdminLayout = () => {
 
             <aside className={`admin-sidebar ${isSidebarOpen ? 'active' : ''}`}>
                 <div className="admin-logo">
-                    <h1>Jannat <span>Admin</span></h1>
+                    <h1>Jannat <span>Admin V3.3 💎</span></h1>
                     <button className="mobile-close" onClick={closeSidebar}>✕</button>
                 </div>
                 <nav className="admin-nav">

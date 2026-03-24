@@ -6,7 +6,11 @@ const { sendOrderConfirmation } = require('../services/emailService');
 // Create order (public - guests can order too)
 exports.createOrder = async (req, res) => {
     try {
-        const { items, shippingAddress, paymentMode, subtotal, shippingCost, totalAmount } = req.body;
+        const { 
+            items, shippingAddress, paymentMode, subtotal, shippingCost, totalAmount,
+            razorpayOrderId, razorpayPaymentId, razorpaySignature, paymentStatus
+        } = req.body;
+
         const order = new Order({
             user: req.user?.id || null,
             items,
@@ -15,7 +19,10 @@ exports.createOrder = async (req, res) => {
             subtotal,
             shippingCost: shippingCost || 0,
             totalAmount,
-            paymentStatus: paymentMode === 'COD' ? 'pending' : 'paid'
+            paymentStatus: paymentStatus || (paymentMode === 'COD' ? 'pending' : 'paid'),
+            razorpayOrderId,
+            razorpayPaymentId,
+            razorpaySignature
         });
         await order.save();
         // Send confirmation email (non-blocking)
