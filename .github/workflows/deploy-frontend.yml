@@ -38,9 +38,13 @@ jobs:
           port: 65002
           script: |
             mkdir -p domains/jannathandloom.com/public_html
-            # Clean old files but PRESERVE 'uploads'
-            find domains/jannathandloom.com/ -maxdepth 1 -not -name 'uploads' -not -name 'public_html' -not -name '.' -not -name '..' -exec rm -rf {} +
-            find domains/jannathandloom.com/public_html/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -exec rm -rf {} +
+            # Clean root folder safely (preserve uploads + public_html)
+            cd domains/jannathandloom.com
+            ls -A | grep -vE '^(uploads|public_html)$' | xargs rm -rf 2>/dev/null || true
+            
+            # Clean public_html folder safely (preserve uploads)
+            cd public_html
+            ls -A | grep -vE '^(uploads)$' | xargs rm -rf 2>/dev/null || true
 
       - name: Deploy Unified App to Hostinger (SCP)
         uses: appleboy/scp-action@v0.1.7
