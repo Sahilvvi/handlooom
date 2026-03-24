@@ -37,11 +37,11 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           script: |
-            mkdir -p domains/jannathandloom.com
+            mkdir -p domains/jannathandloom.com/public_html
             # Clean old files to ensure a fresh deployment
             # We preserve the uploads folder to keep product images!
-            # We use 'rm -rf' via 'find' because -delete only works on empty folders.
-            find domains/jannathandloom.com/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -exec rm -rf {} +
+            # We deploy everything to public_html which is the standard web folder.
+            find domains/jannathandloom.com/public_html/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -exec rm -rf {} +
 
       - name: Deploy Unified App to Hostinger (SCP)
         uses: appleboy/scp-action@v0.1.7
@@ -51,7 +51,7 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           source: "server/*"
-          target: "domains/jannathandloom.com/"
+          target: "domains/jannathandloom.com/public_html/"
           strip_components: 1
 
       - name: Install Final Dependencies & Restart
@@ -62,7 +62,7 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           script: |
-            cd domains/jannathandloom.com
+            cd domains/jannathandloom.com/public_html
             npm install --production
             # Ensure the uploads directory exists
             mkdir -p uploads
