@@ -14,11 +14,22 @@ const ProductList = () => {
     const fetchProducts = async () => {
         try {
             const response = await fetch(`${BASE_URL}/api/products`);
-            const data = await response.json();
-            setProducts(data);
+            const resData = await response.json();
+            
+            // Supporting both paginated object structure { products: [], ... } 
+            // and the simpler array structure [] for maximum robustness.
+            const data = resData.products || resData;
+            
+            if (Array.isArray(data)) {
+                setProducts(data);
+            } else {
+                console.error('Invalid products data format:', resData);
+                setProducts([]);
+            }
             setLoading(false);
         } catch (err) {
             console.error('Error fetching products:', err);
+            setProducts([]);
             setLoading(false);
         }
     };
