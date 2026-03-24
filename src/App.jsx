@@ -18,6 +18,7 @@ import Dashboard from './pages/admin/Dashboard';
 import ProductList from './pages/admin/ProductList';
 import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
+import BulkUpload from './pages/admin/BulkUpload';
 import OrderManagement from './pages/admin/OrderManagement';
 import CustomerManagement from './pages/admin/CustomerManagement';
 import CouponManagement from './pages/admin/CouponManagement';
@@ -77,6 +78,7 @@ function App() {
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<Dashboard />} />
                   <Route path="products" element={<ProductList />} />
+                  <Route path="products/bulk" element={<BulkUpload />} />
                   <Route path="products/new" element={<AddProduct />} />
                   <Route path="products/edit/:id" element={<EditProduct />} />
                   <Route path="orders" element={<OrderManagement />} />

@@ -20,6 +20,7 @@ const AdminLayout = () => {
     const navLinks = [
         { to: "/admin", icon: "📊", label: "Dashboard" },
         { to: "/admin/products", icon: "📦", label: "Manage Products" },
+        { to: "/admin/products/bulk", icon: "🚀", label: "Bulk Upload" },
         { to: "/admin/orders", icon: "🛒", label: "Orders" },
         { to: "/admin/customers", icon: "👥", label: "Customers" },
         { to: "/admin/coupons", icon: "🏷️", label: "Coupons" },
