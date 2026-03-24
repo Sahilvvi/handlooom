@@ -55,7 +55,7 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
 });
 
 // POST /api/upload/multiple
-router.post('/multiple', protect, admin, upload.array('images', 5), (req, res) => {
+router.post('/multiple', protect, admin, upload.array('images', 50), (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ message: 'No files uploaded' });

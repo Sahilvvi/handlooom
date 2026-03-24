@@ -9,6 +9,7 @@ exports.getAllProducts = async (req, res) => {
 
         const products = await Product.find({ isActive: { $ne: false } })
             .select('name price images originalPrice category transparency material fastDelivery isActive colors room isBestSeller description')
+            .sort({ _id: -1 }) // Newest first
             .skip(skip)
             .limit(limit)
             .lean();
