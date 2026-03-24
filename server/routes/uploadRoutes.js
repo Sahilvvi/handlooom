@@ -5,13 +5,16 @@ const fs = require('fs');
 const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Ensure /uploads dir exists locally or in public_html for Hostinger
-const uploadsDir = process.env.NODE_ENV === 'production' 
-    ? path.join(__dirname, '../../public_html/uploads') 
-    : path.join(__dirname, '../uploads');
+// Ensure /uploads dir exists local to the server app
+const uploadsDir = path.join(__dirname, '../uploads');
 
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
+try {
+    if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+        console.log('✅ Created uploads directory at:', uploadsDir);
+    }
+} catch (err) {
+    console.error('⚠️ Could not create uploads directory:', err.message);
 }
 
 // disk storage for Hostinger (permanent filesystem)
