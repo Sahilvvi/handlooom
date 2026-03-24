@@ -67,6 +67,39 @@ router.post('/multiple', protect, admin, upload.array('images', 5), (req, res) =
     }
 });
 
+// GET /api/upload — list all uploaded files
+router.get('/', protect, admin, (req, res) => {
+    try {
+        if (!fs.existsSync(uploadsDir)) return res.json({ files: [] });
+        const files = fs.readdirSync(uploadsDir)
+            .filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
+            .map(f => ({
+                filename: f,
+                url: `/uploads/${f}`,
+                time: fs.statSync(path.join(uploadsDir, f)).mtime.getTime()
+            }))
+            .sort((a, b) => b.time - a.time);
+        res.json({ files });
+    } catch (err) {
+        res.status(500).json({ message: 'Error reading uploads', error: err.message });
+    }
+});
+
+// DELETE /api/upload/:filename — delete an uploaded file
+router.delete('/:filename', protect, admin, (req, res) => {
+    try {
+        const filePath = path.join(uploadsDir, req.params.filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            res.json({ message: 'File deleted' });
+        } else {
+            res.status(404).json({ message: 'File not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Error deleting file', error: err.message });
+    }
+});
+
 // Multer Error Handling
 router.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) {

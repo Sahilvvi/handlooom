@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BASE_URL from '../../utils/api';
+import BASE_URL, { getImgUrl } from '../../utils/api';
 
 const BannerManagement = () => {
     const [banners, setBanners] = useState([]);
@@ -89,7 +89,7 @@ const BannerManagement = () => {
                             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase' }}>Banner Image *</label>
                             <input type="file" onChange={handleFileUpload} accept="image/*" />
                             {uploading && <p style={{ fontSize: '0.75rem', color: '#EF6F31' }}>Uploading image...</p>}
-                            {form.image && <img src={form.image} alt="preview" style={{ width: 120, height: 60, objectFit: 'cover', borderRadius: 4, marginTop: 8, border: '1px solid #e2e8f0' }} />}
+                            {form.image && <img src={getImgUrl(form.image)} alt="preview" style={{ width: 120, height: 60, objectFit: 'cover', borderRadius: 4, marginTop: 8, border: '1px solid #e2e8f0' }} />}
                         </div>
                         {[['title', 'Title (e.g. Summer Sale)', 'text'], ['subtitle', 'Subtitle text', 'text'], ['link', 'Button Link (/shop)', 'text'], ['buttonText', 'Button Text', 'text']].map(([n, ph, t]) => (
                             <div key={n} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}><label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase' }}>{ph}</label><input style={{ padding: '10px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: '0.9rem' }} type={t} name={n} value={form[n]} onChange={e => setForm({ ...form, [n]: e.target.value })} placeholder={ph} /></div>
@@ -109,7 +109,7 @@ const BannerManagement = () => {
                 <div style={{ display: 'grid', gap: 16 }}>
                     {banners.map(b => (
                         <div key={b._id} style={{ display: 'flex', gap: 20, alignItems: 'center', background: 'white', borderRadius: 10, padding: 16, boxShadow: '0 1px 4px rgba(0,0,0,0.06)', flexWrap: 'wrap' }}>
-                            <img src={b.image.startsWith('http') ? b.image : `${BASE_URL}${b.image}`} alt={b.title} style={{ width: 100, height: 60, objectFit: 'cover', borderRadius: 6, background: '#f1f5f9' }} />
+                            <img src={getImgUrl(b.image)} alt={b.title} style={{ width: 100, height: 60, objectFit: 'cover', borderRadius: 6, background: '#f1f5f9' }} />
                             <div style={{ flex: '1 1 200px' }}>
                                 <div style={{ fontWeight: 600, color: '#1e293b' }}>{b.title || '(No title)'}</div>
                                 <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{b.subtitle}</div>

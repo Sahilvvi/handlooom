@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import BASE_URL from '../../utils/api';
+import BASE_URL, { getImgUrl } from '../../utils/api';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -81,7 +81,7 @@ const ProductList = () => {
                         <tr key={product._id} style={{ opacity: product.isActive ? 1 : 0.6 }}>
                             <td>
                                 <img
-                                    src={product.images[0]?.startsWith('http') ? product.images[0] : `${BASE_URL}${product.images[0]}`}
+                                    src={getImgUrl(product.images[0])}
                                     alt={product.name}
                                     className="admin-thumb"
                                 />

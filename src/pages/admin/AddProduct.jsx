@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BASE_URL from '../../utils/api';
+import BASE_URL, { getImgUrl } from '../../utils/api';
 import './AddProduct.css';
 
 const CATEGORIES = [
@@ -159,7 +159,7 @@ const AddProduct = () => {
                         <div className="images-grid">
                             {images.map((img, idx) => (
                                 <div key={idx} className={`image-preview-item ${idx === thumbnailIndex ? 'is-thumbnail' : ''}`} onClick={() => setThumbnailIndex(idx)}>
-                                    <img src={img} alt="" />
+                                    <img src={getImgUrl(img)} alt="" />
                                     <button type="button" className="remove-img" onClick={(e) => { e.stopPropagation(); removeImage(idx); }}>&times;</button>
                                     {idx === thumbnailIndex && <div className="thumbnail-badge">Main Thumbnail</div>}
                                 </div>

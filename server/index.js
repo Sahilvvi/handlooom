@@ -37,7 +37,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Simplified Asset Serving (Uses standard public/uploads or similar)
 const globalUploadBasePath = process.env.NODE_ENV === 'production'
-    ? path.join(__dirname, '../uploads')
+    ? path.join(__dirname, '../public_html/uploads')
     : path.join(__dirname, 'uploads');
 
 console.log('Static asset path configured at:', globalUploadBasePath);

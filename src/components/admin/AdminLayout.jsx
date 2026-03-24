@@ -24,6 +24,7 @@ const AdminLayout = () => {
         { to: "/admin/customers", icon: "👥", label: "Customers" },
         { to: "/admin/coupons", icon: "🏷️", label: "Coupons" },
         { to: "/admin/banners", icon: "🖼️", label: "Banners" },
+        { to: "/admin/media", icon: "📁", label: "Media Library" },
         { to: "/", icon: "🌐", label: "View Website" },
     ];
 

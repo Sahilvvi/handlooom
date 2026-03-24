@@ -22,6 +22,7 @@ import OrderManagement from './pages/admin/OrderManagement';
 import CustomerManagement from './pages/admin/CustomerManagement';
 import CouponManagement from './pages/admin/CouponManagement';
 import BannerManagement from './pages/admin/BannerManagement';
+import MediaLibrary from './pages/admin/MediaLibrary';
 import { About, Shipping, Returns, Privacy, Faq, Career, Contact, OurStores } from './pages/StaticPages';
 import NotFound from './pages/NotFound';
 import Wishlist from './pages/Wishlist';
@@ -82,6 +83,7 @@ function App() {
                   <Route path="customers" element={<CustomerManagement />} />
                   <Route path="coupons" element={<CouponManagement />} />
                   <Route path="banners" element={<BannerManagement />} />
+                  <Route path="media" element={<MediaLibrary />} />
                 </Route>
               </Route>
             </Routes>
