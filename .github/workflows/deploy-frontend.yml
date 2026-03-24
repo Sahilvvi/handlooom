@@ -40,8 +40,8 @@ jobs:
             mkdir -p domains/jannathandloom.com
             # Clean old files to ensure a fresh deployment
             # We preserve the uploads folder to keep product images!
-            # We deploy everything to the root to match the hPanel config (Root: ./)
-            find domains/jannathandloom.com/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -delete
+            # We use 'rm -rf' via 'find' because -delete only works on empty folders.
+            find domains/jannathandloom.com/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -exec rm -rf {} +
 
       - name: Deploy Unified App to Hostinger (SCP)
         uses: appleboy/scp-action@v0.1.7
