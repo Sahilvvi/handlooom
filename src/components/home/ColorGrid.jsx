@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getImgUrl } from '../../utils/api';
+import useHomeSettings from '../../hooks/useHomeSettings';
 import './ColorGrid.css';
 
-const colors = [
-    { title: 'White Curtains', offer: 'UPTO 39% OFF', image: '/q1.png', search: 'white' },
-    { title: 'Blue Curtains', offer: 'UPTO 30% OFF', image: '/q2.png', search: 'blue' },
-    { title: 'Green Curtains', offer: 'UPTO 30% OFF', image: '/q3.png', search: 'green' },
-    { title: 'Grey Curtains', offer: 'UPTO 42% OFF', image: '/q1.png', search: 'grey' },
-    { title: 'Black Curtains', offer: 'UPTO 43% OFF', image: '/q2.png', search: 'black' }
-];
-
 const ColorGrid = () => {
+    const { settings, loading } = useHomeSettings();
+
+    if (loading) return null;
+
+    const items = settings?.colors || [];
+
+    if (items.length === 0) return null;
+
     return (
         <section className="color-section">
             <div className="container">
@@ -19,14 +21,14 @@ const ColorGrid = () => {
                     <p>Color Your Space with Style & Elegance</p>
                 </div>
                 <div className="color-grid">
-                    {colors.map((item, index) => (
-                        <Link key={index} to={`/shop?search=${encodeURIComponent(item.search)}`} className="color-card">
+                    {items.map((item, index) => (
+                        <Link key={index} to={item.link || `/shop?search=${encodeURIComponent(item.name)}`} className="color-card">
                             <div className="color-img">
-                                <img src={item.image} alt={item.title} />
+                                <img src={getImgUrl(item.image)} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/200x200'} />
                             </div>
                             <div className="color-info">
-                                <h3>{item.title}</h3>
-                                <p className="offer-badge">{item.offer}</p>
+                                <h3>{item.name}</h3>
+                                {item.offer && <p className="offer-badge">{item.offer}</p>}
                             </div>
                         </Link>
                     ))}

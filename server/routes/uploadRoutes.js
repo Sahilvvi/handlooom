@@ -54,6 +54,19 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
     }
 });
 
+// POST /api/upload/single — alias
+router.post('/single', protect, admin, upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+
+        // Return relative path for database storage
+        const filePath = `/uploads/${req.file.filename}`;
+        res.json({ url: filePath, filename: req.file.filename });
+    } catch (err) {
+        res.status(500).json({ message: 'Error saving image', error: err.message });
+    }
+});
+
 // POST /api/upload/multiple
 router.post('/multiple', protect, admin, upload.array('images', 50), (req, res) => {
     try {

@@ -19,6 +19,7 @@ import ProductList from './pages/admin/ProductList';
 import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import BulkUpload from './pages/admin/BulkUpload';
+import HomepageManagement from './pages/admin/HomepageManagement';
 import OrderManagement from './pages/admin/OrderManagement';
 import CustomerManagement from './pages/admin/CustomerManagement';
 import CouponManagement from './pages/admin/CouponManagement';
@@ -81,6 +82,7 @@ function App() {
                   <Route path="products/bulk" element={<BulkUpload />} />
                   <Route path="products/new" element={<AddProduct />} />
                   <Route path="products/edit/:id" element={<EditProduct />} />
+                  <Route path="homepage" element={<HomepageManagement />} />
                   <Route path="orders" element={<OrderManagement />} />
                   <Route path="customers" element={<CustomerManagement />} />
                   <Route path="coupons" element={<CouponManagement />} />

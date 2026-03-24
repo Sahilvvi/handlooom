@@ -82,6 +82,7 @@ app.use('/api/banners', require('./routes/bannerRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
+app.use('/api/home', require('./routes/homeRoutes'));
 
 // ─── Health check & Frontend Serving ─────────────────
 app.get('/api', (req, res) => res.json({ message: 'Jannat Handloom API ✅', version: '2.0' }));
