@@ -38,9 +38,8 @@ jobs:
           port: 65002
           script: |
             mkdir -p domains/jannathandloom.com/public_html
-            # Clean old files to ensure a fresh deployment
-            # We preserve the uploads folder to keep product images!
-            # We deploy everything to public_html which is the standard web folder.
+            # Clean old files but PRESERVE 'uploads'
+            find domains/jannathandloom.com/ -maxdepth 1 -not -name 'uploads' -not -name 'public_html' -not -name '.' -not -name '..' -exec rm -rf {} +
             find domains/jannathandloom.com/public_html/ -maxdepth 1 -not -name 'uploads' -not -name '.' -not -name '..' -exec rm -rf {} +
 
       - name: Deploy Unified App to Hostinger (SCP)
@@ -54,7 +53,7 @@ jobs:
           target: "domains/jannathandloom.com/public_html/"
           strip_components: 1
 
-      - name: Install Final Dependencies & Restart
+      - name: Prepare Root for Hostinger (SSH)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 82.25.83.161
@@ -62,10 +61,16 @@ jobs:
           password: Vrushali@123456789
           port: 65002
           script: |
-            cd domains/jannathandloom.com/public_html
+            # Hostinger ROOT setting is ./ so we MUST have package.json there
+            cd domains/jannathandloom.com
+            cp public_html/package.json .
+            cp public_html/package-lock.json .
             npm install --production
-            # Ensure the uploads directory exists
-            mkdir -p uploads
-            # Restart mechanism
+            # We also install in public_html just in case the pathing is weird
+            cd public_html
+            npm install --production
+            # Restart
             mkdir -p tmp
             touch tmp/restart.txt
+
+
