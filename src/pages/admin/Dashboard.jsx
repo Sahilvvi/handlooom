@@ -7,7 +7,6 @@ import './Dashboard.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
-
 const statusColors = { placed: '#f59e0b', confirmed: '#3b82f6', processing: '#8b5cf6', shipped: '#06b6d4', delivered: '#16a34a', cancelled: '#ef4444' };
 
 const Dashboard = () => {
@@ -24,47 +23,45 @@ const Dashboard = () => {
             .catch(() => setLoading(false));
     }, []);
 
-    if (loading) return <div style={{ padding: '40px', color: '#666' }}>Loading dashboard...</div>;
+    if (loading) return <div style={{ padding: '80px', color: '#666', textAlign: 'center', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Consulting Artisanal Data...</div>;
 
     return (
         <div className="dashboard-page">
             <div className="dashboard-grid">
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#fff9f5' }}>📦</div>
+                    <div className="stat-icon" style={{ background: '#f8f7f2', color: '#c5a059' }}>📦</div>
                     <div>
-                        <p className="stat-label">Total Products</p>
-                        <p className="stat-value">{stats?.totalProducts ?? 0}</p>
+                        <p className="stat-label">Artisanal Gallery</p>
+                        <p className="stat-value">{stats?.totalProducts ?? 0} Masterpieces</p>
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#f0fdf4' }}>🛒</div>
+                    <div className="stat-icon" style={{ background: '#f8f7f2', color: '#c5a059' }}>🛒</div>
                     <div>
-                        <p className="stat-label">Total Orders</p>
-                        <p className="stat-value">{stats?.totalOrders ?? 0}</p>
+                        <p className="stat-label">Boutique Orders</p>
+                        <p className="stat-value">{stats?.totalOrders ?? 0} Selections</p>
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#eff6ff' }}>👥</div>
+                    <div className="stat-icon" style={{ background: '#f8f7f2', color: '#c5a059' }}>👥</div>
                     <div>
-                        <p className="stat-label">Customers</p>
-                        <p className="stat-value">{stats?.totalUsers ?? 0}</p>
+                        <p className="stat-label">Elite Clientele</p>
+                        <p className="stat-value">{stats?.totalUsers ?? 0} Verified</p>
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#fdf4ff' }}>💰</div>
+                    <div className="stat-icon" style={{ background: '#f8f7f2', color: '#c5a059' }}>💰</div>
                     <div>
-                        <p className="stat-label">Total Revenue</p>
+                        <p className="stat-label">Boutique Revenue</p>
                         <p className="stat-value">₹{(stats?.revenue ?? 0).toLocaleString('en-IN')}</p>
                     </div>
                 </div>
             </div>
 
-            {/* Charts Section */}
             {stats && (
                 <div className="dashboard-charts">
-                    {/* Order Status Donut */}
-                    <div className="chart-container donut">
-                        <h3 className="chart-title">Orders by Status</h3>
+                    <div className="chart-container">
+                        <h3 className="chart-title">Selection Status Distribution</h3>
                         <div className="donut-wrapper">
                             <Doughnut
                                 data={{
@@ -76,29 +73,29 @@ const Dashboard = () => {
                                             stats.recentOrders?.filter(o => o.orderStatus === 'shipped').length || 0,
                                             stats.recentOrders?.filter(o => o.orderStatus === 'delivered').length || 0,
                                             stats.recentOrders?.filter(o => o.orderStatus === 'cancelled').length || 0,
-                                        ], backgroundColor: ['#f59e0b', '#3b82f6', '#06b6d4', '#16a34a', '#ef4444'], borderWidth: 0
+                                        ], backgroundColor: ['#C5A059', '#121212', '#F8F7F2', '#16a34a', '#ef4444'], borderWidth: 1, borderColor: '#eee'
                                     }]
                                 }}
                                 options={{
-                                    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 10 } } },
-                                    cutout: '65%',
+                                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true, font: { size: 10, weight: '800' } } } },
+                                    cutout: '75%',
                                     maintainAspectRatio: false
                                 }}
                             />
                         </div>
                     </div>
-                    {/* Revenue Bar */}
-                    <div className="chart-container bar">
-                        <h3 className="chart-title">Recent Order Revenue (₹)</h3>
+                    
+                    <div className="chart-container">
+                        <h3 className="chart-title">Recent Boutique Performance (₹)</h3>
                         <div className="bar-wrapper">
                             <Bar
                                 data={{
                                     labels: (stats.recentOrders || []).map(o => o.orderNumber?.slice(-4) || '').reverse(),
-                                    datasets: [{ label: 'Revenue', data: (stats.recentOrders || []).map(o => o.totalAmount || 0).reverse(), backgroundColor: 'rgba(239,111,49,0.75)', borderRadius: 4 }]
+                                    datasets: [{ label: 'Revenue', data: (stats.recentOrders || []).map(o => o.totalAmount || 0).reverse(), backgroundColor: '#C5A059', borderRadius: 2 }]
                                 }}
                                 options={{
                                     plugins: { legend: { display: false } },
-                                    scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => '₹' + v.toLocaleString('en-IN') } } },
+                                    scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: '#f9f9f9' } } },
                                     maintainAspectRatio: false
                                 }}
                             />
@@ -110,25 +107,25 @@ const Dashboard = () => {
             <div className="dashboard-bottom">
                 <div className="recent-orders-section">
                     <div className="section-header">
-                        <h3>Recent Orders</h3>
-                        <Link to="/admin/orders" className="view-all-link">View All →</Link>
+                        <h3>Recent Boutique Activity</h3>
+                        <Link to="/admin/orders" style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--admin-gold)', textTransform: 'uppercase' }}>View All Activity →</Link>
                     </div>
                     {(!stats?.recentOrders || stats.recentOrders.length === 0) ? (
-                        <p style={{ color: '#94a3b8', padding: '20px 0' }}>No orders yet.</p>
+                        <p style={{ color: '#94a3b8', padding: '40px 0', textAlign: 'center' }}>No recent selections found.</p>
                     ) : (
                         <div className="orders-table-scroll">
                             <table className="mini-orders-table">
                                 <thead>
-                                    <tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Status</th></tr>
+                                    <tr><th>Ref #</th><th>Patron</th><th>Investment</th><th>Status</th></tr>
                                 </thead>
                                 <tbody>
-                                    {stats.recentOrders.map(order => (
+                                    {stats.recentOrders.slice(0, 5).map(order => (
                                         <tr key={order._id}>
-                                            <td>{order.orderNumber}</td>
+                                            <td style={{ fontWeight: 800 }}>{order.orderNumber}</td>
                                             <td>{order.shippingAddress?.firstName} {order.shippingAddress?.lastName}</td>
-                                            <td>₹{order.totalAmount?.toLocaleString('en-IN')}</td>
+                                            <td style={{ color: 'var(--admin-gold)', fontWeight: 800 }}>₹{order.totalAmount?.toLocaleString('en-IN')}</td>
                                             <td>
-                                                <span className="mini-status" style={{ background: statusColors[order.orderStatus] + '22', color: statusColors[order.orderStatus] }}>
+                                                <span className="mini-status" style={{ background: statusColors[order.orderStatus] + '11', color: statusColors[order.orderStatus], border: `1px solid ${statusColors[order.orderStatus]}33` }}>
                                                     {order.orderStatus}
                                                 </span>
                                             </td>
@@ -141,11 +138,11 @@ const Dashboard = () => {
                 </div>
 
                 <div className="quick-actions">
-                    <h3>Quick Actions</h3>
-                    <Link to="/admin/products/new" className="quick-btn">+ Add New Product</Link>
-                    <Link to="/admin/orders" className="quick-btn secondary">📋 Manage Orders</Link>
-                    <Link to="/admin/coupons" className="quick-btn secondary">🏷️ Coupons</Link>
-                    <Link to="/" className="quick-btn secondary">🌐 View Website</Link>
+                    <h3 style={{ marginBottom: '30px', fontSize: '0.9rem', fontWeight: 800 }}>Management Concierge</h3>
+                    <Link to="/admin/products/new" className="quick-btn">+ Catalog New Drape</Link>
+                    <Link to="/admin/orders" className="quick-btn secondary">📋 Review Selections</Link>
+                    <Link to="/admin/coupons" className="quick-btn secondary">🏷️ Promotion Center</Link>
+                    <Link to="/" className="quick-btn secondary">🌐 Visit Boutique</Link>
                 </div>
             </div>
         </div>

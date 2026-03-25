@@ -1,160 +1,69 @@
 .wide-promo-section {
-    padding: 40px 0;
-    background-color: #fff;
+    padding: 0;
+    margin: 80px 0;
 }
 
-.wide-banner {
-    background: linear-gradient(135deg, #fff5f6 0%, #fde2e7 100%);
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 15px 35px rgba(214, 69, 97, 0.1);
+.wide-banner-ux {
+    height: 600px;
+    width: 100%;
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(214, 69, 97, 0.05);
-}
-
-.wide-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(214, 69, 97, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-}
-
-.wide-banner-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    position: relative;
+    background: #000;
+}
+
+.banner-bg-parallax {
+    position: absolute;
+    inset: -50px;
+    background-size: cover;
+    background-position: center;
+    transform: translateY(0);
+    transition: transform 0.1s linear;
+}
+
+.banner-overlay-ux {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
     z-index: 1;
 }
 
-.left-promo {
-    display: flex;
-    flex-direction: column;
+.banner-content-lux {
+    position: relative;
+    z-index: 10;
+    color: white;
+    max-width: 700px;
 }
 
-.splash-text {
-    font-family: var(--font-heading);
-    font-size: 2.2rem;
-    font-style: italic;
-    color: #1a1a1a;
-    line-height: 1.2;
-}
-
-.colours-text {
-    font-size: 4rem;
-    color: #D64561;
-    line-height: 0.9;
-    margin: 5px 0 0;
-    font-weight: 900;
+.banner-tag-lux {
     text-transform: uppercase;
-    letter-spacing: -2px;
-}
-
-.colours-text span {
-    font-family: var(--font-heading);
-    font-style: italic;
-    color: #1a1a1a;
-    font-size: 2.5rem;
-    font-weight: 400;
-    letter-spacing: normal;
-}
-
-.divider {
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(180deg, transparent 0%, #D64561 50%, transparent 100%);
-    opacity: 0.3;
-}
-
-.middle-promo {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.upto {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-size: 1rem;
-    font-weight: 800;
-    color: #D64561;
-}
-
-.percent {
-    font-size: 7rem;
-    font-weight: 900;
-    color: #D64561;
-    line-height: 1;
-    letter-spacing: -5px;
-}
-
-.plus {
-    font-size: 4rem;
-    color: #D64561;
-    font-weight: 300;
-}
-
-.cashback {
-    display: flex;
-    flex-direction: column;
-}
-
-.upto-small {
-    font-size: 1rem;
-    font-weight: 800;
-    color: #D64561;
-}
-
-.amount {
-    font-size: 5rem;
-    font-weight: 900;
-    color: #D64561;
-    line-height: 1;
-    letter-spacing: -2px;
-}
-
-.right-promo {
-    max-width: 200px;
-}
-
-.cashback-label {
-    font-size: 1.4rem;
+    letter-spacing: 0.5em;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: #1a1a1a;
-    line-height: 1.1;
+    color: var(--lux-gold);
     display: block;
-    text-transform: uppercase;
+    margin-bottom: 1.5rem;
 }
 
-@media (max-width: 1200px) {
-    .percent { font-size: 5rem; }
-    .amount { font-size: 4rem; }
+.banner-title-lux {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 1.5rem;
 }
 
-@media (max-width: 1024px) {
-    .wide-banner { padding: 40px; }
-    .wide-banner-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
-    .divider { display: none; }
-    .colours-text { font-size: 3rem; }
-    .colours-text span { font-size: 1.8rem; }
-    .percent { font-size: 5rem; }
+.banner-desc-lux {
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
 }
 
 @media (max-width: 768px) {
-    .wide-banner { padding: 30px 20px; }
-    .percent { font-size: 4rem; letter-spacing: -2px; }
-    .amount { font-size: 3.5rem; }
-    .splash-text { font-size: 1.5rem; }
-    .colours-text { font-size: 2.2rem; }
-    .plus { font-size: 2.5rem; }
-}
+    .wide-banner-ux { height: 450px; }
+    .banner-content-lux { padding: 0 1rem; text-align: center; }
+    .banner-overlay-ux { background: rgba(0,0,0,0.6); }
+}

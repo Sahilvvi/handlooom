@@ -14,27 +14,19 @@ const MaterialGrid = () => {
     if (items.length === 0) return null;
 
     return (
-        <section className="material-section">
-            <div className="container">
-                <div className="section-header-alt">
-                    <h2>Shop Curtains By Material</h2>
-                    <p>Find the Perfect Fabric — From Sheers to Blackouts</p>
-                </div>
-                <div className="material-grid">
-                    {items.map((item, index) => (
-                        <Link key={index} to={item.link || `/shop?search=${encodeURIComponent(item.name)}`} className="material-card">
-                            <div className="material-img">
-                                <img src={getImgUrl(item.image)} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/300x400'} />
-                            </div>
-                            <div className="material-info">
-                                <h3>{item.name}</h3>
-                                {item.offer && <p className="offer-badge">{item.offer}</p>}
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
-        </section>
+        <div className="material-grid">
+            {items.map((item, index) => (
+                <Link key={index} to={item.link || `/shop?search=${encodeURIComponent(item.name)}`} className="material-card-lux">
+                    <div className="material-img-lux">
+                        <img src={getImgUrl(item.image)} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/300x300'} />
+                    </div>
+                    <div className="material-info">
+                        <h3>{item.name}</h3>
+                        {item.offer && <span className="material-label-lux">{item.offer}</span>}
+                    </div>
+                </Link>
+            ))}
+        </div>
     );
 };
 

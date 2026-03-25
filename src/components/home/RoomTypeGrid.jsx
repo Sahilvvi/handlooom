@@ -14,27 +14,19 @@ const RoomTypeGrid = () => {
     if (items.length === 0) return null;
 
     return (
-        <section className="room-type-section">
-            <div className="container">
-                <div className="section-header-alt">
-                    <h2>Find the Perfect Curtains by Room Type</h2>
-                    <p>Discover Ideal Curtain Styles for Every Space</p>
-                </div>
-                <div className="room-grid">
-                    {items.map((item, index) => (
-                        <Link key={index} to={item.link || `/shop?search=${encodeURIComponent(item.name)}`} className="room-card-alt">
-                            <div className="room-img-alt">
-                                <img src={getImgUrl(item.image)} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/300x400'} />
-                            </div>
-                            <div className="room-info-alt">
-                                <h3>{item.name}</h3>
-                                {item.offer && <p className="offer-badge">{item.offer}</p>}
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
-        </section>
+        <div className="room-grid">
+            {items.map((item, index) => (
+                <Link key={index} to={item.link || `/shop?search=${encodeURIComponent(item.name)}`} className="room-card-premium">
+                    <div className="room-img-premium">
+                        <img src={getImgUrl(item.image)} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/400x600'} />
+                    </div>
+                    <div className="room-overlay-premium">
+                        {item.offer && <span className="offer-premium">{item.offer}</span>}
+                        <h3>{item.name}</h3>
+                    </div>
+                </Link>
+            ))}
+        </div>
     );
 };
 

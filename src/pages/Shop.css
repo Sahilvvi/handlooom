@@ -1,165 +1,195 @@
 .shop-premium-page {
+    background: var(--lux-white);
     padding-bottom: 120px;
-    background: #fdfbf7;
 }
 
-.shop-hero-premium {
-    padding: 100px 0 60px;
-    background: #fff;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 60px;
+.shop-hero-ux {
+    padding: 160px 0 80px;
+    background: var(--lux-ivory);
+    margin-bottom: 80px;
+    text-align: center;
 }
 
-.breadcrumb-alt {
-    font-size: 0.75rem;
+.breadcrumb-ux {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent-gold);
-    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--lux-gold);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    display: block;
 }
 
-.shop-hero-premium h1 {
-    font-size: 3.5rem;
-    margin: 10px 0;
+.shop-hero-ux h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 1rem;
 }
 
-.shop-layout-premium {
+.shop-hero-ux p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Layout */
+.shop-layout-ux {
     display: grid;
     grid-template-columns: 280px 1fr;
-    gap: 60px;
+    gap: 80px;
 }
 
-.filters-sidebar-premium {
+.filters-sidebar-lux {
     position: sticky;
     top: 140px;
 }
 
 .filter-widget {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding-bottom: 30px;
 }
 
 .filter-widget h3 {
+    font-family: var(--font-body);
     font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+    letter-spacing: 0.25em;
+    font-weight: 800;
+    margin-bottom: 25px;
+    color: var(--lux-charcoal);
 }
 
 .filter-options {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
 }
 
-.filter-chip {
-    padding: 8px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 40px;
+.filter-chip-lux {
+    padding: 10px 20px;
+    border: 1px solid #E5E5E7;
+    background: transparent;
     font-size: 0.85rem;
-    background: #fff;
-    transition: all 0.3s;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.4s ease;
+    cursor: pointer;
 }
 
-.filter-chip.active {
-    background: var(--accent-dark);
+.filter-chip-lux:hover {
+    border-color: var(--lux-gold);
+}
+
+.filter-chip-lux.active {
+    background: var(--lux-charcoal);
     color: white;
-    border-color: var(--accent-dark);
+    border-color: var(--lux-charcoal);
 }
 
 .premium-checkbox {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     cursor: pointer;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.premium-checkbox:hover .check-text {
+    color: var(--lux-gold);
+}
+
+.check-box-ui {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #E5E5E7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.premium-checkbox.active .check-box-ui {
+    background: var(--lux-charcoal);
+    border-color: var(--lux-charcoal);
+}
+
+.premium-checkbox.active .check-box-ui::after {
+    content: '✕';
+    color: white;
+    font-size: 0.6rem;
 }
 
 .check-text {
-    font-size: 0.95rem;
-    color: #475569;
-}
-
-.price-slider-luxury input {
-    width: 100%;
-}
-
-.price-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    margin-top: 10px;
+    font-size: 0.9rem;
     font-weight: 600;
+    color: var(--text-muted);
 }
 
-.shop-controls-premium {
+/* Products Area */
+.shop-controls-ux {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #E5E5E7;
 }
 
-.view-toggle {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+.result-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.sort-select-lux {
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 800;
+    background: none;
+    cursor: pointer;
     text-transform: uppercase;
-    font-weight: 700;
-    opacity: 0.5;
+    letter-spacing: 0.1em;
 }
 
-.view-toggle.active {
-    opacity: 1;
-}
-
-.products-display-premium.grid {
+.products-grid-ux {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-}
-
-.empty-shop-premium {
-    text-align: center;
-    padding: 100px 0;
-}
-
-.btn-clear {
-    margin-top: 20px;
-    text-decoration: underline;
-    font-weight: 600;
+    gap: 50px 40px;
 }
 
 @media (max-width: 1024px) {
-    .shop-layout-premium { grid-template-columns: 1fr; }
-    .filters-sidebar-premium { display: none; }
-    .products-display-premium.grid { grid-template-columns: repeat(2, 1fr); }
+    .shop-layout-ux { grid-template-columns: 1fr; }
+    .filters-sidebar-lux { display: none; }
+    .products-grid-ux { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; }
 }
 
 @media (max-width: 600px) {
-    .shop-hero-premium h1 { font-size: 2.2rem; }
-    .products-display-premium.grid { grid-template-columns: 1fr; }
+    .products-grid-ux { grid-template-columns: 1fr; }
 }
 
-/* Skeleton Loaders */
-.shop-skeleton-container {
-    padding-top: 100px;
+/* Empty Shop States */
+.empty-shop-lux {
+    text-align: center;
+    padding: 120px 0;
 }
 
-.skeleton-hero {
-    height: 200px;
-    background: #eee;
-    margin-bottom: 40px;
-    border-radius: 20px;
+.empty-shop-lux h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
-.skeleton-content {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-}
-
-.skeleton-card {
-    aspect-ratio: 3/4;
-    background: #f0f0f0;
-    border-radius: 12px;
+.btn-clear-lux {
+    margin-top: 2rem;
+    display: inline-block;
+    color: var(--lux-gold);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--lux-gold);
 }

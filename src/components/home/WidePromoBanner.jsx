@@ -14,23 +14,20 @@ const WidePromoBanner = () => {
 
     return (
         <section className="wide-promo-section">
-            <div className="container">
-                <a href={banner.link || '/shop'} className="wide-banner-link">
-                    <div className="wide-banner" style={{ backgroundImage: `url(${getImgUrl(banner.image)})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                        {!banner.image && (
-                            <div className="wide-banner-content">
-                                <div className="left-promo">
-                                    <span className="splash-text">Splash of</span>
-                                    <h2 className="colours-text">{banner.title || 'COLOURS'} <span>Sale</span></h2>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="middle-promo">
-                                    <p>{banner.subtitle}</p>
-                                </div>
-                            </div>
-                        )}
+            <div className="wide-banner-ux">
+                <div 
+                    className="banner-bg-parallax" 
+                    style={{ backgroundImage: `url(${getImgUrl(banner.image)})` }}
+                ></div>
+                <div className="banner-overlay-ux"></div>
+                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+                    <div className="banner-content-lux">
+                        <span className="banner-tag-lux">{banner.subtitle || 'Flash Collection'}</span>
+                        <h2 className="banner-title-lux">{banner.title || 'Artisanal Selection'}</h2>
+                        <p className="banner-desc-lux">{banner.description || 'Exclusive curated drapes for the finest homes. Starting at ₹1,499.'}</p>
+                        <a href={banner.link || '/shop'} className="btn-lux">Explore the Sale</a>
                     </div>
-                </a>
+                </div>
             </div>
         </section>
     );

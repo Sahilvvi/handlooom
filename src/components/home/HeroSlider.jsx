@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getImgUrl } from '../../utils/api';
 import useHomeSettings from '../../hooks/useHomeSettings';
 import './HeroSlider.css';
@@ -35,14 +36,14 @@ const HeroSlider = () => {
                 <div
                     key={index}
                     className={`slide ${index === current ? 'active' : ''}`}
-                    style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${getImgUrl(slide.image)})` }}
+                    style={{ backgroundImage: `url(${getImgUrl(slide.image)})` }}
                 >
                     <div className="container">
                         <div className="slide-content">
                             <span className="slide-label">{slide.label}</span>
                             <h2 className="slide-title">{slide.title}</h2>
                             <p className="slide-subtitle">{slide.subtitle}</p>
-                            <a href={slide.link || "/shop"} className="btn-primary">{slide.cta || 'Shop Now'}</a>
+                            <Link to={slide.link || "/shop"} className="btn-lux">{slide.cta || 'Shop Now'}</Link>
                         </div>
                     </div>
                 </div>
