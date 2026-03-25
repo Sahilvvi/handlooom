@@ -36,9 +36,22 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Simplified Asset Serving (Uses standard public/uploads or similar)
-const globalUploadBasePath = path.join(__dirname, 'uploads');
+// Use the root uploads folder (preserved by deploy scripts)
+const globalUploadBasePath = path.join(process.cwd(), 'uploads');
 
-console.log('Static asset path configured at:', globalUploadBasePath);
+// Use root uploads folder for persistence across deployments
+const uploadsDir = path.join(process.cwd(), 'uploads');
+
+try {
+    if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+        console.log('✅ PERSISTENCE: Created uploads directory at root:', uploadsDir);
+    }
+} catch (err) {
+    console.error('❌ Error creating uploads directory:', err.message);
+}
+
+console.log('✅ Physical storage path (for persistence):', globalUploadBasePath);
 
 app.use('/api/uploads', (req, res, next) => {
     let imgPath = req.path.split('?')[0];

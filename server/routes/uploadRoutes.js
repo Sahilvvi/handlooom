@@ -5,13 +5,13 @@ const fs = require('fs');
 const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Ensure /uploads dir exists local to the server app
-const uploadsDir = path.join(__dirname, '../uploads');
+// Ensure /uploads dir exists in the root of the app for persistence
+const uploadsDir = path.join(process.cwd(), 'uploads');
 
 try {
     if (!fs.existsSync(uploadsDir)) {
         fs.mkdirSync(uploadsDir, { recursive: true });
-        console.log('✅ Created uploads directory at:', uploadsDir);
+        console.log('✅ Created root uploads directory for persistence:', uploadsDir);
     }
 } catch (err) {
     console.error('⚠️ Could not create uploads directory:', err.message);
