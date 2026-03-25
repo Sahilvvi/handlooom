@@ -73,8 +73,10 @@ jobs:
             # We also install in public_html just in case the pathing is weird
             cd public_html
             npm install --production
-            # Restart
+            # Restart & Permissions
             mkdir -p tmp
             touch tmp/restart.txt
+            find . -type d -exec chmod 755 {} \;
+            find . -type f -exec chmod 644 {} \;
 
 
