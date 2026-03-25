@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSlider from '../components/home/HeroSlider';
-import CategoryGrid from '../components/category/CategoryGrid';
+import CategoryGrid from '../components/home/CategoryGrid';
 import RoomTypeGrid from '../components/home/RoomTypeGrid';
 import MaterialGrid from '../components/home/MaterialGrid';
 import ColorGrid from '../components/home/ColorGrid';
@@ -18,113 +18,101 @@ const Home = () => {
     useEffect(() => {
         const fetchAll = async () => {
             try {
-                const res = await fetch(`${BASE_URL}/api/products?limit=24`);
+                const res = await fetch(`${BASE_URL}/api/products`);
                 const data = await res.json();
-                if (data && data.products) setProducts(data.products);
-                else if (Array.isArray(data)) setProducts(data);
+                if (res.ok) setProducts(data);
             } catch (err) {
-                console.error("Home fetch error:", err);
+                console.error(err);
             } finally {
                 setLoading(false);
             }
         };
         fetchAll();
+        window.scrollTo(0, 0);
     }, []);
 
-    // Global Scroll Observer for Animations
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-
-        const targets = document.querySelectorAll('[data-animate]');
-        targets.forEach(el => observer.observe(el));
-        return () => observer.disconnect();
-    }, [loading]);
+    const bestsellerProducts = products.filter(p => p.isBestSeller).slice(0, 8);
+    const newArrivalProducts = products.slice(-8).reverse();
 
     return (
-        <main className="home-main-premium">
-            {/* 1. Cinematic Hero Section */}
+        <div className="home-premium">
+            {/* 1. Immersive Hero */}
             <HeroSlider />
 
-            {/* 2. Shop by Category - Minimal Grid */}
-            <div className="section-padding" data-animate>
+            {/* 2. Artisanal Categories */}
+            <section className="section-premium ivory-bg">
                 <div className="container">
-                    <div className="section-header">
-                        <h2>Curated Collections</h2>
-                        <p>Explore our handcrafted drapes by style and technique</p>
+                    <div className="section-header-centered">
+                        <span className="subtitle">Heritage Craftsmanship</span>
+                        <h2 className="title-luxury">Curated Collections</h2>
+                        <div className="gold-divider"></div>
                     </div>
                     <CategoryGrid />
                 </div>
-            </div>
+            </section>
 
-            {/* 3. Trending Now Strip */}
-            <div data-animate>
-               <BestSellers products={products} loading={loading} />
-            </div>
-
-            {/* 4. Shop by Room - Lifestyle Integration */}
-            <div className="section-padding bg-alt" data-animate>
+            {/* 3. Room Specialization */}
+            <section className="section-premium white-bg">
                 <div className="container">
-                    <div className="section-header">
-                        <h2>Shop by Sanctuary</h2>
-                        <p>Artisanal solutions tailored for every space in your home</p>
+                    <div className="section-header-left">
+                        <span className="subtitle">Ambiance Defined</span>
+                        <h2 className="title-luxury">Drapes for Every Space</h2>
                     </div>
                     <RoomTypeGrid />
                 </div>
-            </div>
+            </section>
 
-            {/* 5. Promotional Call-to-Action */}
-            <div data-animate>
-                <WidePromoBanner />
-            </div>
-
-            {/* 6. New Masterpieces */}
-            <div className="section-padding" data-animate>
-                <NewArrivals products={products} loading={loading} />
-            </div>
-
-            {/* 7. Artisanal Materials Showcase */}
-            <div className="section-padding bg-alt" data-animate>
+            {/* 4. Materiality Focus */}
+            <section className="section-premium sage-bg-light">
                 <div className="container">
-                    <div className="section-header">
-                        <h2>The Art of Texture</h2>
-                        <p>Finest fabrics sourced for durability and aesthetic light-play</p>
+                    <div className="section-header-centered">
+                        <span className="subtitle">Tactile Excellence</span>
+                        <h2 className="title-luxury">The Artisanal Palette</h2>
                     </div>
                     <MaterialGrid />
                 </div>
-            </div>
+            </section>
+            
+            {/* 5. Wide Promo Engagement */}
+            <WidePromoBanner />
 
-            {/* 8. Palette Philosophy */}
-            <div className="section-padding" data-animate>
+            {/* 6. High-Performance Showcases */}
+            <section className="section-premium white-bg">
                 <div className="container">
-                    <div className="section-header">
-                        <h2>Palette of light</h2>
-                        <p>Find the perfect hue to complement your interior's soul</p>
+                    <BestSellers products={bestsellerProducts} loading={loading} />
+                </div>
+            </section>
+
+            <section className="section-premium ivory-bg">
+                <div className="container">
+                    <NewArrivals products={newArrivalProducts} loading={loading} />
+                </div>
+            </section>
+
+            {/* 7. Color Psychology */}
+            <section className="section-premium white-bg">
+                <div className="container">
+                    <div className="section-header-centered">
+                        <span className="subtitle">Chromatic Harmony</span>
+                        <h2 className="title-luxury">Discover by Vibration</h2>
                     </div>
                     <ColorGrid />
                 </div>
-            </div>
+            </section>
 
-            {/* 9. Experience Invitation */}
-            <section className="experience-invite section-padding" data-animate>
-                <div className="container">
-                    <div className="invite-card glass">
-                        <div className="invite-content">
-                            <span className="accent-tag">The Boutique Experience</span>
-                            <h2>Visit Our Delhi Gallery</h2>
-                            <p>Witness the dance of light through our hand-woven fabrics in person. Our styling concierge is waiting to assist you in Rajouri Garden.</p>
-                            <div className="invite-cta">
-                                <Link to="/about" className="btn-primary">Our Stores</Link>
-                                <Link to="/contact" className="btn-secondary">Book Consultation</Link>
-                            </div>
-                        </div>
+            {/* 8. Call to Action High-Fidelity */}
+            <section className="cta-luxury-section">
+                <div className="cta-bg-overlay"></div>
+                <div className="container cta-content">
+                    <h3>Experience Artisanal Mastery</h3>
+                    <p>Each drape is a symphony of tradition and modern elegance, hand-crafted for the discerning home.</p>
+                    <div className="cta-buttons">
+                        <Link to="/shop" className="btn-luxury">Explore Boutique</Link>
+                        <Link to="/contact" className="btn-luxury-outline">Private Consultation</Link>
                     </div>
                 </div>
             </section>
-        </main>
+        </div>
     );
 };
 
